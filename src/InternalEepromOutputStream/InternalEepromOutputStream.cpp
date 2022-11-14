@@ -1,0 +1,43 @@
+#if __OZEROIO_IO_INTERNAL_EEPROM_SUPPORT_ENABLED__ == 1
+
+#include "InternalEepromOutputStream.h"
+#include <EEPROM.h>
+
+InternalEepromOutputStream::InternalEepromOutputStream() :
+        pos(0), markpos(0), eepromSize(E2END) {
+}
+
+void InternalEepromOutputStream::write(unsigned char b) {
+    if (pos < eepromSize) {
+        eeprom_write_byte((unsigned char *) (pos++), b);
+    }
+}
+
+void InternalEepromOutputStream::write(unsigned char* b, int off, int len) {
+    unsigned int available = eepromSize - pos;
+    if (available < len) {
+        len = available;
+    }
+    eeprom_write_block((const void *) pos, (void *) b, len);
+    pos += len;
+}
+
+void InternalEepromOutputStream::seek(unsigned int pos) {
+    if (pos < eepromSize) {
+        this->pos = pos;
+    }
+}
+
+void InternalEepromOutputStream::mark() {
+    markpos = pos;
+}
+
+bool InternalEepromOutputStream::markSupported() {
+    return true;
+}
+
+void InternalEepromOutputStream::reset() {
+    pos = markpos;
+}
+
+#endif /* __OZEROIO_IO_INTERNAL_EEPROM_SUPPORT_ENABLED__ */

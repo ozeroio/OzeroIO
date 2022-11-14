@@ -36,8 +36,9 @@ void RandomAccessInternalEeprom::writeBytes(unsigned char* b, int len) {
     if (pos + len >= endPos) {
         len = endPos - pos;
     }
-    EEPROM.writeBytes(pos, (void *) b, len);
-    pos += len;
+    int written = EEPROM.writeBytes(pos, (void *) b, len);
+    EEPROM.commit();
+    pos += written;
 }
 
 void RandomAccessInternalEeprom::writeBoolean(bool v) {

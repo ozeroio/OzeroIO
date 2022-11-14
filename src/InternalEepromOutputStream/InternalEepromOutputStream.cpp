@@ -1,4 +1,4 @@
-#if __OZEROIO_IO_INTERNAL_EEPROM_SUPPORT_ENABLED__ == 0
+#if __OZEROIO_IO_INTERNAL_EEPROM_SUPPORT_ENABLED__ == 1
 
 #include "InternalEepromOutputStream.h"
 #include <EEPROM.h>
@@ -10,6 +10,7 @@ InternalEepromOutputStream::InternalEepromOutputStream() :
 void InternalEepromOutputStream::write(unsigned char b) {
     if (pos < eepromSize) {
         EEPROM.write((int) (pos++), b);
+        EEPROM.commit();
     }
 }
 
@@ -18,7 +19,8 @@ void InternalEepromOutputStream::write(unsigned char* b, int off, int len) {
     if (available < len) {
         len = (int) available;
     }
-    pos += EEPROM.readBytes((int) pos, (void *) b, len);
+    pos += EEPROM.writeBytes((int) pos, (void *) b, len);
+    EEPROM.commit();
 }
 
 void InternalEepromOutputStream::seek(unsigned int pos) {

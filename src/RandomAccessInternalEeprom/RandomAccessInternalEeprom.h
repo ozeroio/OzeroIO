@@ -117,13 +117,6 @@ public:
     virtual void writeUnsignedInt(unsigned int v);
 
     /**
-     * Writes a word into the stream.
-     * 
-     * @param v         The word to be written.
-     */
-    virtual void writeWord(word v);
-
-    /**
      * Writes a long into the stream.
      * 
      * @param v         The long to be written.
@@ -192,13 +185,6 @@ public:
      * @return unsigned int
      */
     virtual unsigned int readUnsignedInt();
-
-    /**
-     * Reads a word from the stream.
-     * 
-     * @return word
-     */
-    virtual word readWord();
 
     /**
      * Reads a long from the stream.

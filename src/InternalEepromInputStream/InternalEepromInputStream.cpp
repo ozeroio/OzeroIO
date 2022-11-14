@@ -4,7 +4,7 @@
 #include <EEPROM.h>
 
 InternalEepromInputStream::InternalEepromInputStream()
-        : maxAvailableChunk(0x08), pos(0), markpos(0), eepromSize(E2END) {
+        : maxAvailableChunk(0x08), pos(0), markpos(0), eepromSize(EEPROM.length()) {
 }
 
 int InternalEepromInputStream::available() {
@@ -27,15 +27,15 @@ int InternalEepromInputStream::read() {
     if (pos >= eepromSize) {
         return -1;
     }
-    return (int) EEPROM.read((const unsigned char *) pos++);
+    return (int) EEPROM.read(pos++);
 }
 
 int InternalEepromInputStream::read(unsigned char* b, int off, int len) {
     unsigned int available = (eepromSize - pos);
     len = (int) ((unsigned int) len > available) ? available : len;
-    eeprom_read_block((void *) &b[off], (const void*) pos, len);
-    pos += len;
-    return len;
+    int read = EEPROM.readBytes(pos, (void *) &b[off], len);
+    pos += read;
+    return read;
 }
 
 void InternalEepromInputStream::reset() {

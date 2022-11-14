@@ -1,6 +1,7 @@
 #if __OZEROIO_IO_INTERNAL_EEPROM_SUPPORT_ENABLED__ == 1
 
 #include "RandomAccessInternalEeprom.h"
+#include <EEPROM.h>
 
 RandomAccessInternalEeprom::RandomAccessInternalEeprom(unsigned int startPos, unsigned int endPos) : pos(startPos), startPos(startPos), endPos(endPos) {
 }
@@ -35,7 +36,7 @@ void RandomAccessInternalEeprom::writeBytes(unsigned char* b, int len) {
     if (pos + len >= endPos) {
         len = endPos - pos;
     }
-    eeprom_write_block((const void *) b, (void *) pos, len);
+    EEPROM.writeBytes(pos, (void *) b, len);
     pos += len;
 }
 
@@ -56,10 +57,6 @@ void RandomAccessInternalEeprom::writeInt(int v) {
 }
 
 void RandomAccessInternalEeprom::writeUnsignedInt(unsigned int v) {
-    writeInt((int) v);
-}
-
-void RandomAccessInternalEeprom::writeWord(word v) {
     writeInt((int) v);
 }
 
@@ -92,7 +89,7 @@ char RandomAccessInternalEeprom::readChar() {
 }
 
 unsigned char RandomAccessInternalEeprom::readUnsignedChar() {
-    return (unsigned char) eeprom_read_byte((const unsigned char *) pos++);
+    return (unsigned char) EEPROM.readUChar(pos++);
 }
 
 int RandomAccessInternalEeprom::readInt() {
@@ -103,10 +100,6 @@ int RandomAccessInternalEeprom::readInt() {
 
 unsigned int RandomAccessInternalEeprom::readUnsignedInt() {
     return (unsigned int) readInt();
-}
-
-word RandomAccessInternalEeprom::readWord() {
-    return (word) readInt();
 }
 
 long RandomAccessInternalEeprom::readLong() {
@@ -131,7 +124,7 @@ void RandomAccessInternalEeprom::readFully(unsigned char* b, int len) {
     if (pos + len >= endPos) {
         len = endPos - pos;
     }
-    eeprom_read_block((void *) b, (const void *) pos, len);
+    EEPROM.readBytes(pos, (void *) b, len);
     pos += len;
 }
 

@@ -1,5 +1,5 @@
 /**
- * Araduino IO
+ * Ozero IO
  * 
  * RandomAccessInternalEeprom
  */

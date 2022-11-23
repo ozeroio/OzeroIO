@@ -90,7 +90,9 @@ char RandomAccessInternalEeprom::readChar() {
 }
 
 unsigned char RandomAccessInternalEeprom::readUnsignedChar() {
-    return (unsigned char) EEPROM.readUChar(pos++);
+    unsigned char c = 0;
+    readFully(&c, 1);
+    return c;
 }
 
 int RandomAccessInternalEeprom::readInt() {

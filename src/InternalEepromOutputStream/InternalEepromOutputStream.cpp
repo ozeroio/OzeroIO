@@ -1,6 +1,7 @@
-#if __OZEROIO_IO_INTERNAL_EEPROM_SUPPORT_ENABLED__ == 1
+#if OZEROIO_IO_INTERNAL_EEPROM_SUPPORT_ENABLED == 1
 
 #include "InternalEepromOutputStream.h"
+#include <io.h>
 #include <EEPROM.h>
 
 InternalEepromOutputStream::InternalEepromOutputStream() :
@@ -10,17 +11,23 @@ InternalEepromOutputStream::InternalEepromOutputStream() :
 void InternalEepromOutputStream::write(unsigned char b) {
     if (pos < eepromSize) {
         EEPROM.write((int) (pos++), b);
+#ifdef ARDUINO_ARCH_ESP32
         EEPROM.commit();
+#endif
     }
 }
 
 void InternalEepromOutputStream::write(unsigned char* b, int off, int len) {
     unsigned int available = eepromSize - pos;
-    if (available < len) {
-        len = (int) available;
-    }
-    pos += EEPROM.writeBytes((int) pos, (void *) b, len);
+    len = ozero_min(len, available);
+#ifdef ARDUINO_ARCH_ESP32
+    pos += EEPROM.writeBytes((int) pos, (void *) &(b[off]), len);
     EEPROM.commit();
+#else
+    for (int i = 0; i < len; i++) {
+        EEPROM.write((int) pos++, b[off + i]);
+    }
+#endif
 }
 
 void InternalEepromOutputStream::seek(unsigned int pos) {
@@ -41,4 +48,4 @@ void InternalEepromOutputStream::reset() {
     pos = markpos;
 }
 
-#endif /* __OZEROIO_IO_INTERNAL_EEPROM_SUPPORT_ENABLED__ */
+#endif // OZEROIO_IO_INTERNAL_EEPROM_SUPPORT_ENABLED

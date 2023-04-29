@@ -6,10 +6,10 @@
  * A software serial output stream is a output stream to write in a serial port.
  */
 
-#if __OZEROIO_IO_HARDWARE_SERIAL_SUPPORT_ENABLED__ == 1
+#if OZEROIO_IO_HARDWARE_SERIAL_SUPPORT_ENABLED == 1
 
-#ifndef __OZEROIO_IO_HARDWARE_SERIAL_OUTPUT_STREAM_H__
-#define __OZEROIO_IO_HARDWARE_SERIAL_OUTPUT_STREAM_H__ 1
+#ifndef OZEROIO_IO_HARDWARE_SERIAL_OUTPUT_STREAM_H
+#define OZEROIO_IO_HARDWARE_SERIAL_OUTPUT_STREAM_H 1
 
 #include <OutputStream/OutputStream.h>
 #include <SerialOutputStream/SerialOutputStream.h>
@@ -20,16 +20,25 @@ public:
     /**
      * Public constructor.
      * 
-     * @param boudRate
+     * @param baudRate
      */
-    HardwareSerialOutputStream(unsigned int boudRate);
+    explicit HardwareSerialOutputStream(unsigned int baudRate);
 
     /**
      * Writes the specified unsigned char to this output stream.
      */
-    virtual void write(unsigned char b);
+    void write(unsigned char b) override;
+
+    /**
+     * Writes len bytes from the specified unsigned char array to
+     * this output stream.
+     *
+     * @param b
+     * @param len
+     */
+    void write(unsigned char* b, int len) override;
 };
 
-#endif /* __OZEROIO_IO_HARDWARE_SERIAL_OUTPUT_STREAM_H__ */
+#endif // OZEROIO_IO_HARDWARE_SERIAL_OUTPUT_STREAM_H
 
-#endif /* __OZEROIO_IO_HARDWARE_SERIAL_SUPPORT_ENABLED__ */
+#endif // OZEROIO_IO_HARDWARE_SERIAL_SUPPORT_ENABLED

@@ -7,10 +7,10 @@
  * ExternalEeprom.
  */
 
-#if __OZEROIO_IO_EXTERNAL_EEPROM_SUPPORT_ENABLED__ == 1
+//#if OZEROIO_IO_EXTERNAL_EEPROM_SUPPORT_ENABLED == 1
 
-#ifndef __OZEROIO_IO_EXTERNAL_EEPROM_OUTPUT_STREAM_H__
-#define __OZEROIO_IO_EXTERNAL_EEPROM_OUTPUT_STREAM_H__ 1
+#ifndef OZEROIO_IO_EXTERNAL_EEPROM_OUTPUT_STREAM_H
+#define OZEROIO_IO_EXTERNAL_EEPROM_OUTPUT_STREAM_H 1
 
 #include <SeekableOutputStream/SeekableOutputStream.h>
 #include <ExternalEeprom/ExternalEeprom.h>
@@ -20,7 +20,7 @@ class ExternalEepromOutputStream : public SeekableOutputStream {
     /**
      * The associated eeprom.
      */
-    ExternalEeprom* externalEeprom;
+    ExternalEeprom *externalEeprom;
 
     /**
      * Current eeprom position.
@@ -44,7 +44,7 @@ public:
      * 
      * @param externalEeprom
      */
-    ExternalEepromOutputStream(ExternalEeprom* externalEeprom);
+    explicit ExternalEepromOutputStream(ExternalEeprom* externalEeprom);
 
     /**
      * Using parent write.
@@ -56,7 +56,7 @@ public:
      * 
      * @param b
      */
-    virtual void write(unsigned char b);
+    void write(unsigned char b) override;
 
     /**
      * Writes len bytes from the specified unsigned char array starting at offset off to 
@@ -66,32 +66,32 @@ public:
      * @param off
      * @param len
      */
-    virtual void write(unsigned char* b, int off, int len);
+    void write(unsigned char* b, int off, int len) override;
 
     /**
      * Seeks to the desired position.
      *
      * @param pos The position we want to point to.
      */
-    virtual void seek(unsigned int pos);
+    void seek(unsigned int pos) override;
 
     /**
      * Marks the current position in this output stream.
      */
-    virtual void mark();
+    void mark() override;
 
     /**
      * Tests if this output stream supports the mark and reset methods.
      */
-    virtual bool markSupported();
+    bool markSupported() override;
 
     /**
      * Repositions this stream to the position at the time the mark method was
      * last called on this output stream.
      */
-    virtual void reset();
+    void reset() override;
 };
 
-#endif /* __OZEROIO_IO_EXTERNAL_EEPROM_OUTPUT_STREAM_H__ */
+#endif // OZEROIO_IO_EXTERNAL_EEPROM_OUTPUT_STREAM_H
 
-#endif /* __OZEROIO_IO_EXTERNAL_EEPROM_SUPPORT_ENABLED__ */
+//#endif // OZEROIO_IO_EXTERNAL_EEPROM_SUPPORT_ENABLED

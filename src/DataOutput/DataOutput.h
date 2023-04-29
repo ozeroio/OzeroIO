@@ -7,8 +7,8 @@
  * primitive types to a series of bytes and writing these bytes to a binary stream.
  */
 
-#ifndef __OZEROIO_IO_DATA_OUTPUT_H__
-#define __OZEROIO_IO_DATA_OUTPUT_H__ 1
+#ifndef OZEROIO_IO_DATA_OUTPUT_H
+#define OZEROIO_IO_DATA_OUTPUT_H 1
 
 class DataOutput {
 public:
@@ -107,4 +107,4 @@ public:
     virtual void writeDouble(double v) = 0;
 };
 
-#endif /* __OZEROIO_IO_DATA_OUTPUT_H__ */
+#endif // OZEROIO_IO_DATA_OUTPUT_H

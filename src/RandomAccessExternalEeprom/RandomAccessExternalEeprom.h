@@ -8,10 +8,10 @@
  * stored in the externalEeprom system.
  */
 
-#if __OZEROIO_IO_EXTERNAL_EEPROM_SUPPORT_ENABLED__ == 1
+#if OZEROIO_IO_EXTERNAL_EEPROM_SUPPORT_ENABLED == 1
 
-#ifndef __OZEROIO_IO_RANDOM_ACCESS_EXTERNAL_EEPROM_H__
-#define __OZEROIO_IO_RANDOM_ACCESS_EXTERNAL_EEPROM_H__ 1
+#ifndef OZEROIO_IO_RANDOM_ACCESS_EXTERNAL_EEPROM_H
+#define OZEROIO_IO_RANDOM_ACCESS_EXTERNAL_EEPROM_H 1
 
 #include <RandomAccess/RandomAccess.h>
 #include <Closeable/Closeable.h>
@@ -36,14 +36,14 @@ public:
      * 
      * @param externalEeprom    The external eeprom instance to be used.
      */
-    RandomAccessExternalEeprom(ExternalEeprom* externalEeprom);
+    explicit RandomAccessExternalEeprom(ExternalEeprom* externalEeprom);
 
     /**
      * Seeks the stream at the position.
      * 
      * @param pos       The position.
      */
-    virtual void seek(unsigned int pos);
+    void seek(unsigned int pos) override;
 
     /**
      * Returns the length of the stream.
@@ -55,7 +55,7 @@ public:
     /**
      * Closing a external eeprom has no effect.
      */
-    virtual void close();
+    void close() override;
 
     /**
      * Writes an array of bytes into the stream.
@@ -63,21 +63,21 @@ public:
      * @param b         The array of bytes.
      * @param len       The length of such array.
      */
-    virtual void write(unsigned char* b, int len);
+    void write(unsigned char* b, int len) override;
 
     /**
      * Writes a unsigned char into the stream.
      * 
      * @param b         The unsigned char to be written.
      */
-    virtual void write(unsigned char b);
+    void write(unsigned char b) override;
 
     /**
      * Writes a unsigned char into the stream.
      * 
      * @param b         The unsigned char to be written.
      */
-    virtual void writeByte(unsigned char b);
+    void writeByte(unsigned char b) override;
 
     /**
      * Writes an array of bytes into the stream.
@@ -85,154 +85,140 @@ public:
      * @param b         The array of bytes.
      * @param len       The length of such array.
      */
-    virtual void writeBytes(unsigned char* b, int len);
+    void writeBytes(unsigned char* b, int len) override;
 
     /**
      * Writes a bool into the stream.
      * 
      * @param v         The bool to be written.
      */
-    virtual void writeBoolean(bool v);
+    void writeBoolean(bool v) override;
 
     /**
      * Writes a char into the stream.
      * 
      * @param c         The char to be written.
      */
-    virtual void writeChar(char c);
+    void writeChar(char c) override;
 
     /**
      * Writes an unsigned char into the stream.
      * 
      * @param c         The unsigned char to be written.
      */
-    virtual void writeUnsignedChar(unsigned char c);
+    void writeUnsignedChar(unsigned char c) override;
 
     /**
      * Writes an int into the stream.
      * 
      * @param v         The int to be written.
      */
-    virtual void writeInt(int v);
+    void writeInt(int v) override;
 
     /**
      * Writes an unsigned int into the stream.
      * 
      * @param v         The unsigned int to be written.
      */
-    virtual void writeUnsignedInt(unsigned int v);
-
-    /**
-     * Writes a word into the stream.
-     * 
-     * @param v         The word to be written.
-     */
-    virtual void writeWord(word v);
+    void writeUnsignedInt(unsigned int v) override;
 
     /**
      * Writes a long into the stream.
      * 
      * @param v         The long to be written.
      */
-    virtual void writeLong(long v);
+    void writeLong(long v) override;
 
     /**
      * Writes a unsigned long into the stream.
      * 
      * @param v         The unsigned long to be written.
      */
-    virtual void writeUnsignedLong(unsigned long v);
+    void writeUnsignedLong(unsigned long v) override;
 
     /**
      * Writes a float into the stream.
      * 
      * @param v         The float to be written.
      */
-    virtual void writeFloat(float v);
+    void writeFloat(float v) override;
 
     /**
      * Writes a double into the stream.
      * 
      * @param v         The double to be written.
      */
-    virtual void writeDouble(double v);
+    void writeDouble(double v) override;
 
     /**
      * Reads a unsigned char from the stream.
      * 
      * @return unsigned char
      */
-    virtual unsigned char readByte();
+    unsigned char readByte() override;
 
     /**
      * Reads a bool from the stream.
      * 
      * @return bool
      */
-    virtual bool readBoolean();
+    bool readBoolean() override;
 
     /**
      * Reads a char from the stream.
      * 
      * @return char
      */
-    virtual char readChar();
+    char readChar() override;
 
     /**
      * Reads an unsigned char from the stream.
      * 
      * @return unsigned char
      */
-    virtual unsigned char readUnsignedChar();
+    unsigned char readUnsignedChar() override;
 
     /**
      * Reads an int from the stream.
      * 
      * @return int
      */
-    virtual int readInt();
+    int readInt() override;
 
     /**
      * Reads an unsigned int from the stream.
      * 
      * @return unsigned int
      */
-    virtual unsigned int readUnsignedInt();
-
-    /**
-     * Reads a word from the stream.
-     * 
-     * @return word
-     */
-    virtual word readWord();
+    unsigned int readUnsignedInt() override;
 
     /**
      * Reads a long from the stream.
      * 
      * @return long
      */
-    virtual long readLong();
+    long readLong() override;
 
     /**
      * Reads a unsigned long from the stream.
      * 
      * @return unsigned long
      */
-    virtual unsigned long readUnsignedLong();
+    unsigned long readUnsignedLong() override;
 
     /**
      * Reads a float from the stream.
      * 
      * @return float
      */
-    virtual float readFloat();
+    float readFloat() override;
 
     /**
      * Reads a double from the stream.
      * 
      * @return double
      */
-    virtual double readDouble();
+    double readDouble() override;
 
     /**
      * Reads a array of bytes from the stream.
@@ -240,7 +226,7 @@ public:
      * @param b
      * @param len
      */
-    virtual void readFully(unsigned char* b, int len);
+    void readFully(unsigned char* b, int len) override;
 
     /**
      * Skips n bytes of the stream.
@@ -248,9 +234,9 @@ public:
      * @param n
      * @return unsigned int The number of skipped bytes.
      */
-    virtual unsigned int skipBytes(unsigned int n);
+    unsigned int skipBytes(unsigned int n) override;
 };
 
-#endif /* __OZEROIO_IO_RANDOM_ACCESS_EXTERNAL_EEPROM_H__ */
+#endif // OZEROIO_IO_RANDOM_ACCESS_EXTERNAL_EEPROM_H
 
-#endif /* __OZEROIO_IO_EXTERNAL_EEPROM_SUPPORT_ENABLED__ */
+#endif // OZEROIO_IO_EXTERNAL_EEPROM_SUPPORT_ENABLED

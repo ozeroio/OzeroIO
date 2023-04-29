@@ -4,56 +4,56 @@ DataOutputStream::DataOutputStream(OutputStream* outputStream) :
         outputStream(outputStream) {
 }
 
-void DataOutputStream::write(unsigned char* b, int len) {
+void DataOutputStream::write(unsigned char *b, const int len) {
     writeBytes(b, len);
 }
 
-void DataOutputStream::write(unsigned char b) {
+void DataOutputStream::write(const unsigned char b) {
     writeByte(b);
 }
 
-void DataOutputStream::writeByte(unsigned char b) {
+void DataOutputStream::writeByte(const unsigned char b) {
     outputStream->write(b);
 }
 
-void DataOutputStream::writeBytes(unsigned char* b, int len) {
+void DataOutputStream::writeBytes(unsigned char *b, const int len) {
     for (int i = 0; i < len; i++) {
         outputStream->write(b[i]);
     }
 }
 
-void DataOutputStream::writeBoolean(bool v) {
+void DataOutputStream::writeBoolean(const bool v) {
     outputStream->write((unsigned char) v);
 }
 
-void DataOutputStream::writeChar(char c) {
+void DataOutputStream::writeChar(const char c) {
     outputStream->write((unsigned char) c);
 }
 
-void DataOutputStream::writeUnsignedChar(unsigned char c) {
+void DataOutputStream::writeUnsignedChar(const unsigned char c) {
     outputStream->write((unsigned char) c);
 }
 
-void DataOutputStream::writeInt(int v) {
+void DataOutputStream::writeInt(const int v) {
     writeBytes((unsigned char *) &v, sizeof(int));
 }
 
-void DataOutputStream::writeUnsignedInt(unsigned int v) {
+void DataOutputStream::writeUnsignedInt(const unsigned int v) {
     writeInt((int) v);
 }
 
-void DataOutputStream::writeLong(long v) {
+void DataOutputStream::writeLong(const long v) {
     writeBytes((unsigned char *) &v, sizeof(long));
 }
 
-void DataOutputStream::writeUnsignedLong(unsigned long v) {
+void DataOutputStream::writeUnsignedLong(const unsigned long v) {
     writeLong((long) v);
 }
 
-void DataOutputStream::writeFloat(float v) {
+void DataOutputStream::writeFloat(const float v) {
     writeBytes((unsigned char *) &v, sizeof(float));
 }
 
-void DataOutputStream::writeDouble(double v) {
+void DataOutputStream::writeDouble(const double v) {
     writeBytes((unsigned char *) &v, sizeof(double));
 }

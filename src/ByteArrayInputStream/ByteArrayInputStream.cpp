@@ -1,15 +1,18 @@
 #include "ByteArrayInputStream.h"
+#include <limits.h>
 
-ByteArrayInputStream::ByteArrayInputStream(unsigned char* buf,
-        unsigned int count) :
-        buf(buf), count(count) {
+ByteArrayInputStream::ByteArrayInputStream(unsigned char *buf, unsigned int count) : buf(buf), count(count) {
     markpos = 0;
     pos = 0;
 }
 
 int ByteArrayInputStream::available() {
-    if ((count - pos) > 0) {
-        return 1;
+    if (count >= pos) {
+        const unsigned int diff = count - pos;
+        if (diff > INT_MAX) {
+            return INT_MAX;
+        }
+        return (int) diff;
     }
     return 0;
 }
@@ -33,7 +36,7 @@ void ByteArrayInputStream::reset() {
     pos = markpos;
 }
 
-void ByteArrayInputStream::seek(unsigned int pos) {
+void ByteArrayInputStream::seek(const unsigned int pos) {
     if (pos < count) {
         this->pos = pos;
     }

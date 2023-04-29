@@ -20,7 +20,7 @@ int InputStream::read(unsigned char* b, int len) {
 
 int InputStream::read(unsigned char* b, int off, int len) {
     int i, c;
-    if (b == (unsigned char*) 0) {
+    if (b == nullptr) {
         return 0;
     }
     c = read();

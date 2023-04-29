@@ -7,15 +7,15 @@
  * externalEeprom. 
  */
 
-#if __OZEROIO_IO_EXTERNAL_EEPROM_SUPPORT_ENABLED__ == 1
+//#if OZEROIO_IO_EXTERNAL_EEPROM_SUPPORT_ENABLED == 1
 
-#ifndef __OZEROIO_IO_EXTERNAL_EEPROM_INPUT_STREAM_H__
-#define __OZEROIO_IO_EXTERNAL_EEPROM_INPUT_STREAM_H__ 1
+#ifndef OZEROIO_IO_EXTERNAL_EEPROM_INPUT_STREAM_H
+#define OZEROIO_IO_EXTERNAL_EEPROM_INPUT_STREAM_H 1
 
 #include <SeekableInputStream/SeekableInputStream.h>
 #include <ExternalEeprom/ExternalEeprom.h>
 
-class ExternalEepromInputStream: public virtual SeekableInputStream {
+class ExternalEepromInputStream : public virtual SeekableInputStream {
 
 protected:
 
@@ -60,7 +60,7 @@ public:
      * 
      * @return int      The available number of bytes.
      */
-    virtual int available();
+    int available() override;
 
     /**
      * Using the parent read.
@@ -72,7 +72,7 @@ public:
      * 
      * @return int      The read unsigned char as an int.
      */
-    virtual int read();
+    int read() override;
 
     /**
      * Reads len of bytes from the input stream.
@@ -82,34 +82,34 @@ public:
      * @param len
      * @return 
      */
-    virtual int read(unsigned char* b, int off, int len);
+    int read(unsigned char *b, int off, int len) override;
 
     /**
      * Marks the current position in this input stream.
      */
-    virtual void mark();
+    void mark() override;
 
     /**
      * Tests if this input stream supports the mark and reset methods.
      *
      * @return bool
      */
-    virtual bool markSupported();
+    bool markSupported() override;
 
     /**
      * Repositions this stream to the position at the time the mark method was 
      * last called on this input stream.
      */
-    virtual void reset();
+    void reset() override;
 
     /**
      * Seeks to the desired position.
      *
      * @param pos The position we want to point to.
      */
-    virtual void seek(unsigned int pos);
+    void seek(unsigned int pos) override;
 };
 
-#endif /* __OZEROIO_IO_EXTERNAL_EEPROM_INPUT_STREAM_H__ */
+#endif // OZEROIO_IO_EXTERNAL_EEPROM_INPUT_STREAM_H
 
-#endif /* __OZEROIO_IO_EXTERNAL_EEPROM_SUPPORT_ENABLED__ */
+//#endif // OZEROIO_IO_EXTERNAL_EEPROM_SUPPORT_ENABLED

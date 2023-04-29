@@ -50,12 +50,12 @@ double DataInputStream::readDouble() {
     return (double) readLong();
 }
 
-void DataInputStream::readFully(unsigned char* b, int len) {
+void DataInputStream::readFully(unsigned char *b, const int len) {
     for (int i = 0; i < len; i++) {
         b[i] = inputStream->read();
     }
 }
 
-unsigned int DataInputStream::skipBytes(unsigned int n) {
+unsigned int DataInputStream::skipBytes(const unsigned int n) {
     return inputStream->skip(n);
 }

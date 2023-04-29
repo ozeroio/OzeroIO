@@ -16,8 +16,8 @@
  * methods as well as provide additional methods and fields.
  */
 
-#ifndef __OZEROIO_IO_FILTER_OUTPUT_STREAM_H__
-#define __OZEROIO_IO_FILTER_OUTPUT_STREAM_H__ 1
+#ifndef OZEROIO_IO_FILTER_OUTPUT_STREAM_H
+#define OZEROIO_IO_FILTER_OUTPUT_STREAM_H 1
 
 #include <OutputStream/OutputStream.h>
 
@@ -27,7 +27,7 @@ protected:
     /**
      * The underlying output stream to be filtered.
      */
-    OutputStream* out;
+    OutputStream *out;
 public:
 
     /**
@@ -37,7 +37,7 @@ public:
      * @param   out   the underlying output stream to be assigned to
      *                the field <tt>this->out</tt> for later use.
      */
-    FilterOutputStream(OutputStream* out);
+    explicit FilterOutputStream(OutputStream* out);
 
     /**
      * Writes the specified <code>unsigned char</code> to this output stream.
@@ -50,7 +50,7 @@ public:
      *
      * @param      b   the <code>unsigned char</code>.
      */
-    virtual void write(unsigned char b);
+    void write(unsigned char b) override;
 
     /**
      * Writes <code>len</code> bytes to this output stream.
@@ -63,7 +63,7 @@ public:
      * @param      b   the data to be written.
      * @param      len the length
      */
-    virtual void write(unsigned char* b, int len);
+    void write(unsigned char* b, int len) override;
 
     /**
      * Writes <code>len</code> bytes from the specified
@@ -74,7 +74,7 @@ public:
      * @param      off   the start offset in the data.
      * @param      len   the number of bytes to write.
      */
-    virtual void write(unsigned char* b, int off, int len);
+    void write(unsigned char* b, int off, int len) override;
 
     /**
      * Flushes this output stream and forces any buffered output bytes
@@ -83,7 +83,7 @@ public:
      * The <code>flush</code> method of <code>FilterOutputStream</code>
      * calls the <code>flush</code> method of its underlying output stream.
      */
-    virtual void flush();
+    void flush() override;
 
     /**
      * Closes this output stream and releases any system resources
@@ -93,7 +93,7 @@ public:
      * calls its <code>flush</code> method, and then calls the
      * <code>close</code> method of its underlying output stream.
      */
-    virtual void close();
+    void close() override;
 };
 
-#endif /* __OZEROIO_IO_FILTER_OUTPUT_STREAM_H__ */
+#endif // OZEROIO_IO_FILTER_OUTPUT_STREAM_H

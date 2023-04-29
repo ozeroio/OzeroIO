@@ -9,12 +9,12 @@
  * system for each unsigned char written.
  */
 
-#ifndef __OZEROIO_IO_BUFFERED_OUTPUT_STREAM_H__
-#define __OZEROIO_IO_BUFFERED_OUTPUT_STREAM_H__ 1
+#ifndef OZEROIO_IO_BUFFERED_OUTPUT_STREAM_H
+#define OZEROIO_IO_BUFFERED_OUTPUT_STREAM_H 1
 
 #include <FilterOutputStream/FilterOutputStream.h>
 
-class BufferedOutputStream: public FilterOutputStream {
+class BufferedOutputStream : public FilterOutputStream {
 
 protected:
 
@@ -51,7 +51,7 @@ public:
     /**
      * Virtual destructor.
      */
-    virtual ~BufferedOutputStream();
+    virtual ~BufferedOutputStream() = default;
 
     /**
      * Writes the specified unsigned char to this buffered output stream.
@@ -59,7 +59,7 @@ public:
      * @param      b   the unsigned char to be written.
      * @exception  IOException  if an I/O error occurs.
      */
-    void write(unsigned char b);
+    void write(unsigned char b) override;
 
     /**
      * Writes len bytes from the specified unsigned char array to this output stream. 
@@ -69,7 +69,7 @@ public:
      * @param b
      * @param len
      */
-    virtual void write(unsigned char* b, int len);
+    void write(unsigned char *b, int len) override;
 
     /**
      * Writes <code>len</code> bytes from the specified unsigned char array
@@ -86,15 +86,18 @@ public:
      * @param      off   the start offset in the data.
      * @param      len   the number of bytes to write.
      */
-    virtual void write(unsigned char* b, int off, int len);
+    void write(unsigned char* b, int off, int len) override;
 
     /**
      * Flushes this buffered output stream. This forces any buffered
      * output bytes to be written out to the underlying output stream.
      */
-    virtual void flush();
+    void flush() override;
 
-    virtual void close();
+    /**
+     * Closes the output stream.
+     */
+    void close() override;
 
 private:
 
@@ -104,4 +107,4 @@ private:
     void flushBuffer();
 };
 
-#endif /* __OZEROIO_IO_BUFFERED_OUTPUT_STREAM_H__ */
+#endif // OZEROIO_IO_BUFFERED_OUTPUT_STREAM_H

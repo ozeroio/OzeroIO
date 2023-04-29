@@ -7,8 +7,8 @@
  * may be read from the stream.
  */
 
-#ifndef __OZEROIO_IO_BYTE_ARRAY_INPUT_STREAM_H__
-#define __OZEROIO_IO_BYTE_ARRAY_INPUT_STREAM_H__ 1
+#ifndef OZEROIO_IO_BYTE_ARRAY_INPUT_STREAM_H
+#define OZEROIO_IO_BYTE_ARRAY_INPUT_STREAM_H 1
 
 #include <SeekableInputStream/SeekableInputStream.h>
 
@@ -41,30 +41,32 @@ public:
     ByteArrayInputStream(unsigned char* buf, unsigned int count);
 
     /**
-     * Returns the number of bytes that can be read(or skipped over) from this 
-     * input stream without blocking by the next caller of a method for this input stream.
-     * 
-     * NOTE: This implementation return 1 or 0. It is because the size 
+     * Returns the number of bytes that can be read(or skipped over) from this input stream.
+     *
+     * NOTE: This implementation return 1 or 0. It is because the size
      * of the array is unsigned int, and this method returns a signed
      * int, which means there is no way to return the difference between
      * the current position (can be 0) and the size of the array without
-     * possible overflow. 
-     * 
+     * possible overflow.
+     *
+     * NOTE2: Actually we can return it. We return INT_MAX in case the available space is bigger than
+     * INT_MAX.
+     *
      * @return 
      */
-    virtual int available();
+    int available() override;
 
     /**
      * Marks the current position in this input stream.
      */
-    virtual void mark();
+    void mark() override;
 
     /**
      * Tests if this input stream supports the mark and reset methods.
      * 
      * @return 
      */
-    virtual bool markSupported();
+    bool markSupported() override;
 
     /**
      * Using the parent's read.
@@ -76,20 +78,20 @@ public:
      * 
      * @return 
      */
-    virtual int read();
+    int read() override;
 
     /**
      * Repositions this stream to the position at the time the mark method was 
      * last called on this input stream.
      */
-    virtual void reset();
+    void reset() override;
 
     /**
      * Seeks to the desired position.
      *
      * @param pos The position we want to point to.
      */
-    virtual void seek(unsigned int pos);
+    void seek(unsigned int pos) override;
 };
 
-#endif /* __OZEROIO_IO_BYTE_ARRAY_INPUT_STREAM_H__ */
+#endif // OZEROIO_IO_BYTE_ARRAY_INPUT_STREAM_H

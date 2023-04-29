@@ -21,12 +21,13 @@
  * the contained input stream.
  */
 
-#ifndef __OZEROIO_IO_BUFFERED_INPUT_STREAM_H__
-#define __OZEROIO_IO_BUFFERED_INPUT_STREAM_H__ 1
+#ifndef OZEROIO_IO_BUFFERED_INPUT_STREAM_H
+#define OZEROIO_IO_BUFFERED_INPUT_STREAM_H 1
 
 #include <FilterInputStream/FilterInputStream.h>
+#include <InputStream/InputStream.h>
 
-class BufferedInputStream: public FilterInputStream {
+class BufferedInputStream : public FilterInputStream {
 
     /**
      * The size of the buffer.
@@ -38,11 +39,11 @@ protected:
     /**
      * The internal buffer array where the data is stored.
      */
-    unsigned char* buf;
+    unsigned char *buf;
 
     /**
-     * The index one greater than the index of the last valid unsigned char in 
-     * the buffer. 
+     * The index one greater than the index of the last valid unsigned char in
+     * the buffer.
      * This value is always
      * in the range <code>0</code> through <code>size</code>;
      * elements <code>buf[0]</code>  through <code>buf[count-1]
@@ -111,36 +112,35 @@ public:
     /**
      * Virtual destructor.
      */
-    virtual ~BufferedInputStream() {
-    }
+    virtual ~BufferedInputStream() = default;
 
     /**
      * Returns the number of bytes that can be read(or skipped over) from this 
      * input stream without blocking by the next caller of a method for this input stream.
      * 
      */
-    virtual int available();
+    int available() override;
 
     /**
      * Closes this input stream and releases any system resources associated 
      * with the stream.
      */
-    virtual void close();
+    void close() override;
 
     /**
      * Marks the current position in this input stream.
      */
-    virtual void mark();
+    void mark() override;
 
     /**
      * Tests if this input stream supports the mark and reset methods.
      */
-    virtual bool markSupported();
+    bool markSupported() override;
 
     /**
      * Reads the next unsigned char of data from the input stream.
      */
-    virtual int read();
+    int read() override;
 
     /**
      * Reads some number of bytes from the input stream and stores them into 
@@ -150,31 +150,31 @@ public:
      * @param len
      * @return 
      */
-    virtual int read(unsigned char* b, int len);
+    int read(unsigned char *b, int len) override;
 
     /**
      * Reads some number of bytes from the input stream and stores them into 
      * the buffer array b.
      */
-    virtual int read(unsigned char* b, int off, int len);
+    int read(unsigned char *b, int off, int len) override;
 
     /**
      * Repositions this stream to the position at the time the mark method was 
      * last called on this input stream.
      */
-    virtual void reset();
+    void reset() override;
 
     /**
      * Skips over and discards n bytes of data from this input stream.
      */
-    virtual unsigned int skip(unsigned int n);
+    unsigned int skip(unsigned int n) override;
 
 private:
 
     /**
      * Moves the valid bytes on the buffer to the left side of the buffer.
      */
-    void realineBufferContent();
+    void reAlineBufferContent();
 
     /**
      * Fills the buffer.
@@ -184,4 +184,4 @@ private:
     void fill(int startPos);
 };
 
-#endif /* __OZEROIO_IO_BUFFERED_INPUT_STREAM_H__ */
+#endif // OZEROIO_IO_BUFFERED_INPUT_STREAM_H

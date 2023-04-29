@@ -8,8 +8,8 @@
  * arduino types.
  */
 
-#ifndef __OZEROIO_IO_DATA_INPUT_H__
-#define __OZEROIO_IO_DATA_INPUT_H__ 1
+#ifndef OZEROIO_IO_DATA_INPUT_H
+#define OZEROIO_IO_DATA_INPUT_H 1
 
 class DataInput {
 public:
@@ -101,4 +101,4 @@ public:
     virtual unsigned int skipBytes(unsigned int n) = 0;
 };
 
-#endif /* __OZEROIO_IO_DATA_INPUT_H__ */
+#endif // OZEROIO_IO_DATA_INPUT_H

@@ -7,12 +7,12 @@
  * unsigned char array.
  */
 
-#ifndef __OZEROIO_IO_BYTE_ARRAY_OUTPUT_STREAM_H__
-#define __OZEROIO_IO_BYTE_ARRAY_OUTPUT_STREAM_H__ 1
+#ifndef OZEROIO_IO_BYTE_ARRAY_OUTPUT_STREAM_H
+#define OZEROIO_IO_BYTE_ARRAY_OUTPUT_STREAM_H 1
 
 #include <SeekableOutputStream/SeekableOutputStream.h>
 
-class ByteArrayOutputStream: public SeekableOutputStream {
+class ByteArrayOutputStream : public SeekableOutputStream {
 
 protected:
 
@@ -49,15 +49,14 @@ public:
     /**
      * Virtual destructor.
      */
-    virtual ~ByteArrayOutputStream() {
-    }
+    virtual ~ByteArrayOutputStream() = default;
 
     /**
      * Returns the current size of the buffer.
      * 
      * @return unsigned int The size of the stream.
      */
-    unsigned int size();
+    unsigned int size() const;
 
     /**
      * Creates a newly allocated unsigned char array.
@@ -76,32 +75,32 @@ public:
      * 
      * @param b The unsigned char to be written.
      */
-    virtual void write(unsigned char b);
+    void write(unsigned char b) override;
 
     /**
      * Marks the current position in this input stream.
      */
-    virtual void mark();
+    void mark() override;
 
     /**
      * Tests if this input stream supports the mark and reset methods.
      *
      * @return bool
      */
-    virtual bool markSupported();
+    bool markSupported() override;
 
     /**
      * Repositions this stream to the position at the time the mark method was
      * last called on this input stream.
      */
-    virtual void reset();
+    void reset() override;
 
     /**
      * Seeks to the desired position.
      *
      * @param pos The position we want to point to.
      */
-    virtual void seek(unsigned int pos);
+    void seek(unsigned int pos) override;
 };
 
-#endif /* __OZEROIO_IO_BYTE_ARRAY_OUTPUT_STREAM_H__ */
+#endif // OZEROIO_IO_BYTE_ARRAY_OUTPUT_STREAM_H

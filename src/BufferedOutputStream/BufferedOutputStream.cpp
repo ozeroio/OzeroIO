@@ -1,21 +1,21 @@
 #include "BufferedOutputStream.h"
 
-BufferedOutputStream::BufferedOutputStream(OutputStream* out, unsigned char* buf, int size)
+BufferedOutputStream::BufferedOutputStream(OutputStream *out, unsigned char *buf, const int size)
         : FilterOutputStream(out), buf(buf), size(size), count(0) {
 }
 
-void BufferedOutputStream::write(unsigned char b) {
+void BufferedOutputStream::write(const unsigned char b) {
     if (count >= size) {
         flushBuffer();
     }
     buf[count++] = b;
 }
 
-void BufferedOutputStream::write(unsigned char* b, int len) {
+void BufferedOutputStream::write(unsigned char *b, const int len) {
     write(b, 0, len);
 }
 
-void BufferedOutputStream::write(unsigned char* b, int off, int len) {
+void BufferedOutputStream::write(unsigned char *b, const int off, const int len) {
 
     /*
      * If the request length exceeds the size of the output buffer,

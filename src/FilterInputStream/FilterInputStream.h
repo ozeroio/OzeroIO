@@ -13,8 +13,8 @@
  * and fields.
  */
 
-#ifndef __OZEROIO_IO_FILTER_INPUT_STREAM_H__
-#define __OZEROIO_IO_FILTER_INPUT_STREAM_H__ 1
+#ifndef OZEROIO_IO_FILTER_INPUT_STREAM_H
+#define OZEROIO_IO_FILTER_INPUT_STREAM_H 1
 
 #include <InputStream/InputStream.h>
 
@@ -25,7 +25,7 @@ protected:
     /**
      * The input stream to be filtered. 
      */
-    InputStream* in;
+    InputStream *in;
 
     /**
      * Creates a <code>FilterInputStream</code>
@@ -35,7 +35,7 @@ protected:
      *
      * @param   in   the underlying input stream
      */
-    FilterInputStream(InputStream* in);
+    explicit FilterInputStream(InputStream* in);
 
 public:
 
@@ -52,7 +52,7 @@ public:
      * @return     the next unsigned char of data, or <code>-1</code> if the end of the
      *             stream is reached.
      */
-    virtual int read();
+    int read() override;
 
     /**
      * Reads up to <code>len</code> bytes of data from this 
@@ -71,7 +71,7 @@ public:
      *             <code>-1</code> if there is no more data because the end of
      *             the stream has been reached.
      */
-    virtual int read(unsigned char* b, int len);
+    int read(unsigned char* b, int len) override;
 
     /**
      * Reads up to <code>len</code> bytes of data from this input stream 
@@ -87,14 +87,14 @@ public:
      *             <code>-1</code> if there is no more data because the end of
      *             the stream has been reached.
      */
-    virtual int read(unsigned char* b, int off, int len);
+    int read(unsigned char* b, int off, int len) override;
 
     /**
      * This method simply performs <code>in->skip(n)</code>.
      * 
      * @param 
      */
-    virtual unsigned int skip(unsigned int n);
+    unsigned int skip(unsigned int n) override;
 
     /**
      * Returns an estimate of the number of bytes that can be read (or
@@ -104,13 +104,13 @@ public:
      * @return     an estimate of the number of bytes that can be read (or skipped
      *             over) from this input stream without blocking.
      */
-    virtual int available();
+    int available() override;
 
     /**
      * Closes this input stream. 
      * This method simply performs <code>in->close()</code>.
      */
-    virtual void close();
+    void close() override;
 
     /**
      * Marks the current position in this input stream. A subsequent 
@@ -119,7 +119,7 @@ public:
      * <p>
      * This method simply performs <code>in->mark()</code>.
      */
-    virtual void mark();
+    void mark() override;
 
     /**
      * Repositions this stream to the position at the time the 
@@ -134,7 +134,7 @@ public:
      * parse, it just chugs along happily. If the stream is not of
      * that type, the parser should toss an exception when it fails.
      */
-    virtual void reset();
+    void reset() override;
 
     /**
      * Tests if this input stream supports the <code>mark</code> 
@@ -146,7 +146,7 @@ public:
      *          <code>mark</code> and <code>reset</code> method;
      *          <code>false</code> otherwise.
      */
-    virtual bool markSupported();
+    bool markSupported() override;
 };
 
-#endif /* __OZEROIO_IO_FILTER_INPUT_STREAM_H__ */
+#endif // OZEROIO_IO_FILTER_INPUT_STREAM_H

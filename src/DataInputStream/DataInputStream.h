@@ -6,8 +6,8 @@
  * A data input stream lets an application read data from a InputStream.
  */
 
-#ifndef __OZEROIO_IO_DATA_INPUT_STREAM_H__
-#define __OZEROIO_IO_DATA_INPUT_STREAM_H__ 1
+#ifndef OZEROIO_IO_DATA_INPUT_STREAM_H
+#define OZEROIO_IO_DATA_INPUT_STREAM_H 1
 
 #include <DataInput/DataInput.h>
 #include <InputStream/InputStream.h>
@@ -17,7 +17,7 @@ class DataInputStream : public DataInput {
     /**
      * The used input stream.
      */
-    InputStream* inputStream;
+    InputStream *inputStream;
 
 public:
 
@@ -26,77 +26,77 @@ public:
      * 
      * @param inputStream
      */
-    DataInputStream(InputStream* inputStream);
+    explicit DataInputStream(InputStream *inputStream);
 
     /**
      * Reads a unsigned char from the stream.
      * 
      * @return unsigned char
      */
-    virtual unsigned char readByte();
+    unsigned char readByte() override;
 
     /**
      * Reads a bool from the stream.
      * 
      * @return bool
      */
-    virtual bool readBoolean();
+    bool readBoolean() override;
 
     /**
      * Reads a char from the stream.
      * 
      * @return char
      */
-    virtual char readChar();
+    char readChar() override;
 
     /**
      * Reads an unsigned char from the stream.
      * 
      * @return unsigned char
      */
-    virtual unsigned char readUnsignedChar();
+    unsigned char readUnsignedChar() override;
 
     /**
      * Reads an int from the stream.
      * 
      * @return int
      */
-    virtual int readInt();
+    int readInt() override;
 
     /**
      * Reads an unsigned int from the stream.
      * 
      * @return unsigned int
      */
-    virtual unsigned int readUnsignedInt();
+    unsigned int readUnsignedInt() override;
 
     /**
      * Reads a long from the stream.
      * 
      * @return long
      */
-    virtual long readLong();
+    long readLong() override;
 
     /**
      * Reads a unsigned long from the stream.
      * 
      * @return unsigned long
      */
-    virtual unsigned long readUnsignedLong();
+    unsigned long readUnsignedLong() override;
 
     /**
      * Reads a float from the stream.
      * 
      * @return float
      */
-    virtual float readFloat();
+    float readFloat() override;
 
     /**
      * Reads a double from the stream.
      * 
      * @return double
      */
-    virtual double readDouble();
+    double readDouble() override;
 
     /**
      * Reads a array of bytes from the stream.
@@ -104,7 +104,7 @@ public:
      * @param b
      * @param len
      */
-    virtual void readFully(unsigned char* b, int len);
+    void readFully(unsigned char *b, int len) override;
 
     /**
      * Skips n bytes of the stream.
@@ -112,7 +112,7 @@ public:
      * @param n
      * @return unsigned int The number of skipped bytes.
      */
-    virtual unsigned int skipBytes(unsigned int n);
+    unsigned int skipBytes(unsigned int n) override;
 };
 
-#endif /* __OZEROIO_IO_DATA_INPUT_STREAM_H__ */
+#endif // OZEROIO_IO_DATA_INPUT_STREAM_H

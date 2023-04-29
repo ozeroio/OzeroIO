@@ -1,4 +1,4 @@
-#if __OZEROIO_IO_INTERNAL_EEPROM_SUPPORT_ENABLED__ == 1
+#if OZEROIO_IO_INTERNAL_EEPROM_SUPPORT_ENABLED == 1
 
 #include "InternalEepromInputStream.h"
 #include <EEPROM.h>
@@ -48,4 +48,4 @@ void InternalEepromInputStream::seek(unsigned int pos) {
     }
 }
 
-#endif /* __OZEROIO_IO_INTERNAL_EEPROM_SUPPORT_ENABLED__ */
+#endif // OZEROIO_IO_INTERNAL_EEPROM_SUPPORT_ENABLED

@@ -4,8 +4,8 @@
  * SeekableInputStream
  */
 
-#ifndef __OZEROIO_IO_SEEKABLE_INPUT_STREAM_H__
-#define __OZEROIO_IO_SEEKABLE_INPUT_STREAM_H__ 1
+#ifndef OZEROIO_IO_SEEKABLE_INPUT_STREAM_H
+#define OZEROIO_IO_SEEKABLE_INPUT_STREAM_H 1
 
 #include <Seekable/Seekable.h>
 #include <InputStream/InputStream.h>
@@ -15,4 +15,4 @@ public:
 
 };
 
-#endif /* __OZEROIO_IO_SEEKABLE_INPUT_STREAM_H__ */
+#endif // OZEROIO_IO_SEEKABLE_INPUT_STREAM_H

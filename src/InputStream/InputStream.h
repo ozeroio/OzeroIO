@@ -10,8 +10,8 @@
  * provide a method that returns the next unsigned char of input.
  */
 
-#ifndef __OZEROIO_IO_INPUT_STREAM_H__
-#define __OZEROIO_IO_INPUT_STREAM_H__ 1
+#ifndef OZEROIO_IO_INPUT_STREAM_H
+#define OZEROIO_IO_INPUT_STREAM_H 1
 
 #include <Closeable/Closeable.h>
 
@@ -29,7 +29,7 @@ public:
      * Closes this input stream and releases any system resources associated 
      * with the stream.
      */
-    virtual void close();
+    void close() override;
 
     /**
      * Marks the current position in this input stream.
@@ -74,4 +74,4 @@ public:
     virtual unsigned int skip(unsigned int n);
 };
 
-#endif /* __OZEROIO_IO_INPUT_STREAM_H__ */
+#endif // OZEROIO_IO_INPUT_STREAM_H

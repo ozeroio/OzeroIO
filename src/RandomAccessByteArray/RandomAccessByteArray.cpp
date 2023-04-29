@@ -1,12 +1,11 @@
 #include "RandomAccessByteArray.h"
 
 RandomAccessByteArray::RandomAccessByteArray(unsigned char* buf,
-        unsigned int count) :
-        buf(buf), count(count) {
+        unsigned int count) : buf(buf), count(count) {
     pos = 0;
 }
 
-unsigned int RandomAccessByteArray::length() {
+unsigned int RandomAccessByteArray::length() const {
     return count;
 }
 

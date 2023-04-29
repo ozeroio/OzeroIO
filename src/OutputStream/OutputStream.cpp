@@ -5,7 +5,7 @@ void OutputStream::write(unsigned char* b, int len) {
 }
 
 void OutputStream::write(unsigned char* b, int off, int len) {
-    if (b == (unsigned char*) 0 || len == 0) {
+    if (b == nullptr || len == 0) {
         return;
     }
     for (int i = 0; i < len; i++) {

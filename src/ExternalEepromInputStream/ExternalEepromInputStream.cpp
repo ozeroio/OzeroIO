@@ -1,9 +1,10 @@
-#if __OZEROIO_IO_EXTERNAL_EEPROM_SUPPORT_ENABLED__ == 1
+#if OZEROIO_IO_EXTERNAL_EEPROM_SUPPORT_ENABLED == 1
 
 #include "ExternalEepromInputStream.h"
 
 ExternalEepromInputStream::ExternalEepromInputStream(ExternalEeprom* externalEeprom)
-        : maxAvailableChunk(0x08), externalEeprom(externalEeprom), pos(0), markpos(0), externalEepromSize(externalEeprom->getDeviceSize()) {
+        : maxAvailableChunk(0x08), externalEeprom(externalEeprom), pos(0), markpos(0),
+        externalEepromSize(externalEeprom->getDeviceSize()) {
 }
 
 int ExternalEepromInputStream::available() {
@@ -21,11 +22,9 @@ int ExternalEepromInputStream::read() {
     return (int) externalEeprom->read(pos++);
 }
 
-int ExternalEepromInputStream::read(unsigned char* b, int off, int len) {
+int ExternalEepromInputStream::read(unsigned char *b, const int off, const int len) {
     unsigned int available = (externalEepromSize - pos);
-    int total;
-    len = (int) ((unsigned int) len > available) ? available : len;
-    total = externalEeprom->readBytes(pos, &b[off], len);
+    int total = externalEeprom->readBytes(pos, &b[off], ozero_min(len, available));
     pos += total;
     return total;
 }
@@ -42,10 +41,8 @@ void ExternalEepromInputStream::reset() {
     pos = markpos;
 }
 
-void ExternalEepromInputStream::seek(unsigned int pos) {
-    if (pos < externalEepromSize) {
-        this->pos = pos;
-    }
+void ExternalEepromInputStream::seek(const unsigned int pos) {
+    this->pos = ozero_min(pos, externalEepromSize - 1);
 }
 
-#endif /* __OZEROIO_IO_EXTERNAL_EEPROM_SUPPORT_ENABLED__ */
+#endif // OZEROIO_IO_EXTERNAL_EEPROM_SUPPORT_ENABLED

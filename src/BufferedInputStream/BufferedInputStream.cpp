@@ -1,4 +1,5 @@
 #include "BufferedInputStream.h"
+#include <InputStream/InputStream.h>
 
 BufferedInputStream::BufferedInputStream(InputStream* in, unsigned char* buf, int size)
         : FilterInputStream(in), size(size), buf(buf), count(0), pos(0), marked(false), markpos(0) {
@@ -18,11 +19,11 @@ void BufferedInputStream::reset() {
     }
 }
 
-int BufferedInputStream::read(unsigned char* b, int len) {
+int BufferedInputStream::read(unsigned char *b, const int len) {
     return read(b, 0, len);
 }
 
-int BufferedInputStream::read(unsigned char* b, int off, int len) {
+int BufferedInputStream::read(unsigned char *b, const int off, const int len) {
     int cnt, available;
     available = count - pos;
 
@@ -81,7 +82,7 @@ int BufferedInputStream::read() {
     return (int) buf[pos++];
 }
 
-void BufferedInputStream::realineBufferContent() {
+void BufferedInputStream::reAlineBufferContent() {
     int n;
     if (pos > 0) {
         n = count - pos;
@@ -93,7 +94,7 @@ void BufferedInputStream::realineBufferContent() {
     }
 }
 
-void BufferedInputStream::fill(int startPos) {
+void BufferedInputStream::fill(const int startPos) {
     int n, needed;
     needed = size - startPos;
     if (needed <= 0) {
@@ -106,7 +107,7 @@ void BufferedInputStream::fill(int startPos) {
 }
 
 void BufferedInputStream::mark() {
-    realineBufferContent();
+    reAlineBufferContent();
     fill(count);
     markpos = 0;
     marked = true;
@@ -116,8 +117,8 @@ bool BufferedInputStream::markSupported() {
     return true;
 }
 
-unsigned int BufferedInputStream::skip(unsigned int n) {
-    unsigned int buffered, skiped;
+unsigned int BufferedInputStream::skip(const unsigned int n) {
+    unsigned int buffered, skipped;
     buffered = count - pos;
     if (buffered >= n) {
         pos += n;
@@ -126,6 +127,6 @@ unsigned int BufferedInputStream::skip(unsigned int n) {
     pos = 0;
     count = 0;
     marked = false;
-    skiped = buffered + in->skip(n - buffered);
-    return skiped;
+    skipped = buffered + in->skip(n - buffered);
+    return skipped;
 }

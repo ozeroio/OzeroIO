@@ -1,4 +1,4 @@
-#if __OZEROIO_IO_SOFTWARE_SERIAL_SUPPORT_ENABLED__ == 1
+#if OZEROIO_IO_SOFTWARE_SERIAL_SUPPORT_ENABLED == 1
 
 #include "SoftwareSerialInputStream.h"
 
@@ -18,4 +18,4 @@ int SoftwareSerialInputStream::read(unsigned char* b, int off, int len) {
     return softwareSerial->readBytes(&b[off], len);
 }
 
-#endif /* __OZEROIO_IO_SOFTWARE_SERIAL_SUPPORT_ENABLED__ */
+#endif // OZEROIO_IO_SOFTWARE_SERIAL_SUPPORT_ENABLED

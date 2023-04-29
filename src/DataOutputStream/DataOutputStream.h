@@ -6,8 +6,8 @@
  * A data output stream lets an application write types to an OutputStream.
  */
 
-#ifndef __OZEROIO_IO_DATA_OUTPUT_STREAM_H__
-#define __OZEROIO_IO_DATA_OUTPUT_STREAM_H__ 1
+#ifndef OZEROIO_IO_DATA_OUTPUT_STREAM_H
+#define OZEROIO_IO_DATA_OUTPUT_STREAM_H 1
 
 #include <OutputStream/OutputStream.h>
 #include <DataOutput/DataOutput.h>
@@ -17,7 +17,7 @@ class DataOutputStream : public DataOutput {
     /**
      * The stream to be used.
      */
-    OutputStream* outputStream;
+    OutputStream *outputStream;
 
 public:
 
@@ -26,7 +26,7 @@ public:
      * 
      * @param outputStream      The stream to be used.
      */
-    DataOutputStream(OutputStream* outputStream);
+    explicit DataOutputStream(OutputStream *outputStream);
 
     /**
      * Writes an array of bytes into the stream.
@@ -34,21 +34,21 @@ public:
      * @param b         The array of bytes.
      * @param len       The length of such array.
      */
-    virtual void write(unsigned char* b, int len);
+    void write(unsigned char *b, int len) override;
 
     /**
      * Writes a unsigned char into the stream.
      * 
      * @param b         The unsigned char to be written.
      */
-    virtual void write(unsigned char b);
+    void write(unsigned char b) override;
 
     /**
      * Writes a unsigned char into the stream.
      * 
      * @param b         The unsigned char to be written.
      */
-    virtual void writeByte(unsigned char b);
+    void writeByte(unsigned char b) override;
 
     /**
      * Writes an array of bytes into the stream.
@@ -56,70 +56,70 @@ public:
      * @param b         The array of bytes.
      * @param len       The length of such array.
      */
-    virtual void writeBytes(unsigned char* b, int len);
+    void writeBytes(unsigned char *b, int len) override;
 
     /**
      * Writes a bool into the stream.
      * 
      * @param v         The bool to be written.
      */
-    virtual void writeBoolean(bool v);
+    void writeBoolean(bool v) override;
 
     /**
      * Writes a char into the stream.
      * 
      * @param c         The char to be written.
      */
-    virtual void writeChar(char c);
+    void writeChar(char c) override;
 
     /**
      * Writes an unsigned char into the stream.
      * 
      * @param c         The unsigned char to be written.
      */
-    virtual void writeUnsignedChar(unsigned char c);
+    void writeUnsignedChar(unsigned char c) override;
 
     /**
      * Writes an int into the stream.
      * 
      * @param v         The int to be written.
      */
-    virtual void writeInt(int v);
+    void writeInt(int v) override;
 
     /**
      * Writes an unsigned int into the stream.
      * 
      * @param v         The unsigned int to be written.
      */
-    virtual void writeUnsignedInt(unsigned int v);
+    void writeUnsignedInt(unsigned int v) override;
 
     /**
      * Writes a long into the stream.
      * 
      * @param v         The long to be written.
      */
-    virtual void writeLong(long v);
+    void writeLong(long v) override;
 
     /**
      * Writes a unsigned long into the stream.
      * 
      * @param v         The unsigned long to be written.
      */
-    virtual void writeUnsignedLong(unsigned long v);
+    void writeUnsignedLong(unsigned long v) override;
 
     /**
      * Writes a float into the stream.
      * 
      * @param v         The float to be written.
      */
-    virtual void writeFloat(float v);
+    void writeFloat(float v) override;
 
     /**
      * Writes a double into the stream.
      * 
      * @param v         The double to be written.
      */
-    virtual void writeDouble(double v);
+    void writeDouble(double v) override;
 };
 
-#endif /* __OZEROIO_IO_DATA_OUTPUT_STREAM_H__ */
+#endif // OZEROIO_IO_DATA_OUTPUT_STREAM_H

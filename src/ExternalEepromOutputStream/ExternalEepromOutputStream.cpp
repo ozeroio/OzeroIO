@@ -1,4 +1,4 @@
-#if __OZEROIO_IO_EXTERNAL_EEPROM_SUPPORT_ENABLED__ == 1
+#if OZEROIO_IO_EXTERNAL_EEPROM_SUPPORT_ENABLED == 1
 
 #include "ExternalEepromOutputStream.h"
 
@@ -33,4 +33,4 @@ void ExternalEepromOutputStream::reset() {
     pos = markpos;
 }
 
-#endif /* __OZEROIO_IO_EXTERNAL_EEPROM_SUPPORT_ENABLED__ */
+#endif // OZEROIO_IO_EXTERNAL_EEPROM_SUPPORT_ENABLED

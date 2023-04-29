@@ -6,10 +6,10 @@
  * An InternalEepromInputStream obtains input bytes from the internal EEPROM.
  */
 
-#if __OZEROIO_IO_INTERNAL_EEPROM_SUPPORT_ENABLED__ == 1
+#if OZEROIO_IO_INTERNAL_EEPROM_SUPPORT_ENABLED == 1
 
-#ifndef __OZEROIO_IO_INTERNAL_EEPROM_INPUT_STREAM_H__
-#define __OZEROIO_IO_INTERNAL_EEPROM_INPUT_STREAM_H__ 1
+#ifndef OZEROIO_IO_INTERNAL_EEPROM_INPUT_STREAM_H
+#define OZEROIO_IO_INTERNAL_EEPROM_INPUT_STREAM_H 1
 
 #include <SeekableInputStream/SeekableInputStream.h>
 #include <EEPROM.h>
@@ -102,6 +102,6 @@ public:
     virtual void seek(unsigned int pos);
 };
 
-#endif /* __OZEROIO_IO_INTERNAL_EEPROM_INPUT_STREAM_H__ */
+#endif // OZEROIO_IO_INTERNAL_EEPROM_INPUT_STREAM_H
 
-#endif /* __OZEROIO_IO_INTERNAL_EEPROM_SUPPORT_ENABLED__ */
+#endif // OZEROIO_IO_INTERNAL_EEPROM_SUPPORT_ENABLED

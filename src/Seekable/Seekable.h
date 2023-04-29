@@ -4,8 +4,8 @@
  * Seekable
  */
 
-#ifndef __OZEROIO_IO_SEEKABLE_H__
-#define __OZEROIO_IO_SEEKABLE_H__ 1
+#ifndef OZEROIO_IO_SEEKABLE_H
+#define OZEROIO_IO_SEEKABLE_H 1
 
 class Seekable {
 public:
@@ -13,4 +13,4 @@ public:
     virtual void seek(unsigned int pos) = 0;
 };
 
-#endif /* __OZEROIO_IO_SEEKABLE_H__ */
+#endif // OZEROIO_IO_SEEKABLE_H

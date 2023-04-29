@@ -12,8 +12,8 @@
  * that writes one unsigned char of output.
  */
 
-#ifndef __OZEROIO_IO_OUTPUT_STREAM_H__
-#define __OZEROIO_IO_OUTPUT_STREAM_H__ 1
+#ifndef OZEROIO_IO_OUTPUT_STREAM_H
+#define OZEROIO_IO_OUTPUT_STREAM_H 1
 
 #include <Closeable/Closeable.h>
 
@@ -24,7 +24,7 @@ public:
      * Closes this output stream and releases any system resources associated 
      * with this stream.
      */
-    virtual void close();
+    void close() override;
 
     /**
      * Flushes this output stream and forces any buffered output bytes to be 
@@ -73,4 +73,4 @@ public:
     virtual void reset();
 };
 
-#endif /* __OZEROIO_IO_OUTPUT_STREAM_H__ */
+#endif // OZEROIO_IO_OUTPUT_STREAM_H

@@ -6,14 +6,14 @@
  * A SoftwareSerialInputStream obtains input bytes from a serial port.
  */
 
-#if __OZEROIO_IO_SOFTWARE_SERIAL_SUPPORT_ENABLED__ == 1
+#if OZEROIO_IO_SOFTWARE_SERIAL_SUPPORT_ENABLED == 1
 
-#ifndef __OZEROIO_IO_SOFTWARE_SERIAL_INPUT_STREAM_H__
-#define __OZEROIO_IO_SOFTWARE_SERIAL_INPUT_STREAM_H__ 1
+#ifndef OZEROIO_IO_SOFTWARE_SERIAL_INPUT_STREAM_H
+#define OZEROIO_IO_SOFTWARE_SERIAL_INPUT_STREAM_H 1
 
-#include <SoftwareSerial/SoftwareSerial.h>
 #include <InputStream/InputStream.h>
 #include <SerialInputStream/SerialInputStream.h>
+#include <SoftwareSerial.h>
 
 class SoftwareSerialInputStream : public SerialInputStream {
 protected:
@@ -31,18 +31,18 @@ public:
      * @param serial
      * @param boudRate
      */
-    SoftwareSerialInputStream(SoftwareSerial *softwareSerial);
+    explicit SoftwareSerialInputStream(SoftwareSerial *softwareSerial);
 
     /**
      * Returns the number of bytes that can be read(or skipped over) from this 
      * input stream without blocking by the next caller of a method for this input stream.
      */
-    virtual int available();
+    int available() override;
 
     /**
      * Reads the next unsigned char of data from the input stream.
      */
-    virtual int read();
+    int read() override;
 
     /**
      * Reads len of bytes from the stream.
@@ -52,9 +52,9 @@ public:
      * @param len
      * @return
      */
-    virtual int read(unsigned char* b, int off, int len);
+    int read(unsigned char* b, int off, int len) override;
 };
 
-#endif /* __OZEROIO_IO_SOFTWARE_SERIAL_INPUT_STREAM_H__ */
+#endif // OZEROIO_IO_SOFTWARE_SERIAL_INPUT_STREAM_H
 
-#endif /* __OZEROIO_IO_SOFTWARE_SERIAL_SUPPORT_ENABLED__ */
+#endif // OZEROIO_IO_SOFTWARE_SERIAL_SUPPORT_ENABLED

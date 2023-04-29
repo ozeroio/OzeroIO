@@ -1,4 +1,4 @@
-#if __OZEROIO_IO_EXTERNAL_EEPROM_SUPPORT_ENABLED__ == 1
+#if OZEROIO_IO_EXTERNAL_EEPROM_SUPPORT_ENABLED == 1
 
 #include <ExternalEeprom/ExternalEeprom.h>
 #include "RandomAccessExternalEeprom.h"
@@ -57,10 +57,6 @@ void RandomAccessExternalEeprom::writeUnsignedInt(unsigned int v) {
     writeInt((int) v);
 }
 
-void RandomAccessExternalEeprom::writeWord(word v) {
-    writeInt((int) v);
-}
-
 void RandomAccessExternalEeprom::writeLong(long v) {
     writeBytes((unsigned char *) &v, sizeof(long));
 }
@@ -103,10 +99,6 @@ unsigned int RandomAccessExternalEeprom::readUnsignedInt() {
     return (unsigned int) readInt();
 }
 
-word RandomAccessExternalEeprom::readWord() {
-    return (word) readInt();
-}
-
 long RandomAccessExternalEeprom::readLong() {
     long v = 0;
     readFully((unsigned char*) &v, sizeof(long));
@@ -126,10 +118,8 @@ double RandomAccessExternalEeprom::readDouble() {
 }
 
 void RandomAccessExternalEeprom::readFully(unsigned char* b, int len) {
-    int avalilable = length() - pos;
-    if (len > avalilable) {
-        len = avalilable;
-    }
+    int available = length() - pos;
+    len = ozero_min(available, len);
     externalEeprom->readBytes(pos, b, len);
     pos += len;
 }
@@ -146,4 +136,4 @@ unsigned int RandomAccessExternalEeprom::skipBytes(unsigned int n) {
     return skipped;
 }
 
-#endif /* __OZEROIO_IO_EXTERNAL_EEPROM_SUPPORT_ENABLED__ */
+#endif // OZEROIO_IO_EXTERNAL_EEPROM_SUPPORT_ENABLED

@@ -1,19 +1,18 @@
 #include "ByteArrayOutputStream.h"
 
-ByteArrayOutputStream::ByteArrayOutputStream(unsigned char* buf,
-        unsigned int count)
+ByteArrayOutputStream::ByteArrayOutputStream(unsigned char *buf, unsigned int count)
         : buf(buf), count(count), pos(0), markpos(0) {
 }
 
-unsigned int ByteArrayOutputStream::size() {
+unsigned int ByteArrayOutputStream::size() const {
     return count;
 }
 
-unsigned char* ByteArrayOutputStream::toByteArray() {
+unsigned char *ByteArrayOutputStream::toByteArray() {
     return buf;
 }
 
-void ByteArrayOutputStream::write(unsigned char b) {
+void ByteArrayOutputStream::write(const unsigned char b) {
     buf[pos++] = b;
 }
 
@@ -29,7 +28,7 @@ void ByteArrayOutputStream::reset() {
     pos = markpos;
 }
 
-void ByteArrayOutputStream::seek(unsigned int pos) {
+void ByteArrayOutputStream::seek(const unsigned int pos) {
     if (pos < count) {
         this->pos = pos;
     }

@@ -1,0 +1,56 @@
+{
+  "name": "OzeroIO",
+  "version": "1.0.0",
+  "keywords": "bus device eeprom wire memory io input output stream",
+  "description": "IO Library.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ozeroio/OzeroIO.git"
+  },
+  "authors": [
+    {
+      "name": "Dalmir da Silva",
+      "email": "dalmirdasilva@gmail.com",
+      "maintainer": true
+    }
+  ],
+  "dependencies": [
+    {
+      "name": "EEPROM",
+      "frameworks": "arduino"
+    },
+    {
+      "name": "Wire",
+      "frameworks": "arduino"
+    },
+    {
+      "name": "SPI",
+      "frameworks": "arduino"
+    },
+    {
+      "name": "OzeroEepromMemory",
+      "frameworks": "arduino",
+      "version": "v2.0.0",
+      "repository": {
+        "type": "git",
+        "url": "https://github.com/ozeroio/OzeroEepromMemory.git"
+      }
+    },
+    {
+      "name": "OzeroDevice",
+      "frameworks": "arduino",
+      "version": "v2.0.0",
+      "repository": {
+        "type": "git",
+        "url": "https://github.com/ozeroio/OzeroDevice.git"
+      }
+    }
+  ],
+  "frameworks": "arduino",
+  "platforms": [
+    "atmelavr",
+    "espressif8266",
+    "espressif32",
+    "raspberrypi"
+  ]
+}

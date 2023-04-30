@@ -1,9 +1,9 @@
 #include <Arduino.h>
 #include <Wire.h>
 #include <External24cl256Eeprom/External24cl256Eeprom.h>
-#include <ExternalEepromOutputStream/ExternalEepromOutputStream.h>
-#include <OutputStream/OutputStream.cpp>
-#include <ExternalEepromOutputStream/ExternalEepromOutputStream.cpp>
+#include <ExternalEepromInputStream/ExternalEepromInputStream.h>
+#include <InputStream/InputStream.cpp>
+#include <ExternalEepromInputStream/ExternalEepromInputStream.cpp>
 #ifdef ARDUINO_ARCH_ESP32
 #include <freertos/FreeRTOS.h>
 #define LEN 10000
@@ -12,7 +12,7 @@
 #endif
 
 External24cl256Eeprom eeprom(0x00);
-ExternalEepromOutputStream os(&eeprom);
+ExternalEepromInputStream is(&eeprom);
 
 void setup() {
     Serial.begin(115200);
@@ -35,12 +35,12 @@ void setup() {
     Serial.println(address);
     Serial.print("Written: ");
     uint32_t start = millis();
-    os.write(data, LEN);
+    Serial.println(eeprom.writeBytes(address, data, LEN));
     Serial.print("Write time: ");
     Serial.println(millis() - start);
     Serial.print("Read: ");
     start = millis();
-    Serial.println(eeprom.readBytes(address, read, LEN));
+    Serial.println(is.read(read, LEN));
     Serial.print("Read time: ");
     Serial.println(millis() - start);
     bool match = true;

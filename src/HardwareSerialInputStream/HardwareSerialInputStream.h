@@ -1,8 +1,8 @@
 /**
  * Ozero IO
- * 
+ *
  * HardwareSerialInputStream
- * 
+ *
  * A HardwareSerialInputStream obtains input bytes from a serial port.
  */
 
@@ -16,26 +16,25 @@
 
 class HardwareSerialInputStream : public SerialInputStream {
 public:
+	/**
+	 * Public constructor.
+	 *
+	 * @param baudRate
+	 */
+	explicit HardwareSerialInputStream(unsigned int baudRate);
 
-    /**
-     * Public constructor.
-     * 
-     * @param baudRate
-     */
-    explicit HardwareSerialInputStream(unsigned int baudRate);
+	/**
+	 * Returns the number of bytes that can be read(or skipped over) from this
+	 * input stream without blocking by the next caller of a method for this input stream.
+	 */
+	int available() override;
 
-    /**
-     * Returns the number of bytes that can be read(or skipped over) from this 
-     * input stream without blocking by the next caller of a method for this input stream.
-     */
-    int available() override;
-
-    /**
-     * Reads the next unsigned char of data from the input stream.
-     */
-    int read() override;
+	/**
+	 * Reads the next unsigned char of data from the input stream.
+	 */
+	int read() override;
 };
 
-#endif // OZEROIO_IO_HARDWARE_SERIAL_INPUT_STREAM_H
+#endif// OZEROIO_IO_HARDWARE_SERIAL_INPUT_STREAM_H
 
-#endif // OZEROIO_IO_HARDWARE_SERIAL_SUPPORT_ENABLED
+#endif// OZEROIO_IO_HARDWARE_SERIAL_SUPPORT_ENABLED

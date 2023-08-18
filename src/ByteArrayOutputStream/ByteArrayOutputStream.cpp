@@ -1,35 +1,35 @@
 #include "ByteArrayOutputStream.h"
 
 ByteArrayOutputStream::ByteArrayOutputStream(unsigned char *buf, unsigned int count)
-        : buf(buf), count(count), pos(0), markpos(0) {
+	: buf(buf), count(count), pos(0), markpos(0) {
 }
 
 unsigned int ByteArrayOutputStream::size() const {
-    return count;
+	return count;
 }
 
 unsigned char *ByteArrayOutputStream::toByteArray() {
-    return buf;
+	return buf;
 }
 
 void ByteArrayOutputStream::write(const unsigned char b) {
-    buf[pos++] = b;
+	buf[pos++] = b;
 }
 
 void ByteArrayOutputStream::mark() {
-    markpos = pos;
+	markpos = pos;
 }
 
 bool ByteArrayOutputStream::markSupported() {
-    return true;
+	return true;
 }
 
 void ByteArrayOutputStream::reset() {
-    pos = markpos;
+	pos = markpos;
 }
 
 void ByteArrayOutputStream::seek(const unsigned int pos) {
-    if (pos < count) {
-        this->pos = pos;
-    }
+	if (pos < count) {
+		this->pos = pos;
+	}
 }

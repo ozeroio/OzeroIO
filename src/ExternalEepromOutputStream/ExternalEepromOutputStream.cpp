@@ -2,35 +2,35 @@
 
 #include "ExternalEepromOutputStream.h"
 
-ExternalEepromOutputStream::ExternalEepromOutputStream(ExternalEeprom* externalEeprom)
-        : externalEeprom(externalEeprom), pos(0), markpos(0), externalEepromSize(externalEeprom->getDeviceSize()) {
+ExternalEepromOutputStream::ExternalEepromOutputStream(ExternalEeprom *externalEeprom)
+	: externalEeprom(externalEeprom), pos(0), markpos(0), externalEepromSize(externalEeprom->getDeviceSize()) {
 }
 
 void ExternalEepromOutputStream::write(unsigned char b) {
-    externalEeprom->write(pos++, b);
+	externalEeprom->write(pos++, b);
 }
 
-void ExternalEepromOutputStream::write(unsigned char* b, int off, int len) {
-    externalEeprom->writeBytes(pos, &b[off], len);
-    pos += len;
+void ExternalEepromOutputStream::write(unsigned char *b, int off, int len) {
+	externalEeprom->writeBytes(pos, &b[off], len);
+	pos += len;
 }
 
 void ExternalEepromOutputStream::seek(unsigned int pos) {
-    if (pos < externalEepromSize) {
-        this->pos = pos;
-    }
+	if (pos < externalEepromSize) {
+		this->pos = pos;
+	}
 }
 
 void ExternalEepromOutputStream::mark() {
-    markpos = pos;
+	markpos = pos;
 }
 
 bool ExternalEepromOutputStream::markSupported() {
-    return true;
+	return true;
 }
 
 void ExternalEepromOutputStream::reset() {
-    pos = markpos;
+	pos = markpos;
 }
 
-#endif // OZEROIO_IO_EXTERNAL_EEPROM_SUPPORT_ENABLED
+#endif// OZEROIO_IO_EXTERNAL_EEPROM_SUPPORT_ENABLED

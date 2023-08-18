@@ -9,4 +9,4 @@
 #define ozero_min(x, y) (((x) < (y)) ? (x) : (y))
 #endif
 
-#endif //OZEROIO_IO_H
+#endif// OZEROIO_IO_H

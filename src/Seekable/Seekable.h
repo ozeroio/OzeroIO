@@ -1,6 +1,6 @@
 /**
  * Ozero IO
- * 
+ *
  * Seekable
  */
 
@@ -9,8 +9,7 @@
 
 class Seekable {
 public:
-
-    virtual void seek(unsigned int pos) = 0;
+	virtual void seek(unsigned int pos) = 0;
 };
 
-#endif // OZEROIO_IO_SEEKABLE_H
+#endif// OZEROIO_IO_SEEKABLE_H

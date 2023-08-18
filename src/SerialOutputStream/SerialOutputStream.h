@@ -1,6 +1,6 @@
 /**
  * Ozero IO
- * 
+ *
  * SerialOutputStream
  *
  * A serial output stream is a output stream to write in a serial port.
@@ -14,4 +14,4 @@
 class SerialOutputStream : public OutputStream {
 };
 
-#endif // OZEROIO_IO_SERIAL_OUTPUT_STREAM_H
+#endif// OZEROIO_IO_SERIAL_OUTPUT_STREAM_H

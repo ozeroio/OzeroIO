@@ -4,15 +4,15 @@
 #include <Arduino.h>
 
 HardwareSerialInputStream::HardwareSerialInputStream(unsigned int baudRate) {
-    Serial.begin(baudRate);
+	Serial.begin(baudRate);
 }
 
 int HardwareSerialInputStream::available() {
-    return Serial.available();
+	return Serial.available();
 }
 
 int HardwareSerialInputStream::read() {
-    return Serial.read();
+	return Serial.read();
 }
 
-#endif // OZEROIO_IO_HARDWARE_SERIAL_SUPPORT_ENABLED
+#endif// OZEROIO_IO_HARDWARE_SERIAL_SUPPORT_ENABLED

@@ -1,61 +1,70 @@
 #include "DataInputStream.h"
 
-DataInputStream::DataInputStream(InputStream* inputStream) :
-        inputStream(inputStream) {
+DataInputStream::DataInputStream(InputStream *inputStream) : inputStream(inputStream) {
 }
 
 unsigned char DataInputStream::readByte() {
-    return (unsigned char) inputStream->read();
+	return (unsigned char) inputStream->read();
 }
 
 bool DataInputStream::readBoolean() {
-    return (bool) inputStream->read();
+	return (bool) inputStream->read();
 }
 
 char DataInputStream::readChar() {
-    return (char) inputStream->read();
+	return (char) inputStream->read();
 }
 
 unsigned char DataInputStream::readUnsignedChar() {
-    return (unsigned char) inputStream->read();
+	return (unsigned char) inputStream->read();
+}
+
+short DataInputStream::readShort() {
+	short v = 0;
+	readFully((unsigned char *) &v, sizeof(short));
+	return v;
+}
+
+unsigned short DataInputStream::readUnsignedShort() {
+	return (unsigned short) readShort();
 }
 
 int DataInputStream::readInt() {
-    int v = 0;
-    readFully((unsigned char *) &v, sizeof(int));
-    return v;
+	int v = 0;
+	readFully((unsigned char *) &v, sizeof(int));
+	return v;
 }
 
 unsigned int DataInputStream::readUnsignedInt() {
-    return (unsigned int) readInt();
+	return (unsigned int) readInt();
 }
 
 long DataInputStream::readLong() {
-    long v = 0;
-    readFully((unsigned char *) &v, sizeof(long));
-    return v;
+	long v = 0;
+	readFully((unsigned char *) &v, sizeof(long));
+	return v;
 }
 
 unsigned long DataInputStream::readUnsignedLong() {
-    return (unsigned long) readLong();
+	return (unsigned long) readLong();
 }
 
 float DataInputStream::readFloat() {
-    float v = 0;
-    readFully((unsigned char *) &v, sizeof(float));
-    return v;
+	float v = 0;
+	readFully((unsigned char *) &v, sizeof(float));
+	return v;
 }
 
 double DataInputStream::readDouble() {
-    return (double) readLong();
+	return (double) readLong();
 }
 
 void DataInputStream::readFully(unsigned char *b, const int len) {
-    for (int i = 0; i < len; i++) {
-        b[i] = inputStream->read();
-    }
+	for (int i = 0; i < len; i++) {
+		b[i] = inputStream->read();
+	}
 }
 
 unsigned int DataInputStream::skipBytes(const unsigned int n) {
-    return inputStream->skip(n);
+	return inputStream->skip(n);
 }

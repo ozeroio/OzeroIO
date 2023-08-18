@@ -1,6 +1,6 @@
 /**
  * Ozero IO
- * 
+ *
  * SerialInputStream
  *
  * A SerialInputStream obtains input bytes from a serial port.
@@ -14,4 +14,4 @@
 class SerialInputStream : public InputStream {
 };
 
-#endif // OZEROIO_IO_SERIAL_INPUT_STREAM_H
+#endif// OZEROIO_IO_SERIAL_INPUT_STREAM_H

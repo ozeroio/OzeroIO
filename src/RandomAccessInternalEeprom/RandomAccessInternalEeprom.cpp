@@ -10,7 +10,7 @@ unsigned int RandomAccessInternalEeprom::length() {
 	return (unsigned int) endPos - startPos;
 }
 
-void RandomAccessInternalEeprom::seek(const unsigned int pos) {
+void RandomAccessInternalEeprom::seek(unsigned int pos) {
 	if (pos >= length()) {
 		pos = length() - 1;
 	}
@@ -32,7 +32,7 @@ void RandomAccessInternalEeprom::writeByte(const unsigned char b) {
 	writeBytes((unsigned char *) &b, 1);
 }
 
-void RandomAccessInternalEeprom::writeBytes(unsigned char *b, const int len) {
+void RandomAccessInternalEeprom::writeBytes(unsigned char *b, int len) {
 	if (pos + len >= endPos) {
 		len = endPos - pos;
 	}

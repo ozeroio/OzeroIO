@@ -1,40 +1,40 @@
 #include "FilterInputStream.h"
 
-FilterInputStream::FilterInputStream(InputStream *in) : in(in) {
+FilterInputStream::FilterInputStream(InputStream *inputStream) : inputStream(inputStream) {
 }
 
 int FilterInputStream::read() {
-	return in->read();
+	return inputStream->read();
 }
 
 int FilterInputStream::read(unsigned char *b, int len) {
-	return in->read(b, len);
+	return inputStream->read(b, len);
 }
 
 int FilterInputStream::read(unsigned char *b, int off, int len) {
-	return in->read(b, off, len);
+	return inputStream->read(b, off, len);
 }
 
 unsigned int FilterInputStream::skip(unsigned int n) {
-	return in->skip(n);
+	return inputStream->skip(n);
 }
 
 int FilterInputStream::available() {
-	return in->available();
+	return inputStream->available();
 }
 
 void FilterInputStream::close() {
-	in->close();
+	inputStream->close();
 }
 
 void FilterInputStream::mark() {
-	in->mark();
+	inputStream->mark();
 }
 
 void FilterInputStream::reset() {
-	in->reset();
+	inputStream->reset();
 }
 
 bool FilterInputStream::markSupported() {
-	return in->markSupported();
+	return inputStream->markSupported();
 }

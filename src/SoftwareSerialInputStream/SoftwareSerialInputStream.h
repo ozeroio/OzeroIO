@@ -18,7 +18,7 @@
 class SoftwareSerialInputStream : public SerialInputStream {
 protected:
 	/**
-	 * The software serial where the data will be read.
+	 * The software serial where the data will be read from.
 	 */
 	SoftwareSerial *softwareSerial;
 
@@ -26,8 +26,7 @@ public:
 	/**
 	 * Public constructor.
 	 *
-	 * @param serial
-	 * @param boudRate
+	 * @param softwareSerial an instance of SoftwareSerial
 	 */
 	explicit SoftwareSerialInputStream(SoftwareSerial *softwareSerial);
 

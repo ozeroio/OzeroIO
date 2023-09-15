@@ -24,7 +24,7 @@ protected:
 	/**
 	 * The input stream to be filtered.
 	 */
-	InputStream *in;
+	InputStream *inputStream;
 
 	/**
 	 * Creates a <code>FilterInputStream</code>
@@ -34,7 +34,7 @@ protected:
 	 *
 	 * @param   in   the underlying input stream
 	 */
-	explicit FilterInputStream(InputStream *in);
+	explicit FilterInputStream(InputStream *inputStream);
 
 public:
 	/**
@@ -45,7 +45,7 @@ public:
 	 * <code>-1</code> is returned.
 	 * <p>
 	 * This method
-	 * simply performs <code>in->read()</code> and returns the result.
+	 * simply performs <code>inputStream->read()</code> and returns the result.
 	 *
 	 * @return     the next unsigned char of data, or <code>-1</code> if the end of the
 	 *             stream is reached.
@@ -59,7 +59,7 @@ public:
 	 * This method simply performs the call
 	 * <code>read(b, 0, len)</code> and returns
 	 * the  result. It is important that it does
-	 * <i>not</i> do <code>in->read(b)</code> instead;
+	 * <i>not</i> do <code>inputStream->read(b)</code> instead;
 	 * certain subclasses of  <code>FilterInputStream</code>
 	 * depend on the implementation strategy actually
 	 * used.
@@ -75,7 +75,7 @@ public:
 	 * Reads up to <code>len</code> bytes of data from this input stream
 	 * into an array of bytes.
 	 * <p>
-	 * This method simply performs <code>in->read(b, off, len)</code>
+	 * This method simply performs <code>inputStream->read(b, off, len)</code>
 	 * and returns the result.
 	 *
 	 * @param      b     the buffer into which the data is read.
@@ -88,7 +88,7 @@ public:
 	int read(unsigned char *b, int off, int len) override;
 
 	/**
-	 * This method simply performs <code>in->skip(n)</code>.
+	 * This method simply performs <code>inputStream->skip(n)</code>.
 	 *
 	 * @param
 	 */
@@ -106,7 +106,7 @@ public:
 
 	/**
 	 * Closes this input stream.
-	 * This method simply performs <code>in->close()</code>.
+	 * This method simply performs <code>inputStream->close()</code>.
 	 */
 	void close() override;
 
@@ -115,7 +115,7 @@ public:
 	 * call to the <code>reset</code> method repositions this stream at
 	 * the last marked position so that subsequent reads re-read the same bytes.
 	 * <p>
-	 * This method simply performs <code>in->mark()</code>.
+	 * This method simply performs <code>inputStream->mark()</code>.
 	 */
 	void mark() override;
 
@@ -123,7 +123,7 @@ public:
 	 * Repositions this stream to the position at the time the
 	 * <code>mark</code> method was last called on this input stream.
 	 * <p>
-	 * This method simply performs <code>in->reset()</code>.
+	 * This method simply performs <code>inputStream->reset()</code>.
 	 * <p>
 	 * Stream marks are intended to be used in
 	 * situations where you need to read ahead a little to see what's in
@@ -138,7 +138,7 @@ public:
 	 * Tests if this input stream supports the <code>mark</code>
 	 * and <code>reset</code> methods.
 	 * This method
-	 * simply performs <code>in->markSupported()</code>.
+	 * simply performs <code>inputStream->markSupported()</code>.
 	 *
 	 * @return  <code>true</code> if this stream type supports the
 	 *          <code>mark</code> and <code>reset</code> method;

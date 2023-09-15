@@ -1,25 +1,25 @@
 #include "FilterOutputStream.h"
 
-FilterOutputStream::FilterOutputStream(OutputStream *out) : out(out) {
+FilterOutputStream::FilterOutputStream(OutputStream *outputStream) : outputStream(outputStream) {
 }
 
 void FilterOutputStream::write(unsigned char b) {
-	out->write(b);
+	outputStream->write(b);
 }
 
 void FilterOutputStream::write(unsigned char *b, int len) {
-	out->write(b, len);
+	outputStream->write(b, len);
 }
 
 void FilterOutputStream::write(unsigned char *b, int off, int len) {
-	out->write(b, off, len);
+	outputStream->write(b, off, len);
 }
 
 void FilterOutputStream::flush() {
-	out->flush();
+	outputStream->flush();
 }
 
 void FilterOutputStream::close() {
-	out->flush();
-	out->close();
+	outputStream->flush();
+	outputStream->close();
 }

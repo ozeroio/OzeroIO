@@ -30,10 +30,10 @@ protected:
 	/**
 	 * The number of valid bytes in the buffer. This value is always
 	 * in the range <tt>0</tt> through <tt>len</tt>; elements
-	 * <tt>buf[0]</tt> through <tt>buf[count-1]</tt> contain valid
+	 * <tt>buf[0]</tt> through <tt>buf[pos-1]</tt> contain valid
 	 * unsigned char data.
 	 */
-	int count;
+	int pos;
 
 public:
 	/**
@@ -44,7 +44,7 @@ public:
 	 * @param   out    the underlying output stream.
 	 * @param   size   the buffer size.
 	 */
-	BufferedOutputStream(OutputStream *out, unsigned char *buf, int size);
+	BufferedOutputStream(OutputStream *outputStream, unsigned char *buf, int size);
 
 	/**
 	 * Virtual destructor.
@@ -96,6 +96,11 @@ public:
 	 * Closes the output stream.
 	 */
 	void close() override;
+
+	/**
+	 * Reset the output stream.
+	 */
+	void reset() override;
 
 private:
 	/**

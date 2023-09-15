@@ -36,7 +36,7 @@ void RandomAccessInternalEeprom::writeBytes(unsigned char *b, int len) {
 	if (pos + len >= endPos) {
 		len = endPos - pos;
 	}
-#ifdef ARDUINO_ARCH_ESP32
+#ifdef ESP32
 	int written = EEPROM.writeBytes(pos, (void *) b, len);
 	EEPROM.commit();
 	pos += written;
@@ -151,7 +151,7 @@ void RandomAccessInternalEeprom::readFully(unsigned char *b, int len) {
 	if (pos + len >= endPos) {
 		len = endPos - pos;
 	}
-#ifdef ARDUINO_ARCH_ESP32
+#ifdef ESP32
 	EEPROM.readBytes(pos, (void *) b, len);
 	pos += len;
 #else

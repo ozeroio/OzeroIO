@@ -8,7 +8,7 @@ InternalEepromInputStream::InternalEepromInputStream()
 }
 
 int InternalEepromInputStream::available() {
-	int room = eepromSize - pos;
+	int room = (int) (eepromSize - pos);
 	if (room > maxAvailableChunk) {
 		return maxAvailableChunk;
 	}
@@ -27,15 +27,22 @@ int InternalEepromInputStream::read() {
 	if (pos >= eepromSize) {
 		return -1;
 	}
-	return (int) EEPROM.read(pos++);
+	return (int) EEPROM.read((int) pos++);
 }
 
 int InternalEepromInputStream::read(unsigned char *b, int off, int len) {
 	unsigned int available = (eepromSize - pos);
-	len = (int) ((unsigned int) len > available) ? available : len;
-	int read = EEPROM.readBytes(pos, (void *) &b[off], len);
+	len = ((unsigned int) len > available) ? (int) available : len;
+#ifdef ESP32
+	int read = (int) EEPROM.readBytes((int) pos, (void *) &b[off], len);
 	pos += read;
 	return read;
+#else
+	for (int i = 0; i < len; i++) {
+		b[off + i] = EEPROM.read((int) pos++);
+	}
+	return len;
+#endif
 }
 
 void InternalEepromInputStream::reset() {

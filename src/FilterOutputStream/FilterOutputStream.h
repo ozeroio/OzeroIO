@@ -26,24 +26,24 @@ protected:
 	/**
 	 * The underlying output stream to be filtered.
 	 */
-	OutputStream *out;
+	OutputStream *outputStream;
 
 public:
 	/**
 	 * Creates an output stream filter built on top of the specified
 	 * underlying output stream.
 	 *
-	 * @param   out   the underlying output stream to be assigned to
-	 *                the field <tt>this->out</tt> for later use.
+	 * @param   outputStream   the underlying output stream to be assigned to
+	 *                		   the field <tt>this->out</tt> for later use.
 	 */
-	explicit FilterOutputStream(OutputStream *out);
+	explicit FilterOutputStream(OutputStream *outputStream);
 
 	/**
 	 * Writes the specified <code>unsigned char</code> to this output stream.
 	 * <p>
 	 * The <code>write</code> method of <code>FilterOutputStream</code>
 	 * calls the <code>write</code> method of its underlying output stream,
-	 * that is, it performs <tt>out->write(b)</tt>.
+	 * that is, it performs <tt>outputStream->write(b)</tt>.
 	 * <p>
 	 * Implements the abstract <tt>write</tt> method of <tt>OutputStream</tt>.
 	 *

@@ -1,16 +1,17 @@
 #include "BufferedInputStream.h"
 #include <InputStream/InputStream.h>
+#include <string.h>
 
-BufferedInputStream::BufferedInputStream(InputStream *in, unsigned char *buf, int size)
-	: FilterInputStream(in), size(size), buf(buf), count(0), pos(0), marked(false), markpos(0) {
+BufferedInputStream::BufferedInputStream(InputStream *inputStream, unsigned char *buf, int size)
+	: FilterInputStream(inputStream), size(size), buf(buf), count(0), pos(0), marked(false), markpos(0) {
 }
 
 int BufferedInputStream::available() {
-	return in->available() + (count - pos);
+	return inputStream->available() + (count - pos);
 }
 
 void BufferedInputStream::close() {
-	in->close();
+	inputStream->close();
 }
 
 void BufferedInputStream::reset() {
@@ -31,9 +32,7 @@ int BufferedInputStream::read(unsigned char *b, const int off, const int len) {
 	 * The needed data are already in the buffer?
 	 */
 	if (available >= len) {
-		for (int i = 0; i < len; i++) {
-			b[off + i] = buf[pos + i];
-		}
+		memcpy(&b[off], &buf[pos], len);
 		pos += len;
 		return len;
 	}
@@ -41,9 +40,7 @@ int BufferedInputStream::read(unsigned char *b, const int off, const int len) {
 	/*
 	 * The buffer data is not enough, but is necessary.
 	 */
-	for (int i = 0; i < available; i++) {
-		b[off + i] = buf[pos + i];
-	}
+	memcpy(&b[off], &buf[pos], available);
 	marked = false;
 	pos = 0;
 	count = 0;
@@ -51,7 +48,7 @@ int BufferedInputStream::read(unsigned char *b, const int off, const int len) {
 	/*
 	 * Reads the rest from the stream.
 	 */
-	cnt = in->read(b, off + available, len - available);
+	cnt = inputStream->read(b, off + available, len - available);
 
 	/*
 	 * Tests if we had enough data.
@@ -100,7 +97,7 @@ void BufferedInputStream::fill(const int startPos) {
 	if (needed <= 0) {
 		return;
 	}
-	n = in->read(buf, startPos, needed);
+	n = inputStream->read(buf, startPos, needed);
 	if (n > 0) {
 		count = startPos + n;
 	}
@@ -127,6 +124,6 @@ unsigned int BufferedInputStream::skip(const unsigned int n) {
 	pos = 0;
 	count = 0;
 	marked = false;
-	skipped = buffered + in->skip(n - buffered);
+	skipped = buffered + inputStream->skip(n - buffered);
 	return skipped;
 }

@@ -10,7 +10,7 @@ InternalEepromOutputStream::InternalEepromOutputStream() : pos(0), markpos(0), e
 void InternalEepromOutputStream::write(unsigned char b) {
 	if (pos < eepromSize) {
 		EEPROM.write((int) (pos++), b);
-#ifdef ARDUINO_ARCH_ESP32
+#ifdef ESP32
 		EEPROM.commit();
 #endif
 	}
@@ -19,7 +19,7 @@ void InternalEepromOutputStream::write(unsigned char b) {
 void InternalEepromOutputStream::write(unsigned char *b, int off, int len) {
 	unsigned int available = eepromSize - pos;
 	len = ozero_min(len, available);
-#ifdef ARDUINO_ARCH_ESP32
+#ifdef ESP32
 	pos += EEPROM.writeBytes((int) pos, (void *) &(b[off]), len);
 	EEPROM.commit();
 #else

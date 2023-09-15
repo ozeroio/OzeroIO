@@ -1,6 +1,6 @@
 #include <Arduino.h>
 #include <Wire.h>
-#include <External24cl256Eeprom/External24cl256Eeprom.h>
+#include <External24x256Eeprom/External24x256Eeprom.h>
 #include <ExternalEepromInputStream/ExternalEepromInputStream.h>
 #include <InputStream/InputStream.cpp>
 #include <ExternalEepromInputStream/ExternalEepromInputStream.cpp>
@@ -11,7 +11,7 @@
  #define LEN 256
 #endif
 
-External24cl256Eeprom eeprom(0x00);
+External24x256Eeprom eeprom(0x00);
 ExternalEepromInputStream is(&eeprom);
 
 void setup() {

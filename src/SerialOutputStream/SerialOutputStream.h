@@ -11,7 +11,7 @@
 
 #include <OutputStream/OutputStream.h>
 
-class SerialOutputStream : public OutputStream {
+class  SerialOutputStream : public OutputStream {
 };
 
 #endif// OZEROIO_IO_SERIAL_OUTPUT_STREAM_H

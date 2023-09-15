@@ -1,14 +1,15 @@
 #include "BufferedOutputStream.h"
+#include <string.h>
 
-BufferedOutputStream::BufferedOutputStream(OutputStream *out, unsigned char *buf, const int size)
-	: FilterOutputStream(out), buf(buf), size(size), count(0) {
+BufferedOutputStream::BufferedOutputStream(OutputStream *outputStream, unsigned char *buf, const int size)
+	: FilterOutputStream(outputStream), buf(buf), size(size), pos(0) {
 }
 
 void BufferedOutputStream::write(const unsigned char b) {
-	if (count >= size) {
+	if (pos >= size) {
 		flushBuffer();
 	}
-	buf[count++] = b;
+	buf[pos++] = b;
 }
 
 void BufferedOutputStream::write(unsigned char *b, const int len) {
@@ -17,38 +18,45 @@ void BufferedOutputStream::write(unsigned char *b, const int len) {
 
 void BufferedOutputStream::write(unsigned char *b, const int off, const int len) {
 
-	/*
-	 * If the request length exceeds the size of the output buffer,
-	 * flush the output buffer and then write the data directly.
-	 * In this way buffered streams will cascade harmlessly.
-	 */
-	if (len >= size) {
+	auto available = size - pos;
+
+	if (len > available) {
+
+		/*
+		 * If the request length exceeds the size of the available space,
+		 * flush the output buffer and then write the data directly.
+		 */
 		flushBuffer();
-		out->write(b, off, len);
-		return;
+		outputStream->write(b, off, len);
+	} else {
+
+		/*
+		 * The request length is smaller or equals than the remaining
+		 * available space inside the buffer.
+		 */
+		memcpy(&buf[pos], &b[off], len);
+		pos += len;
 	}
-	if (len > size - count) {
-		flushBuffer();
-	}
-	for (int i = 0; i < len; i++) {
-		buf[count + i] = b[off + i];
-	}
-	count += len;
 }
 
 void BufferedOutputStream::flush() {
 	flushBuffer();
-	out->flush();
+	outputStream->flush();
 }
 
 void BufferedOutputStream::close() {
 	flush();
-	out->close();
+	outputStream->close();
+}
+
+void BufferedOutputStream::reset() {
+	flush();
+	outputStream->reset();
 }
 
 void BufferedOutputStream::flushBuffer() {
-	if (count > 0) {
-		out->write(buf, 0, count);
-		count = 0;
+	if (pos > 0) {
+		outputStream->write(buf, 0, pos);
+		pos = 0;
 	}
 }

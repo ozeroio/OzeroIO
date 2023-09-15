@@ -105,7 +105,7 @@ public:
 	 * @param buf
 	 * @param size
 	 */
-	BufferedInputStream(InputStream *in, unsigned char *buf, int size);
+	BufferedInputStream(InputStream *inputStream, unsigned char *buf, int size);
 
 	/**
 	 * Virtual destructor.

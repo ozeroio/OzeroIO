@@ -3,7 +3,10 @@
 #include "ExternalEepromInputStream.h"
 
 ExternalEepromInputStream::ExternalEepromInputStream(ExternalEeprom *externalEeprom)
-	: maxAvailableChunk(0x08), externalEeprom(externalEeprom), pos(0), markpos(0),
+	: maxAvailableChunk(0x08),
+	  externalEeprom(externalEeprom),
+	  pos(0),
+	  markpos(0),
 	  externalEepromSize(externalEeprom->getDeviceSize()) {
 }
 

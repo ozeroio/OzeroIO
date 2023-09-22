@@ -17,11 +17,22 @@ class RandomAccessInternalEeprom : public RandomAccess, public virtual Closeable
 	/**
 	 * Current position.
 	 */
-	unsigned int pos;
+	int pos;
 
-	unsigned int startPos;
+	/**
+	 * Start position.
+	 */
+	int startPos;
 
-	unsigned int endPos;
+	/**
+	 * End position.
+	 */
+	int endPos;
+
+	/**
+	 * The size of this internal eeprom.
+	 */
+	int size;
 
 public:
 	/**
@@ -29,21 +40,21 @@ public:
 	 *
 	 * @param externalEeprom    The external eeprom instance to be used.
 	 */
-	RandomAccessInternalEeprom(unsigned int startPos, unsigned int endPos);
+	RandomAccessInternalEeprom(int startPos, int endPos);
 
 	/**
 	 * Seeks the stream at the position.
 	 *
 	 * @param pos       The position.
 	 */
-	void seek(unsigned int pos) override;
+	void seek(int pos) override;
 
 	/**
 	 * Returns the length of the stream.
 	 *
 	 * @return          The length.
 	 */
-	unsigned int length();
+	int length() const;
 
 	/**
 	 * Closing a external eeprom has no effect.
@@ -247,7 +258,7 @@ public:
 	 * @param b
 	 * @param len
 	 */
-	void readFully(unsigned char *b, int len) override;
+	int readFully(unsigned char *b, int len) override;
 
 	/**
 	 * Skips n bytes of the stream.
@@ -255,7 +266,7 @@ public:
 	 * @param n
 	 * @return unsigned int The number of skipped bytes.
 	 */
-	unsigned int skipBytes(unsigned int n) override;
+	int skip(int n) override;
 };
 
 #endif// OZEROIO_IO_RANDOM_ACCESS_INTERNAL_EEPROM_H

@@ -1,7 +1,6 @@
 #include <Arduino.h>
-#include <BufferedOutputStream/BufferedOutputStream.cpp>
+#include <Wire.h>
 #include <ByteArrayOutputStream/ByteArrayOutputStream.cpp>
-#include <FilterOutputStream/FilterOutputStream.cpp>
 #include <OutputStream/OutputStream.cpp>
 
 #include "../test.cpp"
@@ -25,20 +24,19 @@ void setup() {
 	auto *sourceBuffer = new uint8_t[LEN];
 
 	ByteArrayOutputStream os(streamBuffer, LEN);
-	BufferedOutputStream bos(&os, buffer, BUFFER_SIZE);
 
 	os.reset();
-	testWhenSendingEntireBufferSize(&bos, streamBuffer, sourceBuffer, LEN);
+	testWhenSendingEntireBufferSize(&os, streamBuffer, sourceBuffer, LEN);
 	os.reset();
-	testWhenSendingOneByOne(&bos, streamBuffer, sourceBuffer, LEN);
+	testWhenSendingOneByOne(&os, streamBuffer, sourceBuffer, LEN);
 	os.reset();
-	testWhenSendingParts(&bos, streamBuffer, sourceBuffer, LEN);
+	testWhenSendingParts(&os, streamBuffer, sourceBuffer, LEN);
 	os.reset();
-	testNullPointerOrLen0(&bos, streamBuffer, sourceBuffer, LEN);
+	testNullPointerOrLen0(&os, streamBuffer, sourceBuffer, LEN);
 	os.reset();
-	testWriteBeyondLimit(&bos, streamBuffer, sourceBuffer, LEN);
+	testWriteBeyondLimit(&os, streamBuffer, sourceBuffer, LEN);
 	os.reset();
-	testMark(&bos, streamBuffer, sourceBuffer, LEN);
+	testMark(&os, streamBuffer, sourceBuffer, LEN);
 
 	free(sourceBuffer);
 	free(buffer);

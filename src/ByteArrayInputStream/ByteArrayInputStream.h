@@ -1,10 +1,8 @@
 /**
  * Ozero IO
  *
- * ByteArrayInputStream
- *
- * A ByteArrayInputStream contains an internal buffer that contains bytes that
- * may be read from the stream.
+ * A ByteArrayInputStream contains an internal buffer that
+ * contains bytes that may be read from the stream.
  */
 
 #ifndef OZEROIO_IO_BYTE_ARRAY_INPUT_STREAM_H
@@ -23,32 +21,23 @@ protected:
 	/*
 	 * The number of valid bytes in the buffer.
 	 */
-	unsigned int count;
+	int size;
 
 	/*
 	 * Current position
 	 */
-	unsigned int pos;
+	int pos;
 
 	/*
 	 * The currently marked position in the stream.
 	 */
-	unsigned int markpos;
+	int markPos;
 
 public:
-	ByteArrayInputStream(unsigned char *buf, unsigned int count);
+	ByteArrayInputStream(unsigned char *buf, int size);
 
 	/**
-	 * Returns the number of bytes that can be read(or skipped over) from this input stream.
-	 *
-	 * NOTE: This implementation return 1 or 0. It is because the size
-	 * of the array is unsigned int, and this method returns a signed
-	 * int, which means there is no way to return the difference between
-	 * the current position (can be 0) and the size of the array without
-	 * possible overflow.
-	 *
-	 * NOTE2: Actually we can return it. We return INT_MAX in case the available space is bigger than
-	 * INT_MAX.
+	 * Returns the number of bytes that can be read (or skipped over) from this input stream.
 	 *
 	 * @return
 	 */
@@ -79,6 +68,19 @@ public:
 	int read() override;
 
 	/**
+	 * Reads up to <code>len</code> bytes of data from this buffer.
+	 * <p>
+	 *
+	 * @param      b     the buffer into which the data is read.
+	 * @param      off   the start offset in the destination array <code>b</code>
+	 * @param      len   the maximum number of bytes read.
+	 * @return     the total number of bytes read into the buffer, or
+	 *             <code>-1</code> if there is no more data because the end of
+	 *             the stream has been reached.
+	 */
+	int read(unsigned char *b, int off, int len) override;
+
+	/**
 	 * Repositions this stream to the position at the time the mark method was
 	 * last called on this input stream.
 	 */
@@ -89,7 +91,7 @@ public:
 	 *
 	 * @param pos The position we want to point to.
 	 */
-	void seek(unsigned int pos) override;
+	void seek(int pos) override;
 };
 
 #endif// OZEROIO_IO_BYTE_ARRAY_INPUT_STREAM_H

@@ -1,24 +1,19 @@
 #include "ByteArrayInputStream.h"
-#include <limits.h>
+#include <io.h>
+#include <string.h>
 
-ByteArrayInputStream::ByteArrayInputStream(unsigned char *buf, unsigned int count) : buf(buf), count(count) {
-	markpos = 0;
+ByteArrayInputStream::ByteArrayInputStream(unsigned char *buf, const int size) : buf(buf),
+																				 size(size) {
+	markPos = 0;
 	pos = 0;
 }
 
 int ByteArrayInputStream::available() {
-	if (count >= pos) {
-		const unsigned int diff = count - pos;
-		if (diff > INT_MAX) {
-			return INT_MAX;
-		}
-		return (int) diff;
-	}
-	return 0;
+	return size - pos;
 }
 
 void ByteArrayInputStream::mark() {
-	markpos = pos;
+	markPos = pos;
 }
 
 bool ByteArrayInputStream::markSupported() {
@@ -26,18 +21,32 @@ bool ByteArrayInputStream::markSupported() {
 }
 
 int ByteArrayInputStream::read() {
-	if (pos >= count) {
+	if (pos >= size) {
 		return -1;
 	}
-	return buf[pos++];
+	return (int) buf[pos++];
 }
+
+int ByteArrayInputStream::read(unsigned char *b, const int off, const int len) {
+	if (b == nullptr || len == 0) {
+		return 0;
+	}
+	if (pos >= size) {
+		return -1;
+	}
+	const int n = ozero_min(len, size - pos);
+	memcpy(&b[off], &buf[pos], n);
+	pos += n;
+	return n;
+}
+
 
 void ByteArrayInputStream::reset() {
-	pos = markpos;
+	pos = markPos;
 }
 
-void ByteArrayInputStream::seek(const unsigned int pos) {
-	if (pos < count) {
+void ByteArrayInputStream::seek(const int pos) {
+	if (pos < size) {
 		this->pos = pos;
 	}
 }

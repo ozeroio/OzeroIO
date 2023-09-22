@@ -2,7 +2,12 @@
 #include <string.h>
 
 BufferedOutputStream::BufferedOutputStream(OutputStream *outputStream, unsigned char *buf, const int size)
-	: FilterOutputStream(outputStream), buf(buf), size(size), pos(0) {
+	: FilterOutputStream(outputStream),
+	  buf(buf),
+	  size(size),
+	  pos(0),
+	  marked(false),
+	  markPos(0) {
 }
 
 void BufferedOutputStream::write(const unsigned char b) {
@@ -17,26 +22,37 @@ void BufferedOutputStream::write(unsigned char *b, const int len) {
 }
 
 void BufferedOutputStream::write(unsigned char *b, const int off, const int len) {
+	if (b == nullptr || len == 0) {
+		return;
+	}
 
-	auto available = size - pos;
-
-	if (len > available) {
-
-		/*
-		 * If the request length exceeds the size of the available space,
-		 * flush the output buffer and then write the data directly.
-		 */
+	/*
+	 * If the request length exceeds the size of the output buffer,
+	 * flush the output buffer and then write the data directly.
+	 * In this way buffered streams will cascade harmlessly.
+	 */
+	if (len >= size) {
 		flushBuffer();
 		outputStream->write(b, off, len);
-	} else {
-
-		/*
-		 * The request length is smaller or equals than the remaining
-		 * available space inside the buffer.
-		 */
-		memcpy(&buf[pos], &b[off], len);
-		pos += len;
+		return;
 	}
+
+	/*
+	 * If the request length exceeds the size of the available space,
+	 * flush the output buffer.
+	 */
+	const auto available = size - pos;
+	if (len > available) {
+		flushBuffer();
+	}
+
+	/*
+	 * The request length is smaller or equals than the remaining
+	 * available space inside the buffer.
+	 */
+	memcpy(&buf[pos], &b[off], len);
+
+	pos += len;
 }
 
 void BufferedOutputStream::flush() {
@@ -49,14 +65,26 @@ void BufferedOutputStream::close() {
 	outputStream->close();
 }
 
-void BufferedOutputStream::reset() {
+void BufferedOutputStream::mark() {
 	flush();
-	outputStream->reset();
+	markPos = pos;
+	marked = true;
+}
+
+bool BufferedOutputStream::markSupported() {
+	return true;
+}
+
+void BufferedOutputStream::reset() {
+	if (marked) {
+		pos = markPos;
+	}
 }
 
 void BufferedOutputStream::flushBuffer() {
 	if (pos > 0) {
 		outputStream->write(buf, 0, pos);
 		pos = 0;
+		marked = false;
 	}
 }

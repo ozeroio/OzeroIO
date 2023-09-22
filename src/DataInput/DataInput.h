@@ -14,96 +14,112 @@
 class DataInput {
 public:
 	/**
+	 * Reads the next unsigned char.
+	 */
+	virtual int read() = 0;
+
+	/**
+	 * Reads len of bytes and stores them into the buffer array b.
+	 *
+	 * @param b
+	 * @param len
+	 * @return
+	 */
+	virtual int read(unsigned char *b, int len);
+
+	/**
+	 * Reads len of bytes and stores them into the buffer array b with offset.
+	 *
+	 * @param b
+	 * @param off
+	 * @param len
+	 * @return
+	 */
+	virtual int read(unsigned char *b, int off, int len) = 0;
+
+	/**
 	 * Reads a unsigned char from the stream.
 	 *
 	 * @return unsigned char
 	 */
-	virtual unsigned char readByte() = 0;
+	virtual unsigned char readByte();
 
 	/**
 	 * Reads a bool from the stream.
 	 *
 	 * @return bool
 	 */
-	virtual bool readBoolean() = 0;
+	virtual bool readBoolean();
 
 	/**
 	 * Reads a char from the stream.
 	 *
 	 * @return char
 	 */
-	virtual char readChar() = 0;
+	virtual char readChar();
 
 	/**
 	 * Reads an unsigned char from the stream.
 	 *
 	 * @return unsigned char
 	 */
-	virtual unsigned char readUnsignedChar() = 0;
+	virtual unsigned char readUnsignedChar();
 
 	/**
 	 * Reads a short from the stream.
 	 *
 	 * @return short
 	 */
-	virtual short readShort() = 0;
+	virtual short readShort();
 
 	/**
 	 * Reads an unsigned short from the stream.
 	 *
 	 * @return unsigned short
 	 */
-	virtual unsigned short readUnsignedShort() = 0;
+	virtual unsigned short readUnsignedShort();
 
 	/**
 	 * Reads an int from the stream.
 	 *
 	 * @return int
 	 */
-	virtual int readInt() = 0;
+	virtual int readInt();
 
 	/**
 	 * Reads an unsigned int from the stream.
 	 *
 	 * @return unsigned int
 	 */
-	virtual unsigned int readUnsignedInt() = 0;
+	virtual unsigned int readUnsignedInt();
 
 	/**
 	 * Reads a long from the stream.
 	 *
 	 * @return long
 	 */
-	virtual long readLong() = 0;
+	virtual long readLong();
 
 	/**
 	 * Reads a unsigned long from the stream.
 	 *
 	 * @return unsigned long
 	 */
-	virtual unsigned long readUnsignedLong() = 0;
+	virtual unsigned long readUnsignedLong();
 
 	/**
 	 * Reads a float from the stream.
 	 *
 	 * @return float
 	 */
-	virtual float readFloat() = 0;
+	virtual float readFloat();
 
 	/**
 	 * Reads a double from the stream.
 	 *
 	 * @return double
 	 */
-	virtual double readDouble() = 0;
-
-	/**
-	 * Reads a array of bytes from the stream.
-	 *
-	 * @param b
-	 * @param len
-	 */
-	virtual void readFully(unsigned char *b, int len) = 0;
+	virtual double readDouble();
 
 	/**
 	 * Skips n bytes of the stream.
@@ -111,7 +127,7 @@ public:
 	 * @param n
 	 * @return unsigned int The number of skipped bytes.
 	 */
-	virtual unsigned int skipBytes(unsigned int n) = 0;
+	virtual int skip(int n) = 0;
 };
 
 #endif// OZEROIO_IO_DATA_INPUT_H

@@ -1,23 +1,36 @@
 #include "ByteArrayOutputStream.h"
+#include <io.h>
+#include <string.h>
 
-ByteArrayOutputStream::ByteArrayOutputStream(unsigned char *buf, unsigned int count)
-	: buf(buf), count(count), pos(0), markpos(0) {
+ByteArrayOutputStream::ByteArrayOutputStream(unsigned char *buf, const int size)
+	: buf(buf), size(size), pos(0), markPos(0) {
 }
 
-unsigned int ByteArrayOutputStream::size() const {
-	return count;
+int ByteArrayOutputStream::getBufferSize() const {
+	return size;
 }
 
-unsigned char *ByteArrayOutputStream::toByteArray() {
+unsigned char *ByteArrayOutputStream::getBuffer() {
 	return buf;
 }
 
 void ByteArrayOutputStream::write(const unsigned char b) {
-	buf[pos++] = b;
+	if (pos < size) {
+		buf[pos++] = b;
+	}
+}
+
+void ByteArrayOutputStream::write(unsigned char *b, const int off, const int len) {
+	if (b == nullptr || len == 0) {
+		return;
+	}
+	const int n = ozero_min(len, size - pos);
+	memcpy(&buf[pos], &b[off], n);
+	pos += n;
 }
 
 void ByteArrayOutputStream::mark() {
-	markpos = pos;
+	markPos = pos;
 }
 
 bool ByteArrayOutputStream::markSupported() {
@@ -25,11 +38,11 @@ bool ByteArrayOutputStream::markSupported() {
 }
 
 void ByteArrayOutputStream::reset() {
-	pos = markpos;
+	pos = markPos;
 }
 
-void ByteArrayOutputStream::seek(const unsigned int pos) {
-	if (pos < count) {
+void ByteArrayOutputStream::seek(const int pos) {
+	if (pos < size) {
 		this->pos = pos;
 	}
 }

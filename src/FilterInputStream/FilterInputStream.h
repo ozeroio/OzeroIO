@@ -92,7 +92,7 @@ public:
 	 *
 	 * @param
 	 */
-	unsigned int skip(unsigned int n) override;
+	int skip(int n) override;
 
 	/**
 	 * Returns an estimate of the number of bytes that can be read (or

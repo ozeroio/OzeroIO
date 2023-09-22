@@ -20,6 +20,17 @@ void FilterOutputStream::flush() {
 }
 
 void FilterOutputStream::close() {
-	outputStream->flush();
 	outputStream->close();
+}
+
+void FilterOutputStream::mark() {
+	outputStream->mark();
+}
+
+bool FilterOutputStream::markSupported() {
+	return outputStream->markSupported();
+}
+
+void FilterOutputStream::reset() {
+	outputStream->reset();
 }

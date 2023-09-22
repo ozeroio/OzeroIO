@@ -7,15 +7,15 @@ int FilterInputStream::read() {
 	return inputStream->read();
 }
 
-int FilterInputStream::read(unsigned char *b, int len) {
+int FilterInputStream::read(unsigned char *b, const int len) {
 	return inputStream->read(b, len);
 }
 
-int FilterInputStream::read(unsigned char *b, int off, int len) {
+int FilterInputStream::read(unsigned char *b, const int off, const int len) {
 	return inputStream->read(b, off, len);
 }
 
-unsigned int FilterInputStream::skip(unsigned int n) {
+int FilterInputStream::skip(const int n) {
 	return inputStream->skip(n);
 }
 

@@ -3,16 +3,19 @@
 #include "RandomAccessInternalEeprom.h"
 #include <EEPROM.h>
 
-RandomAccessInternalEeprom::RandomAccessInternalEeprom(unsigned int startPos, unsigned int endPos) : pos(startPos), startPos(startPos), endPos(endPos) {
+RandomAccessInternalEeprom::RandomAccessInternalEeprom(int startPos, int endPos) : pos(startPos),
+																				   startPos(startPos),
+																				   endPos(endPos),
+																				   size(endPos - startPos) {
 }
 
-unsigned int RandomAccessInternalEeprom::length() {
-	return (unsigned int) endPos - startPos;
+int RandomAccessInternalEeprom::length() const {
+	return size;
 }
 
-void RandomAccessInternalEeprom::seek(unsigned int pos) {
-	if (pos >= length()) {
-		pos = length() - 1;
+void RandomAccessInternalEeprom::seek(int pos) {
+	if (pos >= size) {
+		pos = size - 1;
 	}
 	this->pos = startPos + pos;
 }
@@ -161,7 +164,7 @@ void RandomAccessInternalEeprom::readFully(unsigned char *b, int len) {
 #endif
 }
 
-unsigned int RandomAccessInternalEeprom::skipBytes(unsigned int n) {
+unsigned int RandomAccessInternalEeprom::skip(unsigned int n) {
 	if (pos + n >= endPos) {
 		n = endPos - pos;
 	}

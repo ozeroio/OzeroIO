@@ -35,6 +35,17 @@ protected:
 	 */
 	int pos;
 
+	/**
+	 * Flag to determine if there is a marker on this stream.
+	 */
+	bool marked;
+
+	/**
+	 * The value of the <code>pos</code> field at the time the last
+	 * <code>mark</code> method was called.
+	 */
+	int markPos;
+
 public:
 	/**
 	 * Creates a new buffered output stream to write data to the
@@ -96,6 +107,16 @@ public:
 	 * Closes the output stream.
 	 */
 	void close() override;
+
+	/**
+	 * Marks the current position in this output stream.
+	 */
+	void mark() override;
+
+	/**
+	 * Tests if this output stream supports the mark and reset methods.
+	 */
+	bool markSupported() override;
 
 	/**
 	 * Reset the output stream.

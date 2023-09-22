@@ -1,13 +1,25 @@
 #include "BufferedInputStream.h"
+#include <Arduino.h>
 #include <InputStream/InputStream.h>
+#include <limits.h>
 #include <string.h>
 
-BufferedInputStream::BufferedInputStream(InputStream *inputStream, unsigned char *buf, int size)
-	: FilterInputStream(inputStream), size(size), buf(buf), count(0), pos(0), marked(false), markpos(0) {
+BufferedInputStream::BufferedInputStream(InputStream *inputStream, unsigned char *buf, const int size)
+	: FilterInputStream(inputStream),
+	  size(size),
+	  buf(buf),
+	  head(0),
+	  pos(0),
+	  marked(false),
+	  markPos(0) {
 }
 
 int BufferedInputStream::available() {
-	return inputStream->available() + (count - pos);
+	const int underliningAvailable = inputStream->available();
+	const int available = head - pos;
+
+	// Both available might overflow the singed int.
+	return available > (INT_MAX - underliningAvailable) ? INT_MAX : underliningAvailable + available;
 }
 
 void BufferedInputStream::close() {
@@ -16,7 +28,7 @@ void BufferedInputStream::close() {
 
 void BufferedInputStream::reset() {
 	if (marked) {
-		pos = markpos;
+		pos = markPos;
 	}
 }
 
@@ -25,88 +37,73 @@ int BufferedInputStream::read(unsigned char *b, const int len) {
 }
 
 int BufferedInputStream::read(unsigned char *b, const int off, const int len) {
-	int cnt, available;
-	available = count - pos;
-
-	/*
-	 * The needed data are already in the buffer?
-	 */
-	if (available >= len) {
-		memcpy(&b[off], &buf[pos], len);
-		pos += len;
-		return len;
+	if (b == nullptr || len == 0) {
+		return 0;
 	}
+	int n = 0;
+	for (;;) {
+		const int p = readPortion(b, off + n, len - n);
 
-	/*
-	 * The buffer data is not enough, but is necessary.
-	 */
-	memcpy(&b[off], &buf[pos], available);
-	marked = false;
-	pos = 0;
-	count = 0;
+		// In case we couldn't read anything.
+		if (p <= 0) {
 
-	/*
-	 * Reads the rest from the stream.
-	 */
-	cnt = inputStream->read(b, off + available, len - available);
+			// If nothing was read so far, return the result from readPortion (potentially -1)
+			// Otherwise, return n.
+			return (n == 0) ? p : n;
+		}
 
-	/*
-	 * Tests if we had enough data.
-	 */
-	if (cnt < 0) {
-		return available;
-	} else if (cnt < (len - available)) {
-		return available + cnt;
-	} else {
-		fill(0);
+		n += p;
+
+		// In case we've done reading.
+		if (n >= len) {
+			return n;
+		}
+
+		// In case the underlying input stream doesn't have more available data.
+		if (inputStream->available() <= 0) {
+			return n;
+		}
 	}
-	return len;
 }
 
 int BufferedInputStream::read() {
 
-	/*
-	 * Tests if the buffer is completely used.
-	 */
-	if (pos >= count) {
-		marked = false;
-		fill(0);
-		if (count == 0) {
+	const int available = head - pos;
+
+	// If buffer is empty.
+	if (available <= 0) {
+		fillBuffer();
+
+		// We just attempted to fill the buffer, but nothing was fetched.
+		if (head - pos <= 0) {
 			return -1;
 		}
-		pos = 0;
 	}
 	return (int) buf[pos++];
 }
 
-void BufferedInputStream::reAlineBufferContent() {
-	int n;
+void BufferedInputStream::shiftBuffer() {
 	if (pos > 0) {
-		n = count - pos;
-		for (int i = 0; i < n; i++) {
+		marked = false;
+		const int available = head - pos;
+		for (int i = 0; i < available; i++) {
 			buf[i] = buf[pos + i];
 		}
-		count -= pos;
+		head -= pos;
 		pos = 0;
 	}
 }
 
-void BufferedInputStream::fill(const int startPos) {
-	int n, needed;
-	needed = size - startPos;
-	if (needed <= 0) {
-		return;
-	}
-	n = inputStream->read(buf, startPos, needed);
-	if (n > 0) {
-		count = startPos + n;
-	}
+void BufferedInputStream::fillBuffer() {
+	shiftBuffer();
+	const int space = size - head;
+	const int n = inputStream->read(buf, pos, space);
+	head = n;
 }
 
 void BufferedInputStream::mark() {
-	reAlineBufferContent();
-	fill(count);
-	markpos = 0;
+	fillBuffer();
+	markPos = 0;
 	marked = true;
 }
 
@@ -114,16 +111,47 @@ bool BufferedInputStream::markSupported() {
 	return true;
 }
 
-unsigned int BufferedInputStream::skip(const unsigned int n) {
-	unsigned int buffered, skipped;
-	buffered = count - pos;
-	if (buffered >= n) {
+int BufferedInputStream::skip(const int n) {
+	const int available = head - pos;
+
+	// In case we can skip within the buffer.
+	if (available >= n) {
 		pos += n;
 		return n;
 	}
 	pos = 0;
-	count = 0;
+	head = 0;
 	marked = false;
-	skipped = buffered + inputStream->skip(n - buffered);
+	const int skipped = available + inputStream->skip(n - available);
 	return skipped;
+}
+
+int BufferedInputStream::readPortion(unsigned char *b, const int off, const int len) {
+	int available = head - pos;
+	if (available <= 0) {
+
+		// If the requested length is at least as large as the buffer,
+		// do not bother to copy the bytes into the local buffer.
+		if (len >= size) {
+			return inputStream->read(b, off, len);
+		}
+
+		// None available, but the buffer size if bigger than required len.
+		// Fill the buffer, then.
+		fillBuffer();
+		available = head - pos;
+
+		// We just attempted to fill the buffer, but nothing was fetched.
+		if (available <= 0) {
+			return -1;
+		}
+	}
+
+	// Available > 0, lets read what is in the buffer.
+	const int n = (available < len) ? available : len;
+
+	// Poor into the input *needed* data from buffer.
+	memcpy(&b[off], &buf[pos], n);
+	pos += n;
+	return n;
 }

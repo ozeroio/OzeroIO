@@ -2,27 +2,34 @@
 
 #include "ExternalEepromOutputStream.h"
 
-ExternalEepromOutputStream::ExternalEepromOutputStream(ExternalEeprom *externalEeprom)
-	: externalEeprom(externalEeprom), pos(0), markpos(0), externalEepromSize(externalEeprom->getDeviceSize()) {
+ExternalEepromOutputStream::ExternalEepromOutputStream(ExternalEeprom *externalEeprom) : externalEeprom(externalEeprom),
+																						 pos(0),
+																						 markPos(0),
+																						 externalEepromSize(externalEeprom->getDeviceSize()) {
 }
 
 void ExternalEepromOutputStream::write(unsigned char b) {
-	externalEeprom->write(pos++, b);
+	if (pos < externalEepromSize) {
+		externalEeprom->write(pos++, b);
+	}
 }
 
 void ExternalEepromOutputStream::write(unsigned char *b, int off, int len) {
-	externalEeprom->writeBytes(pos, &b[off], len);
-	pos += len;
+	if (b == nullptr || len == 0) {
+		return;
+	}
+	int writtenBytes =  externalEeprom->writeBytes(pos, &b[off], len);
+	pos += writtenBytes;
 }
 
-void ExternalEepromOutputStream::seek(unsigned int pos) {
+void ExternalEepromOutputStream::seek(int pos) {
 	if (pos < externalEepromSize) {
 		this->pos = pos;
 	}
 }
 
 void ExternalEepromOutputStream::mark() {
-	markpos = pos;
+	markPos = pos;
 }
 
 bool ExternalEepromOutputStream::markSupported() {
@@ -30,7 +37,7 @@ bool ExternalEepromOutputStream::markSupported() {
 }
 
 void ExternalEepromOutputStream::reset() {
-	pos = markpos;
+	pos = markPos;
 }
 
 #endif// OZEROIO_IO_EXTERNAL_EEPROM_SUPPORT_ENABLED

@@ -12,6 +12,9 @@ void HardwareSerialOutputStream::write(unsigned char b) {
 }
 
 void HardwareSerialOutputStream::write(unsigned char *b, int len) {
+	if (b == nullptr || len == 0) {
+		return;
+	}
 	Serial.write(b, len);
 }
 

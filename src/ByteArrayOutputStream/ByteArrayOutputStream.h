@@ -23,26 +23,26 @@ protected:
 	/*
 	 * The number of valid bytes in the buffer.
 	 */
-	unsigned int count;
+	int size;
 
 	/*
 	 * Current position
 	 */
-	unsigned int pos;
+	int pos;
 
 	/**
 	 * The currently marked position in the stream.
 	 */
-	unsigned int markpos;
+	int markPos;
 
 public:
 	/**
 	 * Public constructor.
 	 *
 	 * @param buf
-	 * @param count
+	 * @param size
 	 */
-	ByteArrayOutputStream(unsigned char *buf, unsigned int count);
+	ByteArrayOutputStream(unsigned char *buf, int size);
 
 	/**
 	 * Virtual destructor.
@@ -50,23 +50,18 @@ public:
 	virtual ~ByteArrayOutputStream() = default;
 
 	/**
-	 * Returns the current size of the buffer.
+	 * Returns the buffer size.
 	 *
-	 * @return unsigned int The size of the stream.
+	 * @return int The size of the buffer.
 	 */
-	unsigned int size() const;
+	int getBufferSize() const;
 
 	/**
-	 * Creates a newly allocated unsigned char array.
+	 * Returns the buffer.
 	 *
 	 * @return unsigned char* The unsigned char array.
 	 */
-	unsigned char *toByteArray();
-
-	/**
-	 * Using parent write.
-	 */
-	using OutputStream::write;
+	unsigned char *getBuffer();
 
 	/**
 	 * Writes the specified unsigned char to this output stream.
@@ -74,6 +69,21 @@ public:
 	 * @param b The unsigned char to be written.
 	 */
 	void write(unsigned char b) override;
+
+	/**
+	 * Writes len bytes from the specified unsigned char array starting at offset off to
+	 * this output stream.
+	 *
+	 * @param b
+	 * @param off
+	 * @param len
+	 */
+	void write(unsigned char *b, int off, int len) override;
+
+	/**
+	 * Using parent write.
+	 */
+	using OutputStream::write;
 
 	/**
 	 * Marks the current position in this input stream.
@@ -98,7 +108,7 @@ public:
 	 *
 	 * @param pos The position we want to point to.
 	 */
-	void seek(unsigned int pos) override;
+	void seek(int pos) override;
 };
 
 #endif// OZEROIO_IO_BYTE_ARRAY_OUTPUT_STREAM_H

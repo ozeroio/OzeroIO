@@ -11,23 +11,25 @@ void InputStream::mark() {
 }
 
 bool InputStream::markSupported() {
+
+	// By default, input streams don't support mark.
 	return false;
 }
 
-int InputStream::read(unsigned char *b, int len) {
+int InputStream::read(unsigned char *b, const int len) {
 	return read(b, 0, len);
 }
 
-int InputStream::read(unsigned char *b, int off, int len) {
-	int i, c;
+int InputStream::read(unsigned char *b, int off, const int len) {
 	if (b == nullptr) {
 		return 0;
 	}
-	c = read();
+	int c = read();
 	if (c == -1) {
 		return -1;
 	}
 	b[off] = (unsigned char) c;
+	int i;
 	for (i = 1; i < len; i++) {
 		c = read();
 		if (c == -1) {
@@ -41,8 +43,11 @@ int InputStream::read(unsigned char *b, int off, int len) {
 void InputStream::reset() {
 }
 
-unsigned int InputStream::skip(unsigned int n) {
-	unsigned int i;
+int InputStream::skip(int n) {
+	int i;
+
+	// Dummy way to skip the stream.
+	// Derived streams should implement their own (optimized) ways to skip.
 	for (i = 0; i < n && available() > 0; i++) {
 		read();
 	}

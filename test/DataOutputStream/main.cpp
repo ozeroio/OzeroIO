@@ -1,5 +1,6 @@
 #include <Arduino.h>
-#include <BufferedOutputStream/BufferedOutputStream.cpp>
+#include <DataOutput/DataOutput.cpp>
+#include <DataOutputStream/DataOutputStream.cpp>
 #include <ByteArrayOutputStream/ByteArrayOutputStream.cpp>
 #include <FilterOutputStream/FilterOutputStream.cpp>
 #include <OutputStream/OutputStream.cpp>
@@ -25,20 +26,22 @@ void setup() {
 	auto *sourceBuffer = new uint8_t[LEN];
 
 	ByteArrayOutputStream os(streamBuffer, LEN);
-	BufferedOutputStream bos(&os, buffer, BUFFER_SIZE);
+	DataOutputStream dos(&os);
 
-	os.reset();
-	testWhenSendingEntireBufferSize(&bos, streamBuffer, sourceBuffer, LEN);
-	os.reset();
-	testWhenSendingOneByOne(&bos, streamBuffer, sourceBuffer, LEN);
-	os.reset();
-	testWhenSendingParts(&bos, streamBuffer, sourceBuffer, LEN);
-	os.reset();
-	testNullPointerOrLen0(&bos, streamBuffer, sourceBuffer, LEN);
-	os.reset();
-	testWriteBeyondLimit(&bos, streamBuffer, sourceBuffer, LEN);
-	os.reset();
-	testMark(&bos, streamBuffer, sourceBuffer, LEN);
+	os.seek(0);
+	testWhenSendingEntireBufferSize(&dos, streamBuffer, sourceBuffer, LEN);
+	os.seek(0);
+	testWhenSendingOneByOne(&dos, streamBuffer, sourceBuffer, LEN);
+	os.seek(0);
+	testWhenSendingParts(&dos, streamBuffer, sourceBuffer, LEN);
+	os.seek(0);
+	testNullPointerOrLen0(&dos, streamBuffer, sourceBuffer, LEN);
+	os.seek(0);
+	testWriteBeyondLimit(&dos, streamBuffer, sourceBuffer, LEN);
+	os.seek(0);
+	testMark(&dos, streamBuffer, sourceBuffer, LEN);
+	os.seek(0);
+	testWriteSupportedTypes(&dos, streamBuffer, LEN);
 
 	free(sourceBuffer);
 	free(buffer);

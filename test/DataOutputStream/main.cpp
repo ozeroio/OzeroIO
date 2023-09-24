@@ -1,7 +1,7 @@
 #include <Arduino.h>
+#include <ByteArrayOutputStream/ByteArrayOutputStream.cpp>
 #include <DataOutput/DataOutput.cpp>
 #include <DataOutputStream/DataOutputStream.cpp>
-#include <ByteArrayOutputStream/ByteArrayOutputStream.cpp>
 #include <FilterOutputStream/FilterOutputStream.cpp>
 #include <OutputStream/OutputStream.cpp>
 

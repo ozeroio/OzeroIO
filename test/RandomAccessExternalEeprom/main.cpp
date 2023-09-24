@@ -1,9 +1,11 @@
 #include <Arduino.h>
 #include <DataInput/DataInput.cpp>
 #include <DataOutput/DataOutput.cpp>
+#include <External24x256Eeprom/External24x256Eeprom.h>
 #include <ExternalEepromOutputStream/ExternalEepromOutputStream.h>
 #include <OutputStream/OutputStream.cpp>
-#include <RandomAccessByteArray/RandomAccessByteArray.cpp>
+#include <RandomAccessExternalEeprom/RandomAccessExternalEeprom.cpp>
+#include <Wire.h>
 
 #include "../test.cpp"
 
@@ -16,18 +18,22 @@
 
 void setup() {
 	Serial.begin(115200);
+	Wire.begin();
 
 	log("Initializing...");
 
-	auto *streamBuffer = new uint8_t[LEN];
-
-	RandomAccessByteArray ra(streamBuffer, LEN);
-
-	ra.seek(0);
-	testReadSupportedTypes(&ra, streamBuffer, LEN);
+	External24x256Eeprom eeprom(0x00);
+	RandomAccessExternalEeprom ra(&eeprom);
 
 	ra.seek(0);
-	testWriteSupportedTypes(&ra, streamBuffer, LEN);
+	ra.write(0xbb);
+	assertTrueThat("I/O eeprom", eeprom.read(0) == 0xbb);
+
+	ra.seek(0);
+	testEepromReadSupportedTypes(&ra, &eeprom, LEN);
+
+	ra.seek(0);
+	testEepromWriteSupportedTypes(&ra, &eeprom, LEN);
 }
 
 void loop() {

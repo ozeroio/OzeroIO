@@ -54,7 +54,7 @@ public:
 	 *
 	 * @return          The length.
 	 */
-	unsigned int length() const;
+	int length() const;
 
 	/**
 	 * Closing a unsigned char array has no effect.

@@ -27,7 +27,7 @@ int ExternalEepromInputStream::read(unsigned char *b, const int off, const int l
 	if (available == 0) {
 		return -1;
 	}
-	const int readBytes = externalEeprom->readBytes(pos, &b[off], ozero_min(len, available));
+	const int readBytes = (int) externalEeprom->readBytes(pos, &b[off], ozero_min(len, available));
 	pos += readBytes;
 	return readBytes;
 }

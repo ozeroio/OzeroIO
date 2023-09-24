@@ -121,13 +121,13 @@ public:
 	 */
 	virtual double readDouble();
 
-	/**
-	 * Skips n bytes of the stream.
-	 *
-	 * @param n
-	 * @return unsigned int The number of skipped bytes.
-	 */
-	virtual int skip(int n) = 0;
+	//	/**
+	//	 * Skips n bytes of the stream.
+	//	 *
+	//	 * @param n
+	//	 * @return unsigned int The number of skipped bytes.
+	//	 */
+	//	virtual int skip(int n) = 0;
 };
 
 #endif// OZEROIO_IO_DATA_INPUT_H

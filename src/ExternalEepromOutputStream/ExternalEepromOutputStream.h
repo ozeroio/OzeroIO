@@ -35,7 +35,7 @@ class ExternalEepromOutputStream : public SeekableOutputStream {
 	/*
 	 * The size of the externalEeprom.
 	 */
-	int externalEepromSize;
+	long externalEepromSize;
 
 public:
 	/**

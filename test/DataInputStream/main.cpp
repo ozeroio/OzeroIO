@@ -1,5 +1,8 @@
 #include <Arduino.h>
 #include <ByteArrayInputStream/ByteArrayInputStream.cpp>
+#include <DataInput/DataInput.cpp>
+#include <DataInputStream/DataInputStream.cpp>
+#include <FilterInputStream/FilterInputStream.cpp>
 #include <InputStream/InputStream.cpp>
 
 #include "../test.cpp"
@@ -22,17 +25,21 @@ void setup() {
 	auto *destinationBuffer = new uint8_t[LEN];
 
 	ByteArrayInputStream is(streamBuffer, LEN);
+	DataInputStream dis(&is);
 
-	is.reset();
-	testInputStreamComparingBuffers(&is, streamBuffer, destinationBuffer, LEN, testWhenReadingFully);
-	is.reset();
-	testInputStreamComparingBuffers(&is, streamBuffer, destinationBuffer, LEN, testWhenReadingParts);
-	is.reset();
-	testNullPointerOrLen0(&is, streamBuffer, destinationBuffer, LEN);
-	is.reset();
-	testReadBeyondLimit(&is, streamBuffer, destinationBuffer, LEN);
-	is.reset();
-	testAvailable(&is, streamBuffer, destinationBuffer, LEN);
+	is.seek(0);
+	testInputStreamComparingBuffers(&dis, streamBuffer, destinationBuffer, LEN, testWhenReadingFully);
+	is.seek(0);
+	testInputStreamComparingBuffers(&dis, streamBuffer, destinationBuffer, LEN, testWhenReadingParts);
+	is.seek(0);
+	testNullPointerOrLen0(&dis, streamBuffer, destinationBuffer, LEN);
+	is.seek(0);
+	testReadBeyondLimit(&dis, streamBuffer, destinationBuffer, LEN);
+	is.seek(0);
+	testAvailable(&dis, streamBuffer, destinationBuffer, LEN);
+
+	is.seek(0);
+	testReadSupportedTypes(&dis, streamBuffer, LEN);
 
 	free(destinationBuffer);
 	free(streamBuffer);

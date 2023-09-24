@@ -3,10 +3,14 @@
 #include "InternalEepromOutputStream.h"
 #include <EEPROM.h>
 #include <io.h>
+#include <limits.h>
 
 InternalEepromOutputStream::InternalEepromOutputStream() : pos(0),
-														   markPos(0),
-														   eepromSize(EEPROM.length()) {
+														   markPos(0) {
+	auto size = EEPROM.length();
+
+	// Int is used to address the stream, so lets make sure we don't overflow in any 16bit int archs.
+	eepromSize = (size > INT_MAX) ? INT_MAX : size;
 }
 
 void InternalEepromOutputStream::write(unsigned char b) {

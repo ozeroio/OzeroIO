@@ -57,5 +57,7 @@ float DataInput::readFloat() {
 }
 
 double DataInput::readDouble() {
-	return (double) readLong();
+	double v = 0;
+	read((unsigned char *) &v, sizeof(double));
+	return v;
 }

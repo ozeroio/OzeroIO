@@ -2,13 +2,15 @@
 
 #include "RandomAccessExternalEeprom.h"
 #include <ExternalEeprom/ExternalEeprom.h>
+#include <limits.h>
 
 RandomAccessExternalEeprom::RandomAccessExternalEeprom(ExternalEeprom *externalEeprom) : externalEeprom(externalEeprom),
-																						 size(externalEeprom->getDeviceSize()),
 																						 pos(0) {
+	auto deviceSize = externalEeprom->getDeviceSize();
+	size = (deviceSize > INT_MAX) ? INT_MAX : (int) deviceSize;
 }
 
-unsigned int RandomAccessExternalEeprom::length() const {
+int RandomAccessExternalEeprom::length() const {
 	return size;
 }
 
@@ -32,7 +34,7 @@ void RandomAccessExternalEeprom::write(unsigned char *b, const int off, const in
 		return;
 	}
 	const int n = ozero_min(len, size - pos);
-	const int writtenBytes = externalEeprom->writeBytes(pos, b, n);
+	const int writtenBytes = (int) externalEeprom->writeBytes(pos, b, n);
 	pos += writtenBytes;
 }
 
@@ -51,7 +53,7 @@ int RandomAccessExternalEeprom::read(unsigned char *b, const int off, const int 
 		return -1;
 	}
 	const int n = ozero_min(len, size - pos);
-	const int readBytes = externalEeprom->readBytes(pos, b, n);
+	const int readBytes = (int) externalEeprom->readBytes(pos, b, n);
 	pos += readBytes;
 	return readBytes;
 }

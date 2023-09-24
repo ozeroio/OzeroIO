@@ -1,71 +1,59 @@
 #include <Arduino.h>
-#include <Wire.h>
-#include <External24x256Eeprom/External24x256Eeprom.h>
-#include <ExternalEepromOutputStream/ExternalEepromOutputStream.h>
-#include <OutputStream/OutputStream.cpp>
+#include <BufferedOutputStream/BufferedOutputStream.cpp>
+#include <External24x256Eeprom/External24x256Eeprom.cpp>
 #include <ExternalEepromOutputStream/ExternalEepromOutputStream.cpp>
+#include <FilterOutputStream/FilterOutputStream.cpp>
+#include <OutputStream/OutputStream.cpp>
+
+#include "../test.cpp"
+
 #ifdef ARDUINO_ARCH_ESP32
 #include <freertos/FreeRTOS.h>
-#define LEN 10000
+#define LEN 1000
 #else
- #define LEN 256
+#define LEN 128
 #endif
 
-External24x256Eeprom eeprom(0x00);
-ExternalEepromOutputStream os(&eeprom);
+#include <Wire.h>
+
+#define BUFFER_SIZE 32
 
 void setup() {
-    Serial.begin(115200);
-#ifdef ARDUINO_ARCH_ESP32
-	Wire.begin(27, 26);
-#else
+	Serial.begin(115200);
 	Wire.begin();
-#endif
-    Serial.println("Initializing...");
-    auto *data = new uint8_t[LEN];
-    auto *read = new uint8_t[LEN];
-    for (int i = 0; i < LEN; i++) {
-        data[i] = random() % 0xff;
-        read[i] = 0;
-    }
-    int address = 0;
-    Serial.print("Device address: ");
-    Serial.println(eeprom.getAddress(), HEX);
-    Serial.print("Address: ");
-    Serial.println(address);
-    Serial.print("Written: ");
-    uint32_t start = millis();
-    os.write(data, LEN);
-    Serial.print("Write time: ");
-    Serial.println(millis() - start);
-    Serial.print("Read: ");
-    start = millis();
-    Serial.println(eeprom.readBytes(address, read, LEN));
-    Serial.print("Read time: ");
-    Serial.println(millis() - start);
-    bool match = true;
-    for (int i = 0; i < LEN; i++) {
-        if (data[i] != read[i]) {
-            match = false;
-            Serial.print("FAILED! AT ");
-            Serial.print(i);
-            Serial.print(": data[] = ");
-            Serial.print(data[i], HEX);
-            Serial.print(", read[] = ");
-            Serial.println(read[i], HEX);
-        }
-    }
-    free(data);
-    free(read);
-    if (match) {
-        Serial.println("PASSED!");
-    }
+
+	Serial.println("Initializing...");
+
+	auto *sourceBuffer = new uint8_t[LEN];
+
+	External24x256Eeprom eeprom(0x00);
+	ExternalEepromOutputStream os(&eeprom);
+
+	os.seek(0);
+	os.write(0xbb);
+	os.flush();
+	assertTrueThat("I/O eeprom", eeprom.read(0) == 0xbb);
+
+	os.seek(0);
+	testEepromWhenSendingEntireBufferSize(&os, &eeprom, sourceBuffer, LEN);
+	os.seek(0);
+	testEepromWhenSendingOneByOne(&os, &eeprom, sourceBuffer, LEN);
+	os.seek(0);
+	testEepromWhenSendingParts(&os, &eeprom, sourceBuffer, LEN);
+	os.seek(0);
+	testEepromNullPointerOrLen0(&os, &eeprom, sourceBuffer, LEN);
+	os.seek(0);
+	testEepromWriteBeyondLimit(&os, &eeprom, sourceBuffer, LEN);
+	os.seek(0);
+	testEepromMark(&os, &eeprom, sourceBuffer, LEN);
+
+	free(sourceBuffer);
 }
 
 void loop() {
 #ifdef ARDUINO_ARCH_ESP32
-    Serial.print("Free heap: ");
-    Serial.println(xPortGetFreeHeapSize());
+	Serial.print("Free heap: ");
+	Serial.println(xPortGetFreeHeapSize());
 #endif
-    delay(1000);
+	delay(1000);
 }

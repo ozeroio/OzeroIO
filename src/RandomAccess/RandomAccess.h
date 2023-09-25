@@ -1,8 +1,6 @@
 /**
  * Ozero IO
  *
- * RandomAccess
- *
  * Interface derived from DataInput, DataOutput, Closeable and Seekable.
  */
 

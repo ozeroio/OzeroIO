@@ -1,7 +1,10 @@
 /**
  * Ozero IO
  *
- * RandomAccessInternalEeprom
+ *
+ * Instances of this class support both reading and writing to the internal EEPROM.
+ * A random access InternalEeprom behaves like a large array of bytes
+ * stored in the EEPROM system.
  */
 
 #if OZEROIO_IO_INTERNAL_EEPROM_SUPPORT_ENABLED == 1

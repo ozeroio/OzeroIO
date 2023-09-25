@@ -1,8 +1,6 @@
 /**
  * Ozero IO
  *
- * InputStream
- *
  * This abstract class is the superclass of all classes representing an input
  * stream of bytes.
  *

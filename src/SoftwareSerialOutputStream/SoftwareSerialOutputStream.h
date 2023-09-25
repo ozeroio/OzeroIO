@@ -1,8 +1,6 @@
 /**
  * Ozero IO
  *
- * SoftwareSerialOutputStream
- *
  * A software serial output stream is a output stream to write in a serial port.
  */
 

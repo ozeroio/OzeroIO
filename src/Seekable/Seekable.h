@@ -1,7 +1,7 @@
 /**
  * Ozero IO
  *
- * Seekable
+ * Seekable class is an abstract class that defines seek.
  */
 
 #ifndef OZEROIO_IO_SEEKABLE_H

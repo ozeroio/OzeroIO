@@ -1,11 +1,16 @@
 #if OZEROIO_IO_EXTERNAL_EEPROM_SUPPORT_ENABLED == 1
 
 #include "ExternalEepromInputStream.h"
+#include <limits.h>
 
 ExternalEepromInputStream::ExternalEepromInputStream(ExternalEeprom *externalEeprom) : externalEeprom(externalEeprom),
 																					   pos(0),
-																					   markPos(0),
-																					   externalEepromSize(externalEeprom->getDeviceSize()) {
+																					   markPos(0) {
+
+	auto size = externalEeprom->getDeviceSize();
+
+	// Int is used to address the stream, so lets make sure we don't overflow in any 16bit int archs.
+	externalEepromSize = (size > INT_MAX) ? INT_MAX : (int) size;
 }
 
 int ExternalEepromInputStream::available() {

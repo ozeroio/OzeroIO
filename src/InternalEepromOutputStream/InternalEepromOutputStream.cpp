@@ -10,7 +10,7 @@ InternalEepromOutputStream::InternalEepromOutputStream() : pos(0),
 	auto size = EEPROM.length();
 
 	// Int is used to address the stream, so lets make sure we don't overflow in any 16bit int archs.
-	eepromSize = (size > INT_MAX) ? INT_MAX : size;
+	eepromSize = (size > INT_MAX) ? INT_MAX : (int) size;
 }
 
 void InternalEepromOutputStream::write(unsigned char b) {

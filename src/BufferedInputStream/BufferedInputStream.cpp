@@ -1,5 +1,4 @@
 #include "BufferedInputStream.h"
-#include <Arduino.h>
 #include <InputStream/InputStream.h>
 #include <limits.h>
 #include <string.h>

@@ -1,8 +1,6 @@
 /**
  * Ozero IO
  *
- * BufferedInputStream
- *
  * A <code>BufferedInputStream</code> adds
  * functionality to another input stream-namely,
  * the ability to buffer the input and to

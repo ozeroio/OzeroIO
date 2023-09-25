@@ -3,10 +3,6 @@
 #include "HardwareSerialOutputStream.h"
 #include <Arduino.h>
 
-HardwareSerialOutputStream::HardwareSerialOutputStream(unsigned int baudRate) {
-	Serial.begin(baudRate);
-}
-
 void HardwareSerialOutputStream::write(unsigned char b) {
 	Serial.write(b);
 }

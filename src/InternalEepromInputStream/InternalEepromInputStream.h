@@ -1,8 +1,6 @@
 /**
  * Ozero IO
  *
- * InternalEepromInputStream
- *
  * An InternalEepromInputStream obtains input bytes from the internal EEPROM.
  */
 

@@ -1,8 +1,6 @@
 /**
  * Ozero IO
  *
- * HardwareSerialOutputStream
- *
  * A software serial output stream is a output stream to write in a serial port.
  */
 
@@ -21,7 +19,7 @@ public:
 	 *
 	 * @param baudRate
 	 */
-	explicit HardwareSerialOutputStream(unsigned int baudRate);
+	HardwareSerialOutputStream() = default;
 
 	/**
 	 * Writes the specified unsigned char to this output stream.
@@ -36,6 +34,8 @@ public:
 	 * @param len
 	 */
 	void write(unsigned char *b, int len) override;
+
+	using OutputStream::write;
 };
 
 #endif// OZEROIO_IO_HARDWARE_SERIAL_OUTPUT_STREAM_H

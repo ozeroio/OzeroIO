@@ -1,8 +1,6 @@
 /**
  * Ozero IO
  *
- * ExternalEepromOutputStream
- *
  * A resource output stream is an output stream for writing data to an
  * ExternalEeprom.
  */
@@ -35,7 +33,7 @@ class ExternalEepromOutputStream : public SeekableOutputStream {
 	/*
 	 * The size of the externalEeprom.
 	 */
-	long externalEepromSize;
+	int externalEepromSize;
 
 public:
 	/**

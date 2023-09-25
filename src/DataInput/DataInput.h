@@ -1,8 +1,6 @@
 /**
  * Ozero IO
  *
- * DataInput
- *
  * The DataInput interface provides for reading bytes from a binary
  * stream and reconstructing from them data in any of the primitive
  * arduino types.

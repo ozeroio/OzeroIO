@@ -1,8 +1,6 @@
 /**
  * Ozero IO
  *
- * InternalEepromOutputStream
- *
  * A resource output stream is an output stream for writing data to an
  * internal EEPROM.
  */

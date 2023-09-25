@@ -1,8 +1,6 @@
 /**
  * Ozero IO
  *
- * DataOutput
- *
  * The DataOutput interface provides for converting data from any of the
  * primitive types to a series of bytes and writing these bytes to a binary stream.
  */

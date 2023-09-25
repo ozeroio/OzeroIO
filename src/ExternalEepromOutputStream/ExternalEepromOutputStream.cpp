@@ -10,7 +10,7 @@ ExternalEepromOutputStream::ExternalEepromOutputStream(ExternalEeprom *externalE
 	auto size = externalEeprom->getDeviceSize();
 
 	// Int is used to address the stream, so lets make sure we don't overflow in any 16bit int archs.
-	externalEepromSize = (size > INT_MAX) ? INT_MAX : size;
+	externalEepromSize = (size > INT_MAX) ? INT_MAX : (int) size;
 }
 
 void ExternalEepromOutputStream::write(unsigned char b) {

@@ -1,8 +1,6 @@
 /**
  * Ozero IO
  *
- * RandomAccessByteArray
- *
  * Instances of this class support both reading and writing to a random access
  * unsigned char array.
  */

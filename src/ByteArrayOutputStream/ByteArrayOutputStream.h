@@ -1,8 +1,6 @@
 /**
  * Ozero IO
  *
- * ByteArrayOutputStream
- *
  * This class implements an output stream in which the data is written into a
  * unsigned char array.
  */

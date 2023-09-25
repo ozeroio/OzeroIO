@@ -1,8 +1,6 @@
 /**
  * Ozero IO
  *
- * FilterOutputStream
- *
  * This class is the superclass of all classes that filter output
  * streams. These streams sit on top of an already existing output
  * stream (the <i>underlying</i> output stream) which it uses as its

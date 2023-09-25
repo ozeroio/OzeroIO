@@ -1,8 +1,6 @@
 /**
  * Ozero IO
  *
- * DataOutputStream
- *
  * A data output stream lets an application write types to an OutputStream.
  */
 

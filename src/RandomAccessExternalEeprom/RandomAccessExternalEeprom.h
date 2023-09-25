@@ -1,8 +1,6 @@
 /**
  * Ozero IO
  *
- * RandomAccessExternalEeprom
- *
  * Instances of this class support both reading and writing to a random access
  * externalEeprom. A random access externalEeprom behaves like a large array of bytes
  * stored in the externalEeprom system.

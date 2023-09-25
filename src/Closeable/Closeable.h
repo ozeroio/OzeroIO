@@ -1,8 +1,6 @@
 /**
  * Ozero IO
  *
- * Closeable
- *
  * A Closeable is a source or destination of data that can be closed.
  */
 

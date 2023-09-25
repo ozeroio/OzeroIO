@@ -1,13 +1,10 @@
 /**
  * Ozero IO
  *
- * ExternalEepromInputStream
- *
- * An ExternalEepromInputStream obtains input bytes from a
- * externalEeprom.
+ * An ExternalEepromInputStream obtains input bytes from an externalEeprom.
  */
 
-// #if OZEROIO_IO_EXTERNAL_EEPROM_SUPPORT_ENABLED == 1
+#if OZEROIO_IO_EXTERNAL_EEPROM_SUPPORT_ENABLED == 1
 
 #ifndef OZEROIO_IO_EXTERNAL_EEPROM_INPUT_STREAM_H
 #define OZEROIO_IO_EXTERNAL_EEPROM_INPUT_STREAM_H 1
@@ -18,11 +15,6 @@
 class ExternalEepromInputStream : public virtual SeekableInputStream {
 
 protected:
-	/**
-	 * When asking for available, this is the max number to return.
-	 */
-	const int maxAvailableChunk;
-
 	/*
 	 * The externalEeprom where data is stored.
 	 */
@@ -31,17 +23,17 @@ protected:
 	/*
 	 * Current position
 	 */
-	unsigned int pos;
+	int pos;
 
 	/*
 	 * The currently marked position in the stream.
 	 */
-	unsigned int markpos;
+	int markPos;
 
 	/*
 	 * The size of the externalEeprom.
 	 */
-	unsigned int externalEepromSize;
+	int externalEepromSize;
 
 public:
 	/**
@@ -105,9 +97,9 @@ public:
 	 *
 	 * @param pos The position we want to point to.
 	 */
-	void seek(unsigned int pos) override;
+	void seek(int pos) override;
 };
 
 #endif// OZEROIO_IO_EXTERNAL_EEPROM_INPUT_STREAM_H
 
-// #endif // OZEROIO_IO_EXTERNAL_EEPROM_SUPPORT_ENABLED
+#endif// OZEROIO_IO_EXTERNAL_EEPROM_SUPPORT_ENABLED

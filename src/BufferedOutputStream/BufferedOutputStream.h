@@ -1,8 +1,6 @@
 /**
  * Ozero IO
  *
- * BufferedOutputStream
- *
  * The class implements a buffered output stream. By setting up such
  * an output stream, an application can write bytes to the underlying
  * output stream without necessarily causing a call to the underlying
@@ -34,6 +32,17 @@ protected:
 	 * unsigned char data.
 	 */
 	int pos;
+
+	/**
+	 * Flag to determine if there is a marker on this stream.
+	 */
+	bool marked;
+
+	/**
+	 * The value of the <code>pos</code> field at the time the last
+	 * <code>mark</code> method was called.
+	 */
+	int markPos;
 
 public:
 	/**
@@ -96,6 +105,16 @@ public:
 	 * Closes the output stream.
 	 */
 	void close() override;
+
+	/**
+	 * Marks the current position in this output stream.
+	 */
+	void mark() override;
+
+	/**
+	 * Tests if this output stream supports the mark and reset methods.
+	 */
+	bool markSupported() override;
 
 	/**
 	 * Reset the output stream.

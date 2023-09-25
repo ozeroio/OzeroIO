@@ -1,8 +1,6 @@
 /**
  * Ozero IO
  *
- * InputStream
- *
  * This abstract class is the superclass of all classes representing an input
  * stream of bytes.
  *
@@ -70,7 +68,7 @@ public:
 	/**
 	 * Skips over and discards n bytes of data from this input stream.
 	 */
-	virtual unsigned int skip(unsigned int n);
+	virtual int skip(int n);
 };
 
 #endif// OZEROIO_IO_INPUT_STREAM_H

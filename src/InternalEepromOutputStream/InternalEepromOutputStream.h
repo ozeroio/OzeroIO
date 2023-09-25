@@ -1,8 +1,6 @@
 /**
  * Ozero IO
  *
- * InternalEepromOutputStream
- *
  * A resource output stream is an output stream for writing data to an
  * internal EEPROM.
  */
@@ -19,17 +17,17 @@ class InternalEepromOutputStream : public SeekableOutputStream {
 	/**
 	 * Current eeprom position.
 	 */
-	unsigned int pos;
+	int pos;
 
 	/**
 	 * The currently marked position in the stream.
 	 */
-	unsigned int markpos;
+	int markPos;
 
 	/**
 	 * Internal eeprom size.
 	 */
-	unsigned int eepromSize;
+	int eepromSize;
 
 public:
 	/**
@@ -64,7 +62,7 @@ public:
 	 *
 	 * @param pos The position we want to point to.
 	 */
-	void seek(unsigned int pos) override;
+	void seek(int pos) override;
 
 	/**
 	 * Marks the current position in this output stream.

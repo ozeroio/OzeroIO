@@ -1,10 +1,10 @@
 #include "OutputStream.h"
 
-void OutputStream::write(unsigned char *b, int len) {
+void OutputStream::write(unsigned char *b, const int len) {
 	write(b, 0, len);
 }
 
-void OutputStream::write(unsigned char *b, int off, int len) {
+void OutputStream::write(unsigned char *b, const int off, const int len) {
 	if (b == nullptr || len == 0) {
 		return;
 	}

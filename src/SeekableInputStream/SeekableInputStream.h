@@ -1,7 +1,5 @@
 /**
  * Ozero IO
- *
- * SeekableInputStream
  */
 
 #ifndef OZEROIO_IO_SEEKABLE_INPUT_STREAM_H

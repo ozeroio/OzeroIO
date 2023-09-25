@@ -3,40 +3,48 @@
 #include "InternalEepromOutputStream.h"
 #include <EEPROM.h>
 #include <io.h>
+#include <limits.h>
 
-InternalEepromOutputStream::InternalEepromOutputStream() : pos(0), markpos(0), eepromSize(EEPROM.length()) {
+InternalEepromOutputStream::InternalEepromOutputStream() : pos(0),
+														   markPos(0) {
+	auto size = EEPROM.length();
+
+	// Int is used to address the stream, so lets make sure we don't overflow in any 16bit int archs.
+	eepromSize = (size > INT_MAX) ? INT_MAX : (int) size;
 }
 
 void InternalEepromOutputStream::write(unsigned char b) {
 	if (pos < eepromSize) {
-		EEPROM.write((int) (pos++), b);
+		EEPROM.write(pos++, b);
 #ifdef ESP32
 		EEPROM.commit();
 #endif
 	}
 }
 
-void InternalEepromOutputStream::write(unsigned char *b, int off, int len) {
-	unsigned int available = eepromSize - pos;
-	len = ozero_min(len, available);
+void InternalEepromOutputStream::write(unsigned char *b, const int off, const int len) {
+	if (b == nullptr || len == 0) {
+		return;
+	}
+	const int n = ozero_min(eepromSize - pos, len);
 #ifdef ESP32
-	pos += EEPROM.writeBytes((int) pos, (void *) &(b[off]), len);
+	pos += (int) EEPROM.writeBytes(pos, &b[off], n);
 	EEPROM.commit();
 #else
-	for (int i = 0; i < len; i++) {
-		EEPROM.write((int) pos++, b[off + i]);
+	for (int i = 0; i < n; i++) {
+		EEPROM.write(pos++, b[off + i]);
 	}
 #endif
 }
 
-void InternalEepromOutputStream::seek(unsigned int pos) {
+void InternalEepromOutputStream::seek(int pos) {
 	if (pos < eepromSize) {
 		this->pos = pos;
 	}
 }
 
 void InternalEepromOutputStream::mark() {
-	markpos = pos;
+	markPos = pos;
 }
 
 bool InternalEepromOutputStream::markSupported() {
@@ -44,7 +52,7 @@ bool InternalEepromOutputStream::markSupported() {
 }
 
 void InternalEepromOutputStream::reset() {
-	pos = markpos;
+	pos = markPos;
 }
 
 #endif// OZEROIO_IO_INTERNAL_EEPROM_SUPPORT_ENABLED

@@ -2,21 +2,23 @@
 
 #include "InternalEepromInputStream.h"
 #include <EEPROM.h>
+#include <io.h>
+#include <limits.h>
 
-InternalEepromInputStream::InternalEepromInputStream()
-	: maxAvailableChunk(0x08), pos(0), markpos(0), eepromSize(EEPROM.length()) {
+InternalEepromInputStream::InternalEepromInputStream() : pos(0),
+														 markPos(0) {
+	auto size = EEPROM.length();
+
+	// Int is used to address the stream, so lets make sure we don't overflow in any 16bit int archs.
+	eepromSize = (size > INT_MAX) ? INT_MAX : (int) size;
 }
 
 int InternalEepromInputStream::available() {
-	int room = (int) (eepromSize - pos);
-	if (room > maxAvailableChunk) {
-		return maxAvailableChunk;
-	}
-	return room;
+	return eepromSize - pos;
 }
 
 void InternalEepromInputStream::mark() {
-	markpos = pos;
+	markPos = pos;
 }
 
 bool InternalEepromInputStream::markSupported() {
@@ -27,29 +29,31 @@ int InternalEepromInputStream::read() {
 	if (pos >= eepromSize) {
 		return -1;
 	}
-	return (int) EEPROM.read((int) pos++);
+	return (int) EEPROM.read(pos++);
 }
 
-int InternalEepromInputStream::read(unsigned char *b, int off, int len) {
-	unsigned int available = (eepromSize - pos);
-	len = ((unsigned int) len > available) ? (int) available : len;
+int InternalEepromInputStream::read(unsigned char *b, const int off, const int len) {
+	if (b == nullptr || len == 0) {
+		return 0;
+	}
+	const int n = ozero_min(eepromSize - pos, len);
 #ifdef ESP32
-	int read = (int) EEPROM.readBytes((int) pos, (void *) &b[off], len);
-	pos += read;
-	return read;
+	int readBytes = (int) EEPROM.readBytes(pos, &b[off], n);
+	pos += readBytes;
+	return readBytes;
 #else
-	for (int i = 0; i < len; i++) {
+	for (int i = 0; i < n; i++) {
 		b[off + i] = EEPROM.read((int) pos++);
 	}
-	return len;
+	return n;
 #endif
 }
 
 void InternalEepromInputStream::reset() {
-	pos = markpos;
+	pos = markPos;
 }
 
-void InternalEepromInputStream::seek(unsigned int pos) {
+void InternalEepromInputStream::seek(int pos) {
 	if (pos < eepromSize) {
 		this->pos = pos;
 	}

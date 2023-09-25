@@ -1,21 +1,20 @@
 #if OZEROIO_IO_EXTERNAL_EEPROM_SUPPORT_ENABLED == 1
 
 #include "ExternalEepromInputStream.h"
+#include <limits.h>
 
-ExternalEepromInputStream::ExternalEepromInputStream(ExternalEeprom *externalEeprom)
-	: maxAvailableChunk(0x08),
-	  externalEeprom(externalEeprom),
-	  pos(0),
-	  markpos(0),
-	  externalEepromSize(externalEeprom->getDeviceSize()) {
+ExternalEepromInputStream::ExternalEepromInputStream(ExternalEeprom *externalEeprom) : externalEeprom(externalEeprom),
+																					   pos(0),
+																					   markPos(0) {
+
+	auto size = externalEeprom->getDeviceSize();
+
+	// Int is used to address the stream, so lets make sure we don't overflow in any 16bit int archs.
+	externalEepromSize = (size > INT_MAX) ? INT_MAX : (int) size;
 }
 
 int ExternalEepromInputStream::available() {
-	int room = externalEepromSize - pos;
-	if (room > maxAvailableChunk) {
-		return maxAvailableChunk;
-	}
-	return room;
+	return externalEepromSize - pos;
 }
 
 int ExternalEepromInputStream::read() {
@@ -26,14 +25,20 @@ int ExternalEepromInputStream::read() {
 }
 
 int ExternalEepromInputStream::read(unsigned char *b, const int off, const int len) {
-	unsigned int available = (externalEepromSize - pos);
-	int total = externalEeprom->readBytes(pos, &b[off], ozero_min(len, available));
-	pos += total;
-	return total;
+	if (b == nullptr || len == 0) {
+		return 0;
+	}
+	const int available = (externalEepromSize - pos);
+	if (available == 0) {
+		return -1;
+	}
+	const int readBytes = (int) externalEeprom->readBytes(pos, &b[off], ozero_min(len, available));
+	pos += readBytes;
+	return readBytes;
 }
 
 void ExternalEepromInputStream::mark() {
-	markpos = pos;
+	markPos = pos;
 }
 
 bool ExternalEepromInputStream::markSupported() {
@@ -41,10 +46,10 @@ bool ExternalEepromInputStream::markSupported() {
 }
 
 void ExternalEepromInputStream::reset() {
-	pos = markpos;
+	pos = markPos;
 }
 
-void ExternalEepromInputStream::seek(const unsigned int pos) {
+void ExternalEepromInputStream::seek(const int pos) {
 	this->pos = ozero_min(pos, externalEepromSize - 1);
 }
 

@@ -1,28 +1,40 @@
 #if OZEROIO_IO_EXTERNAL_EEPROM_SUPPORT_ENABLED == 1
 
 #include "ExternalEepromOutputStream.h"
+#include <limits.h>
 
-ExternalEepromOutputStream::ExternalEepromOutputStream(ExternalEeprom *externalEeprom)
-	: externalEeprom(externalEeprom), pos(0), markpos(0), externalEepromSize(externalEeprom->getDeviceSize()) {
+ExternalEepromOutputStream::ExternalEepromOutputStream(ExternalEeprom *externalEeprom) : externalEeprom(externalEeprom),
+																						 pos(0),
+																						 markPos(0) {
+
+	auto size = externalEeprom->getDeviceSize();
+
+	// Int is used to address the stream, so lets make sure we don't overflow in any 16bit int archs.
+	externalEepromSize = (size > INT_MAX) ? INT_MAX : (int) size;
 }
 
 void ExternalEepromOutputStream::write(unsigned char b) {
-	externalEeprom->write(pos++, b);
+	if (pos < externalEepromSize) {
+		externalEeprom->write(pos++, b);
+	}
 }
 
 void ExternalEepromOutputStream::write(unsigned char *b, int off, int len) {
-	externalEeprom->writeBytes(pos, &b[off], len);
-	pos += len;
+	if (b == nullptr || len == 0) {
+		return;
+	}
+	const int writtenBytes = (int) externalEeprom->writeBytes(pos, &b[off], len);
+	pos += writtenBytes;
 }
 
-void ExternalEepromOutputStream::seek(unsigned int pos) {
+void ExternalEepromOutputStream::seek(int pos) {
 	if (pos < externalEepromSize) {
 		this->pos = pos;
 	}
 }
 
 void ExternalEepromOutputStream::mark() {
-	markpos = pos;
+	markPos = pos;
 }
 
 bool ExternalEepromOutputStream::markSupported() {
@@ -30,7 +42,7 @@ bool ExternalEepromOutputStream::markSupported() {
 }
 
 void ExternalEepromOutputStream::reset() {
-	pos = markpos;
+	pos = markPos;
 }
 
 #endif// OZEROIO_IO_EXTERNAL_EEPROM_SUPPORT_ENABLED

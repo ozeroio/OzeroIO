@@ -1,8 +1,6 @@
 /**
  * Ozero IO
  *
- * FilterOutputStream
- *
  * This class is the superclass of all classes that filter output
  * streams. These streams sit on top of an already existing output
  * stream (the <i>underlying</i> output stream) which it uses as its
@@ -93,6 +91,22 @@ public:
 	 * <code>close</code> method of its underlying output stream.
 	 */
 	void close() override;
+
+	/**
+	 * Marks the current position in this output stream.
+	 */
+	void mark() override;
+
+	/**
+	 * Tests if this output stream supports the mark and reset methods.
+	 */
+	bool markSupported() override;
+
+	/**
+	 * Repositions this stream to the position at the time the mark method was
+	 * last called on this output stream.
+	 */
+	void reset() override;
 };
 
 #endif// OZEROIO_IO_FILTER_OUTPUT_STREAM_H

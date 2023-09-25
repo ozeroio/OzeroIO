@@ -1,8 +1,6 @@
 /**
  * Ozero IO
  *
- * SoftwareSerialOutputStream
- *
  * A software serial output stream is a output stream to write in a serial port.
  */
 
@@ -28,7 +26,7 @@ public:
 	/**
 	 * Writes the specified unsigned char to this output stream.
 	 */
-	virtual void write(unsigned char b);
+	void write(unsigned char b) override;
 
 	/**
 	 * Writes len bytes from the specified unsigned char array starting at offset off to

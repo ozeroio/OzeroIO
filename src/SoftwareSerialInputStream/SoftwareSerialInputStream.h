@@ -1,8 +1,6 @@
 /**
  * Ozero IO
  *
- * SoftwareSerialInputStream
- *
  * A SoftwareSerialInputStream obtains input bytes from a serial port.
  */
 

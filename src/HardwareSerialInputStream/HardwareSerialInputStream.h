@@ -1,8 +1,6 @@
 /**
  * Ozero IO
  *
- * HardwareSerialInputStream
- *
  * A HardwareSerialInputStream obtains input bytes from a serial port.
  */
 
@@ -21,7 +19,7 @@ public:
 	 *
 	 * @param baudRate
 	 */
-	explicit HardwareSerialInputStream(unsigned int baudRate);
+	HardwareSerialInputStream() = default;
 
 	/**
 	 * Returns the number of bytes that can be read(or skipped over) from this
@@ -33,6 +31,18 @@ public:
 	 * Reads the next unsigned char of data from the input stream.
 	 */
 	int read() override;
+
+	/**
+	 * Reads len of bytes from the stream.
+	 *
+	 * @param b
+	 * @param off
+	 * @param len
+	 * @return
+	 */
+	int read(unsigned char *b, int off, int len) override;
+
+	using InputStream::read;
 };
 
 #endif// OZEROIO_IO_HARDWARE_SERIAL_INPUT_STREAM_H

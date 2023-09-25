@@ -1,8 +1,6 @@
 /**
  * Ozero IO
  *
- * RandomAccess
- *
  * Interface derived from DataInput, DataOutput, Closeable and Seekable.
  */
 
@@ -15,6 +13,7 @@
 #include <Seekable/Seekable.h>
 
 class RandomAccess : public virtual DataOutput, public virtual DataInput, public virtual Closeable, public virtual Seekable {
+	virtual int skip(int n) = 0;
 };
 
 #endif// OZEROIO_IO_RANDOM_ACCESS_H

@@ -1,6 +1,6 @@
 {
   "name": "OzeroIO",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "keywords": "bus device eeprom wire memory io input output stream",
   "description": "IO Library.",
   "repository": {

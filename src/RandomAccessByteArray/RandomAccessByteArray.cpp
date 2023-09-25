@@ -4,8 +4,8 @@
 
 RandomAccessByteArray::RandomAccessByteArray(unsigned char *buf,
 											 const int size) : buf(buf),
-															   size(size) {
-	pos = 0;
+															   size(size),
+															   pos(0) {
 }
 
 unsigned int RandomAccessByteArray::length() const {

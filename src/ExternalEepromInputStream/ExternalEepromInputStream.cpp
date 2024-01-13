@@ -1,7 +1,7 @@
-#if OZEROIO_IO_EXTERNAL_EEPROM_SUPPORT_ENABLED == 1
+#if OZERO_IO_EXTERNAL_EEPROM_SUPPORT_ENABLED == 1
 
 #include "ExternalEepromInputStream.h"
-#include <limits.h>
+#include <climits>
 
 ExternalEepromInputStream::ExternalEepromInputStream(ExternalEeprom *externalEeprom) : externalEeprom(externalEeprom),
 																					   pos(0),
@@ -53,4 +53,4 @@ void ExternalEepromInputStream::seek(const int pos) {
 	this->pos = ozero_min(pos, externalEepromSize - 1);
 }
 
-#endif// OZEROIO_IO_EXTERNAL_EEPROM_SUPPORT_ENABLED
+#endif// OZERO_IO_EXTERNAL_EEPROM_SUPPORT_ENABLED

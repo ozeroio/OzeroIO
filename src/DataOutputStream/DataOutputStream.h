@@ -4,8 +4,8 @@
  * A data output stream lets an application write types to an OutputStream.
  */
 
-#ifndef OZEROIO_IO_DATA_OUTPUT_STREAM_H
-#define OZEROIO_IO_DATA_OUTPUT_STREAM_H 1
+#ifndef OZERO_IO_DATA_OUTPUT_STREAM_H
+#define OZERO_IO_DATA_OUTPUT_STREAM_H 1
 
 #include <DataOutput/DataOutput.h>
 #include <FilterOutputStream/FilterOutputStream.h>
@@ -38,4 +38,4 @@ public:
 	void write(unsigned char b) override;
 };
 
-#endif// OZEROIO_IO_DATA_OUTPUT_STREAM_H
+#endif// OZERO_IO_DATA_OUTPUT_STREAM_H

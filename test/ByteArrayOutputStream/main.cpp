@@ -43,7 +43,7 @@ void setup() {
 
 void loop() {
 
-#ifdef ESP32
+#ifdef ARDUINO_ARCH_ESP32
 	logPair("Free heap: ", xPortGetFreeHeapSize());
 #endif
 	delay(1000);

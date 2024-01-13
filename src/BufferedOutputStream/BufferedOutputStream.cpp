@@ -1,5 +1,5 @@
 #include "BufferedOutputStream.h"
-#include <string.h>
+#include <cstring>
 
 BufferedOutputStream::BufferedOutputStream(OutputStream *outputStream, unsigned char *buf, const int size)
 	: FilterOutputStream(outputStream),

@@ -1,5 +1,5 @@
-#ifndef OZEROIO_IO_H
-#define OZEROIO_IO_H
+#ifndef OZERO_IO_H
+#define OZERO_IO_H
 
 #ifndef ozero_max
 #define ozero_max(x, y) (((x) > (y)) ? (x) : (y))
@@ -9,4 +9,4 @@
 #define ozero_min(x, y) (((x) < (y)) ? (x) : (y))
 #endif
 
-#endif// OZEROIO_IO_H
+#endif// OZERO_IO_H

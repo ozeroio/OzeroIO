@@ -1,6 +1,6 @@
 #include "ByteArrayInputStream.h"
 #include <io.h>
-#include <string.h>
+#include <cstring>
 
 ByteArrayInputStream::ByteArrayInputStream(unsigned char *buf, const int size) : buf(buf),
 																				 size(size) {

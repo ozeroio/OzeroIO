@@ -4,10 +4,10 @@
  * An ExternalEepromInputStream obtains input bytes from an externalEeprom.
  */
 
-#if OZEROIO_IO_EXTERNAL_EEPROM_SUPPORT_ENABLED == 1
+#if OZERO_IO_EXTERNAL_EEPROM_SUPPORT_ENABLED == 1
 
-#ifndef OZEROIO_IO_EXTERNAL_EEPROM_INPUT_STREAM_H
-#define OZEROIO_IO_EXTERNAL_EEPROM_INPUT_STREAM_H 1
+#ifndef OZERO_IO_EXTERNAL_EEPROM_INPUT_STREAM_H
+#define OZERO_IO_EXTERNAL_EEPROM_INPUT_STREAM_H 1
 
 #include <ExternalEeprom/ExternalEeprom.h>
 #include <SeekableInputStream/SeekableInputStream.h>
@@ -100,6 +100,6 @@ public:
 	void seek(int pos) override;
 };
 
-#endif// OZEROIO_IO_EXTERNAL_EEPROM_INPUT_STREAM_H
+#endif// OZERO_IO_EXTERNAL_EEPROM_INPUT_STREAM_H
 
-#endif// OZEROIO_IO_EXTERNAL_EEPROM_SUPPORT_ENABLED
+#endif// OZERO_IO_EXTERNAL_EEPROM_SUPPORT_ENABLED

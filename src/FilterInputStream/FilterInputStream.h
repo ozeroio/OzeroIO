@@ -15,8 +15,8 @@
  * and fields.
  */
 
-#ifndef OZEROIO_IO_FILTER_INPUT_STREAM_H
-#define OZEROIO_IO_FILTER_INPUT_STREAM_H 1
+#ifndef OZERO_IO_FILTER_INPUT_STREAM_H
+#define OZERO_IO_FILTER_INPUT_STREAM_H 1
 
 #include <InputStream/InputStream.h>
 
@@ -149,4 +149,4 @@ public:
 	bool markSupported() override;
 };
 
-#endif// OZEROIO_IO_FILTER_INPUT_STREAM_H
+#endif// OZERO_IO_FILTER_INPUT_STREAM_H

@@ -1,4 +1,4 @@
-#if OZEROIO_IO_INTERNAL_EEPROM_SUPPORT_ENABLED == 1
+#if OZERO_IO_INTERNAL_EEPROM_SUPPORT_ENABLED == 1
 
 #include "RandomAccessInternalEeprom.h"
 #include <EEPROM.h>
@@ -26,7 +26,7 @@ void RandomAccessInternalEeprom::close() {
 void RandomAccessInternalEeprom::write(const unsigned char b) {
 	if (pos < size) {
 		EEPROM.write(pos++, b);
-#ifdef ESP32
+#ifdef ARDUINO_ARCH_ESP32
 		EEPROM.commit();
 #endif
 	}
@@ -37,7 +37,7 @@ void RandomAccessInternalEeprom::write(unsigned char *b, const int off, const in
 		return;
 	}
 	const int n = ozero_min(size - pos, len);
-#ifdef ESP32
+#ifdef ARDUINO_ARCH_ESP32
 	pos += (int) EEPROM.writeBytes(pos, &b[off], n);
 	EEPROM.commit();
 #else
@@ -59,7 +59,7 @@ int RandomAccessInternalEeprom::read(unsigned char *b, const int off, const int 
 		return 0;
 	}
 	const int n = ozero_min(size - pos, len);
-#ifdef ESP32
+#ifdef ARDUINO_ARCH_ESP32
 	int readBytes = (int) EEPROM.readBytes(pos, &b[off], n);
 	pos += readBytes;
 	return readBytes;
@@ -81,4 +81,4 @@ int RandomAccessInternalEeprom::skip(const int n) {
 	return skipped;
 }
 
-#endif// OZEROIO_IO_INTERNAL_EEPROM_SUPPORT_ENABLED
+#endif// OZERO_IO_INTERNAL_EEPROM_SUPPORT_ENABLED

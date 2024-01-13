@@ -1,8 +1,8 @@
-#if OZEROIO_IO_EXTERNAL_EEPROM_SUPPORT_ENABLED == 1
+#if OZERO_IO_EXTERNAL_EEPROM_SUPPORT_ENABLED == 1
 
 #include "RandomAccessExternalEeprom.h"
 #include <ExternalEeprom/ExternalEeprom.h>
-#include <limits.h>
+#include <climits>
 
 RandomAccessExternalEeprom::RandomAccessExternalEeprom(ExternalEeprom *externalEeprom) : externalEeprom(externalEeprom),
 																						 pos(0) {
@@ -68,4 +68,4 @@ int RandomAccessExternalEeprom::skip(const int n) {
 	return skipped;
 }
 
-#endif// OZEROIO_IO_EXTERNAL_EEPROM_SUPPORT_ENABLED
+#endif// OZERO_IO_EXTERNAL_EEPROM_SUPPORT_ENABLED

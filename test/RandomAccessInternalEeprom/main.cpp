@@ -31,7 +31,7 @@ void setup() {
 	ra.seek(0);
 	uint8_t data[] = {
 			0xff,// byte
-#ifdef ESP32
+#ifdef ARDUINO_ARCH_ESP32
 			0x00, 0xff, 0x00, 0x01,// int (32 bit)
 			0x06, 0xff, 0x00, 0xf1,// uint (32 bit)
 #else
@@ -47,14 +47,14 @@ void setup() {
 			0xcd, 0xcc, 0xa8, 0x41,// float
 			0xcd, 0xcc, 0xa8, 0xc1,// float
 
-#ifdef ESP32
+#ifdef ARDUINO_ARCH_ESP32
 			0x9a, 0x99, 0x99, 0x99, 0x99, 0x19, 0x35, 0xc0,// double (64 bit)
 #else
 			0xcd, 0xcc, 0xa8, 0xc1,// double (32 bit)
 #endif
 			0x00, // bool
 			0x01};// bool
-#ifdef ESP32
+#ifdef ARDUINO_ARCH_ESP32
 	EEPROM.writeBytes(0, data, sizeof(data));
 #else
 	for (int i = 0; i < sizeof(data); i++) {
@@ -63,7 +63,7 @@ void setup() {
 #endif
 	assertTrue(ra.read() == 0xff);
 
-#ifdef ESP32
+#ifdef ARDUINO_ARCH_ESP32
 	assertTrue(ra.readInt() == 16842496);
 	assertTrue(ra.readUnsignedInt() == 4043374342);
 #else
@@ -87,7 +87,7 @@ void setup() {
 	int n = 0;
 	ra.write(0xff);
 	assertTrue(EEPROM.read(n++) == 0xff);
-#ifdef ESP32
+#ifdef ARDUINO_ARCH_ESP32
 	ra.writeInt(16842496);
 	assertTrue(EEPROM.read(n++) == 0x00);
 	assertTrue(EEPROM.read(n++) == 0xff);
@@ -130,7 +130,7 @@ void setup() {
 	assertTrue(EEPROM.read(n++) == 0xa8);
 	assertTrue(EEPROM.read(n++) == 0xc1);
 	// https://www.binaryconvert.com/result_double.html?decimal=045050049046049
-#ifdef ESP32
+#ifdef ARDUINO_ARCH_ESP32
 	ra.writeDouble(-21.1);
 	assertTrue(EEPROM.read(n++) == 0x9a);
 	assertTrue(EEPROM.read(n++) == 0x99);

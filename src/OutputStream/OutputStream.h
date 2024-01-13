@@ -10,8 +10,8 @@
  * that writes one unsigned char of output.
  */
 
-#ifndef OZEROIO_IO_OUTPUT_STREAM_H
-#define OZEROIO_IO_OUTPUT_STREAM_H 1
+#ifndef OZERO_IO_OUTPUT_STREAM_H
+#define OZERO_IO_OUTPUT_STREAM_H 1
 
 #include <Closeable/Closeable.h>
 
@@ -70,4 +70,4 @@ public:
 	virtual void reset();
 };
 
-#endif// OZEROIO_IO_OUTPUT_STREAM_H
+#endif// OZERO_IO_OUTPUT_STREAM_H

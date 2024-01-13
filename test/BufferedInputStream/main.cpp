@@ -6,7 +6,7 @@
 
 #include "../test.cpp"
 
-#ifdef ESP32
+#ifdef ARDUINO_ARCH_ESP32
 #include <freertos/FreeRTOS.h>
 #define LEN 1000
 #else
@@ -43,7 +43,7 @@ void setup() {
 
 void loop() {
 
-#ifdef ESP32
+#ifdef ARDUINO_ARCH_ESP32
 	logPair("Free heap: ", xPortGetFreeHeapSize());
 #endif
 	delay(10000);

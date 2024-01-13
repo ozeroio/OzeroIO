@@ -1,6 +1,6 @@
 #include "RandomAccessByteArray.h"
 #include <io.h>
-#include <string.h>
+#include <cstring>
 
 RandomAccessByteArray::RandomAccessByteArray(unsigned char *buf,
 											 const int size) : buf(buf),

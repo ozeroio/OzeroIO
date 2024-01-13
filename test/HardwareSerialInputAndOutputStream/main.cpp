@@ -1,4 +1,6 @@
 #include <Arduino.h>
+#include <HardwareSerialInputStream/HardwareSerialInputStream.cpp>
+#include <InputStream/InputStream.cpp>
 #include <HardwareSerialOutputStream/HardwareSerialOutputStream.cpp>
 #include <OutputStream/OutputStream.cpp>
 
@@ -13,17 +15,23 @@
 
 void setup() {
 	Serial.begin(115200);
+	Serial1.begin(115200);
 
 	log("Initializing...");
 
-	HardwareSerialOutputStream os(&Serial);
+	HardwareSerialInputStream is(&Serial1);
+	HardwareSerialOutputStream os(&Serial1);
 
-	assertTrueThat("Mark is not supported", !os.markSupported());
-	const char *str = "Writing: << PASSED ";
-	os.write((unsigned char *) str, 0, 19);
-	os.write('>');
-	os.write('>');
-	os.write('\n');
+	assertTrueThat("Mark is not supported", !is.markSupported());
+	log("Echoing from now on...");
+	for (;;) {
+		if (is.available() > 0) {
+			Serial.write(is.read());
+		}
+		if (Serial.available() > 0) {
+			os.write(Serial.read());
+		}
+	}
 }
 
 void loop() {

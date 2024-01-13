@@ -4,8 +4,8 @@
  * A data input stream lets an application read data from a InputStream.
  */
 
-#ifndef OZEROIO_IO_DATA_INPUT_STREAM_H
-#define OZEROIO_IO_DATA_INPUT_STREAM_H 1
+#ifndef OZERO_IO_DATA_INPUT_STREAM_H
+#define OZERO_IO_DATA_INPUT_STREAM_H 1
 
 #include <DataInput/DataInput.h>
 #include <FilterInputStream/FilterInputStream.h>
@@ -36,4 +36,4 @@ public:
 	int read(unsigned char *b, int off, int len) override;
 };
 
-#endif// OZEROIO_IO_DATA_INPUT_STREAM_H
+#endif// OZERO_IO_DATA_INPUT_STREAM_H

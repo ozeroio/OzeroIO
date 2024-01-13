@@ -7,7 +7,7 @@
 
 #include "../test.cpp"
 
-#ifdef ESP32
+#ifdef ARDUINO_ARCH_ESP32
 #include <freertos/FreeRTOS.h>
 #define LEN 1000
 #else

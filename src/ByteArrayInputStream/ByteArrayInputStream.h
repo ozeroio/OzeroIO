@@ -5,8 +5,8 @@
  * contains bytes that may be read from the stream.
  */
 
-#ifndef OZEROIO_IO_BYTE_ARRAY_INPUT_STREAM_H
-#define OZEROIO_IO_BYTE_ARRAY_INPUT_STREAM_H 1
+#ifndef OZERO_IO_BYTE_ARRAY_INPUT_STREAM_H
+#define OZERO_IO_BYTE_ARRAY_INPUT_STREAM_H 1
 
 #include <SeekableInputStream/SeekableInputStream.h>
 
@@ -94,4 +94,4 @@ public:
 	void seek(int pos) override;
 };
 
-#endif// OZEROIO_IO_BYTE_ARRAY_INPUT_STREAM_H
+#endif// OZERO_IO_BYTE_ARRAY_INPUT_STREAM_H

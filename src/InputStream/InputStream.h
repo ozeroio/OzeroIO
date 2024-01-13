@@ -8,8 +8,8 @@
  * provide a method that returns the next unsigned char of input.
  */
 
-#ifndef OZEROIO_IO_INPUT_STREAM_H
-#define OZEROIO_IO_INPUT_STREAM_H 1
+#ifndef OZERO_IO_INPUT_STREAM_H
+#define OZERO_IO_INPUT_STREAM_H 1
 
 #include <Closeable/Closeable.h>
 
@@ -71,4 +71,4 @@ public:
 	virtual int skip(int n);
 };
 
-#endif// OZEROIO_IO_INPUT_STREAM_H
+#endif// OZERO_IO_INPUT_STREAM_H

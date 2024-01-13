@@ -1,17 +1,20 @@
-#if OZEROIO_IO_HARDWARE_SERIAL_SUPPORT_ENABLED == 1
+#if OZERO_IO_HARDWARE_SERIAL_SUPPORT_ENABLED == 1
 
 #include "HardwareSerialOutputStream.h"
-#include <Arduino.h>
+
+HardwareSerialOutputStream::HardwareSerialOutputStream(HardwareSerial *hardwareSerial)
+	: hardwareSerial(hardwareSerial) {
+}
 
 void HardwareSerialOutputStream::write(unsigned char b) {
-	Serial.write(b);
+	hardwareSerial->write(b);
 }
 
 void HardwareSerialOutputStream::write(unsigned char *b, int len) {
 	if (b == nullptr || len == 0) {
 		return;
 	}
-	Serial.write(b, len);
+	hardwareSerial->write(b, len);
 }
 
-#endif// OZEROIO_IO_HARDWARE_SERIAL_SUPPORT_ENABLED
+#endif// OZERO_IO_HARDWARE_SERIAL_SUPPORT_ENABLED

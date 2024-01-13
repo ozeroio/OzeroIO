@@ -14,8 +14,8 @@
  * methods as well as provide additional methods and fields.
  */
 
-#ifndef OZEROIO_IO_FILTER_OUTPUT_STREAM_H
-#define OZEROIO_IO_FILTER_OUTPUT_STREAM_H 1
+#ifndef OZERO_IO_FILTER_OUTPUT_STREAM_H
+#define OZERO_IO_FILTER_OUTPUT_STREAM_H 1
 
 #include <OutputStream/OutputStream.h>
 
@@ -109,4 +109,4 @@ public:
 	void reset() override;
 };
 
-#endif// OZEROIO_IO_FILTER_OUTPUT_STREAM_H
+#endif// OZERO_IO_FILTER_OUTPUT_STREAM_H

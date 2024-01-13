@@ -1,25 +1,29 @@
 /**
  * Ozero IO
  *
- * A HardwareSerialInputStream obtains input bytes from a serial port.
+ * A hardware serial input stream obtains input bytes from a serial port.
  */
 
-#if OZEROIO_IO_HARDWARE_SERIAL_SUPPORT_ENABLED == 1
+#if OZERO_IO_HARDWARE_SERIAL_SUPPORT_ENABLED == 1
 
-#ifndef OZEROIO_IO_HARDWARE_SERIAL_INPUT_STREAM_H
-#define OZEROIO_IO_HARDWARE_SERIAL_INPUT_STREAM_H 1
+#ifndef OZERO_IO_HARDWARE_SERIAL_INPUT_STREAM_H
+#define OZERO_IO_HARDWARE_SERIAL_INPUT_STREAM_H 1
 
+#include <HardwareSerial.h>
 #include <InputStream/InputStream.h>
 #include <SerialInputStream/SerialInputStream.h>
 
 class HardwareSerialInputStream : public SerialInputStream {
+
+	HardwareSerial *hardwareSerial;
+
 public:
 	/**
 	 * Public constructor.
 	 *
-	 * @param baudRate
+	 * @param hardwareSerial
 	 */
-	HardwareSerialInputStream() = default;
+	explicit HardwareSerialInputStream(HardwareSerial *hardwareSerial);
 
 	/**
 	 * Returns the number of bytes that can be read(or skipped over) from this
@@ -45,6 +49,6 @@ public:
 	using InputStream::read;
 };
 
-#endif// OZEROIO_IO_HARDWARE_SERIAL_INPUT_STREAM_H
+#endif// OZERO_IO_HARDWARE_SERIAL_INPUT_STREAM_H
 
-#endif// OZEROIO_IO_HARDWARE_SERIAL_SUPPORT_ENABLED
+#endif// OZERO_IO_HARDWARE_SERIAL_SUPPORT_ENABLED

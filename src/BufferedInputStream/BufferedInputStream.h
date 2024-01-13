@@ -19,8 +19,8 @@
  * the contained input stream.
  */
 
-#ifndef OZEROIO_IO_BUFFERED_INPUT_STREAM_H
-#define OZEROIO_IO_BUFFERED_INPUT_STREAM_H 1
+#ifndef OZERO_IO_BUFFERED_INPUT_STREAM_H
+#define OZERO_IO_BUFFERED_INPUT_STREAM_H 1
 
 #include <FilterInputStream/FilterInputStream.h>
 #include <InputStream/InputStream.h>
@@ -191,4 +191,4 @@ private:
 	void fillBuffer();
 };
 
-#endif// OZEROIO_IO_BUFFERED_INPUT_STREAM_H
+#endif// OZERO_IO_BUFFERED_INPUT_STREAM_H

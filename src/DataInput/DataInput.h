@@ -6,8 +6,8 @@
  * arduino types.
  */
 
-#ifndef OZEROIO_IO_DATA_INPUT_H
-#define OZEROIO_IO_DATA_INPUT_H 1
+#ifndef OZERO_IO_DATA_INPUT_H
+#define OZERO_IO_DATA_INPUT_H 1
 
 class DataInput {
 public:
@@ -128,4 +128,4 @@ public:
 	//	virtual int skip(int n) = 0;
 };
 
-#endif// OZEROIO_IO_DATA_INPUT_H
+#endif// OZERO_IO_DATA_INPUT_H

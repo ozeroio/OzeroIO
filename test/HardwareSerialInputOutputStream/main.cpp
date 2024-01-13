@@ -22,8 +22,8 @@ void setup() {
 
 	auto *streamBuffer = new uint8_t[16];
 
-	HardwareSerialInputStream is;
-	HardwareSerialOutputStream os;
+	HardwareSerialInputStream is(&Serial);
+	HardwareSerialOutputStream os(&Serial);
 	BufferedOutputStream bos(&os, streamBuffer, 16);
 
 	assertTrueThat("Mark is not supported", !is.markSupported());

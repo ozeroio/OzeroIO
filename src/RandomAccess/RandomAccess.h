@@ -4,8 +4,8 @@
  * Interface derived from DataInput, DataOutput, Closeable and Seekable.
  */
 
-#ifndef OZEROIO_IO_RANDOM_ACCESS_H
-#define OZEROIO_IO_RANDOM_ACCESS_H 1
+#ifndef OZERO_IO_RANDOM_ACCESS_H
+#define OZERO_IO_RANDOM_ACCESS_H 1
 
 #include <Closeable/Closeable.h>
 #include <DataInput/DataInput.h>
@@ -16,4 +16,4 @@ class RandomAccess : public virtual DataOutput, public virtual DataInput, public
 	virtual int skip(int n) = 0;
 };
 
-#endif// OZEROIO_IO_RANDOM_ACCESS_H
+#endif// OZERO_IO_RANDOM_ACCESS_H

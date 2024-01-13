@@ -5,8 +5,8 @@
  * unsigned char array.
  */
 
-#ifndef OZEROIO_IO_RANDOM_ACCESS_BYTE_ARRAY_H
-#define OZEROIO_IO_RANDOM_ACCESS_BYTE_ARRAY_H 1
+#ifndef OZERO_IO_RANDOM_ACCESS_BYTE_ARRAY_H
+#define OZERO_IO_RANDOM_ACCESS_BYTE_ARRAY_H 1
 
 #include <Closeable/Closeable.h>
 #include <RandomAccess/RandomAccess.h>
@@ -96,4 +96,4 @@ public:
 	int skip(int n) override;
 };
 
-#endif// OZEROIO_IO_RANDOM_ACCESS_BYTE_ARRAY_H
+#endif// OZERO_IO_RANDOM_ACCESS_BYTE_ARRAY_H

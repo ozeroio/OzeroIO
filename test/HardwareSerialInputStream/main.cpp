@@ -18,8 +18,8 @@ void setup() {
 
 	log("Initializing...");
 
-	HardwareSerialInputStream is;
-	HardwareSerialOutputStream os;
+	HardwareSerialInputStream is(&Serial);
+	HardwareSerialOutputStream os(&Serial);
 
 	assertTrueThat("Mark is not supported", !is.markSupported());
 	log("Echoing from now on...");

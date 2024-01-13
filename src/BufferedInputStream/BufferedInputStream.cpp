@@ -1,7 +1,7 @@
 #include "BufferedInputStream.h"
 #include <InputStream/InputStream.h>
-#include <limits.h>
-#include <string.h>
+#include <climits>
+#include <cstring>
 
 BufferedInputStream::BufferedInputStream(InputStream *inputStream, unsigned char *buf, const int size)
 	: FilterInputStream(inputStream),

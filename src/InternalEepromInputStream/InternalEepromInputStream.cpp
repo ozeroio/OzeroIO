@@ -1,4 +1,4 @@
-#if OZEROIO_IO_INTERNAL_EEPROM_SUPPORT_ENABLED == 1
+#if OZERO_IO_INTERNAL_EEPROM_SUPPORT_ENABLED == 1
 
 #include "InternalEepromInputStream.h"
 #include <EEPROM.h>
@@ -7,7 +7,7 @@
 
 InternalEepromInputStream::InternalEepromInputStream() : pos(0),
 														 markPos(0) {
-	auto size = EEPROM.length();
+	uint32_t size = EEPROM.length();
 
 	// Int is used to address the stream, so lets make sure we don't overflow in any 16bit int archs.
 	eepromSize = (size > INT_MAX) ? INT_MAX : (int) size;
@@ -37,7 +37,7 @@ int InternalEepromInputStream::read(unsigned char *b, const int off, const int l
 		return 0;
 	}
 	const int n = ozero_min(eepromSize - pos, len);
-#ifdef ESP32
+#ifdef ARDUINO_ARCH_ESP32
 	int readBytes = (int) EEPROM.readBytes(pos, &b[off], n);
 	pos += readBytes;
 	return readBytes;
@@ -59,4 +59,4 @@ void InternalEepromInputStream::seek(int pos) {
 	}
 }
 
-#endif// OZEROIO_IO_INTERNAL_EEPROM_SUPPORT_ENABLED
+#endif// OZERO_IO_INTERNAL_EEPROM_SUPPORT_ENABLED

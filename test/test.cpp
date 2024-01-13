@@ -336,7 +336,7 @@ void testWriteSupportedTypes(DataOutput *out, uint8_t *streamBuffer, int32_t siz
 	int n = 0;
 	out->write(0xff);
 	assertTrue(streamBuffer[n++] == 0xff);
-#ifdef ESP32
+#ifdef ARDUINO_ARCH_ESP32
 	out->writeInt(16842496);
 	assertTrue(streamBuffer[n++] == 0x00);
 	assertTrue(streamBuffer[n++] == 0xff);
@@ -379,7 +379,7 @@ void testWriteSupportedTypes(DataOutput *out, uint8_t *streamBuffer, int32_t siz
 	assertTrue(streamBuffer[n++] == 0xa8);
 	assertTrue(streamBuffer[n++] == 0xc1);
 	// https://www.binaryconvert.com/result_double.html?decimal=045050049046049
-#ifdef ESP32
+#ifdef ARDUINO_ARCH_ESP32
 	out->writeDouble(-21.1);
 	assertTrue(streamBuffer[n++] == 0x9a);
 	assertTrue(streamBuffer[n++] == 0x99);
@@ -408,7 +408,7 @@ void testEepromWriteSupportedTypes(DataOutput *out, ExternalEeprom *eeprom, int3
 	int n = 0;
 	out->write(0xff);
 	assertTrue(eeprom->read(n++) == 0xff);
-#ifdef ESP32
+#ifdef ARDUINO_ARCH_ESP32
 	out->writeInt(16842496);
 	assertTrue(eeprom->read(n++) == 0x00);
 	assertTrue(eeprom->read(n++) == 0xff);
@@ -451,7 +451,7 @@ void testEepromWriteSupportedTypes(DataOutput *out, ExternalEeprom *eeprom, int3
 	assertTrue(eeprom->read(n++) == 0xa8);
 	assertTrue(eeprom->read(n++) == 0xc1);
 	// https://www.binaryconvert.com/result_double.html?decimal=045050049046049
-#ifdef ESP32
+#ifdef ARDUINO_ARCH_ESP32
 	out->writeDouble(-21.1);
 	assertTrue(eeprom->read(n++) == 0x9a);
 	assertTrue(eeprom->read(n++) == 0x99);
@@ -479,7 +479,7 @@ void testReadSupportedTypes(DataInput *in, uint8_t *streamBuffer, int32_t size) 
 	initializeBuffer(streamBuffer, size, false);
 	uint8_t data[] = {
 			0xff,// byte
-#ifdef ESP32
+#ifdef ARDUINO_ARCH_ESP32
 			0x00, 0xff, 0x00, 0x01,// int (32 bit)
 			0x06, 0xff, 0x00, 0xf1,// uint (32 bit)
 #else
@@ -495,7 +495,7 @@ void testReadSupportedTypes(DataInput *in, uint8_t *streamBuffer, int32_t size) 
 			0xcd, 0xcc, 0xa8, 0x41,// float
 			0xcd, 0xcc, 0xa8, 0xc1,// float
 
-#ifdef ESP32
+#ifdef ARDUINO_ARCH_ESP32
 			0x9a, 0x99, 0x99, 0x99, 0x99, 0x19, 0x35, 0xc0,// double (64 bit)
 #else
 			0xcd, 0xcc, 0xa8, 0xc1,// double (32 bit)
@@ -504,7 +504,7 @@ void testReadSupportedTypes(DataInput *in, uint8_t *streamBuffer, int32_t size) 
 			0x01};// bool
 	memcpy(streamBuffer, data, sizeof(data));
 	assertTrue(in->read() == 0xff);
-#ifdef ESP32
+#ifdef ARDUINO_ARCH_ESP32
 	assertTrue(in->readInt() == 16842496);
 	assertTrue(in->readUnsignedInt() == 4043374342);
 #else
@@ -529,7 +529,7 @@ void testEepromReadSupportedTypes(DataInput *in, ExternalEeprom *eeprom, int32_t
 	initializeEeprom(eeprom, size, false);
 	uint8_t data[] = {
 			0xff,// byte
-#ifdef ESP32
+#ifdef ARDUINO_ARCH_ESP32
 			0x00, 0xff, 0x00, 0x01,// int (32 bit)
 			0x06, 0xff, 0x00, 0xf1,// uint (32 bit)
 #else
@@ -545,7 +545,7 @@ void testEepromReadSupportedTypes(DataInput *in, ExternalEeprom *eeprom, int32_t
 			0xcd, 0xcc, 0xa8, 0x41,// float
 			0xcd, 0xcc, 0xa8, 0xc1,// float
 
-#ifdef ESP32
+#ifdef ARDUINO_ARCH_ESP32
 			0x9a, 0x99, 0x99, 0x99, 0x99, 0x19, 0x35, 0xc0,// double (64 bit)
 #else
 			0xcd, 0xcc, 0xa8, 0xc1,// double (32 bit)
@@ -554,7 +554,7 @@ void testEepromReadSupportedTypes(DataInput *in, ExternalEeprom *eeprom, int32_t
 			0x01};// bool
 	eeprom->writeBytes(0, data, sizeof(data));
 	assertTrue(in->read() == 0xff);
-#ifdef ESP32
+#ifdef ARDUINO_ARCH_ESP32
 	assertTrue(in->readInt() == 16842496);
 	assertTrue(in->readUnsignedInt() == 4043374342);
 #else

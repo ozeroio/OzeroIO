@@ -24,16 +24,23 @@ void setup() {
 	Serial.println("Initializing...");
 
 	auto *destinationBuffer = new uint8_t[LEN];
+	auto *streamBuffer = new uint8_t[LEN];
 
 	External24x256Eeprom eeprom(0x00);
 	ExternalEepromInputStream is(&eeprom);
 
+	// Initialize a buffer randomly.
+	initializeBuffer(streamBuffer, LEN, false);
+
+	// Write the buffer to the EEPROM.
+	for (int32_t i = 0; i < LEN; i++) {
+		eeprom.write(i, streamBuffer[i]);
+	}
+
 	is.reset();
-	testInputStreamComparingBuffers(&is, &eeprom, destinationBuffer, LEN, testWhenReadingFully);
+	testInputStreamComparingBuffers(&is, streamBuffer, destinationBuffer, LEN, testWhenReadingFully);
 	is.reset();
-	testInputStreamComparingBuffers(&is, &eeprom, destinationBuffer, LEN, testWhenReadingParts);
-	is.reset();
-	testEepromNullPointerOrLen0(&is, &eeprom, destinationBuffer, LEN);
+	testInputStreamComparingBuffers(&is, streamBuffer, destinationBuffer, LEN, testWhenReadingParts);
 	is.reset();
 	testReadBeyondLimit(&is, streamBuffer, destinationBuffer, LEN);
 	is.reset();

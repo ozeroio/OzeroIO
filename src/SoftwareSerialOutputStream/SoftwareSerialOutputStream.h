@@ -4,10 +4,10 @@
  * A software serial output stream is a output stream to write in a serial port.
  */
 
-#if OZEROIO_IO_SOFTWARE_SERIAL_SUPPORT_ENABLED == 1
+#if OZERO_IO_SOFTWARE_SERIAL_SUPPORT_ENABLED == 1
 
-#ifndef OZEROIO_IO_SOFTWARE_SERIAL_OUTPUT_STREAM_H
-#define OZEROIO_IO_SOFTWARE_SERIAL_OUTPUT_STREAM_H 1
+#ifndef OZERO_IO_SOFTWARE_SERIAL_OUTPUT_STREAM_H
+#define OZERO_IO_SOFTWARE_SERIAL_OUTPUT_STREAM_H 1
 
 #include <OutputStream/OutputStream.h>
 #include <SerialOutputStream/SerialOutputStream.h>
@@ -39,6 +39,6 @@ public:
 	void write(unsigned char *b, int off, int len) override;
 };
 
-#endif// OZEROIO_IO_SOFTWARE_SERIAL_OUTPUT_STREAM_H
+#endif// OZERO_IO_SOFTWARE_SERIAL_OUTPUT_STREAM_H
 
-#endif// OZEROIO_IO_SOFTWARE_SERIAL_SUPPORT_ENABLED
+#endif// OZERO_IO_SOFTWARE_SERIAL_SUPPORT_ENABLED

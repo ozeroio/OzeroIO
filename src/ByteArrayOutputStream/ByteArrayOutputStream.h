@@ -5,8 +5,8 @@
  * unsigned char array.
  */
 
-#ifndef OZEROIO_IO_BYTE_ARRAY_OUTPUT_STREAM_H
-#define OZEROIO_IO_BYTE_ARRAY_OUTPUT_STREAM_H 1
+#ifndef OZERO_IO_BYTE_ARRAY_OUTPUT_STREAM_H
+#define OZERO_IO_BYTE_ARRAY_OUTPUT_STREAM_H 1
 
 #include <SeekableOutputStream/SeekableOutputStream.h>
 
@@ -109,4 +109,4 @@ public:
 	void seek(int pos) override;
 };
 
-#endif// OZEROIO_IO_BYTE_ARRAY_OUTPUT_STREAM_H
+#endif// OZERO_IO_BYTE_ARRAY_OUTPUT_STREAM_H

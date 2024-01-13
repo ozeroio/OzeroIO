@@ -1,13 +1,13 @@
 /**
  * Ozero IO
  *
- * A SoftwareSerialInputStream obtains input bytes from a serial port.
+ * A software serial input stream obtains input bytes from a serial port.
  */
 
-#if OZEROIO_IO_SOFTWARE_SERIAL_SUPPORT_ENABLED == 1
+#if OZERO_IO_SOFTWARE_SERIAL_SUPPORT_ENABLED == 1
 
-#ifndef OZEROIO_IO_SOFTWARE_SERIAL_INPUT_STREAM_H
-#define OZEROIO_IO_SOFTWARE_SERIAL_INPUT_STREAM_H 1
+#ifndef OZERO_IO_SOFTWARE_SERIAL_INPUT_STREAM_H
+#define OZERO_IO_SOFTWARE_SERIAL_INPUT_STREAM_H 1
 
 #include <InputStream/InputStream.h>
 #include <SerialInputStream/SerialInputStream.h>
@@ -50,6 +50,6 @@ public:
 	int read(unsigned char *b, int off, int len) override;
 };
 
-#endif// OZEROIO_IO_SOFTWARE_SERIAL_INPUT_STREAM_H
+#endif// OZERO_IO_SOFTWARE_SERIAL_INPUT_STREAM_H
 
-#endif// OZEROIO_IO_SOFTWARE_SERIAL_SUPPORT_ENABLED
+#endif// OZERO_IO_SOFTWARE_SERIAL_SUPPORT_ENABLED

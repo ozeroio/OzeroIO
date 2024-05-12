@@ -1,20 +1,22 @@
+#if OZERO_IO_ASYNC_STREAM_ENABLED == 1
+
 #include "AsyncBufferedOutputStream.h"
 #include <cstring>
 
 AsyncBufferedOutputStream::AsyncBufferedOutputStream(OutputStream *outputStream, unsigned char *buf, const int size)
-	: BufferedOutputStream(outputStream, buf, size), flushTaskHandle(nullptr) {
+	: BufferedOutputStream(outputStream, buf, size), task(nullptr) {
 	xTaskCreate(
 			reinterpret_cast<TaskFunction_t>(AsyncBufferedOutputStream::flusherTask),
 			OZERO_IO_ASYNC_BUFFERED_INPUT_STREAM_TASK_NAME,
 			OZERO_IO_ASYNC_BUFFERED_INPUT_STREAM_TASK_STACK_SIZE,
 			this,
 			OZERO_IO_ASYNC_BUFFERED_INPUT_STREAM_TASK_PRIORITY,
-			&flushTaskHandle);
+			&task);
 	queue = xQueueCreate(OZERO_IO_ASYNC_BUFFERED_INPUT_STREAM_QUEUE_SIZE, sizeof(unsigned char) * size);
 }
 
 AsyncBufferedOutputStream::~AsyncBufferedOutputStream() {
-	vTaskDelete(flushTaskHandle);
+	vTaskDelete(task);
 	vQueueDelete(queue);
 }
 
@@ -80,3 +82,5 @@ void AsyncBufferedOutputStream::flusherTask(const void *parameters) {
 		}
 	}
 }
+
+#endif// OZERO_IO_ASYNC_STREAM_ENABLED == 1

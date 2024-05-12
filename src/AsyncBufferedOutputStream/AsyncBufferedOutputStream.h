@@ -5,6 +5,8 @@
 #ifndef OZERO_IO_ASYNC_BUFFERED_INPUT_STREAM_H
 #define OZERO_IO_ASYNC_BUFFERED_INPUT_STREAM_H 1
 
+#if OZERO_IO_ASYNC_STREAM_ENABLED == 1
+
 #define OZERO_IO_ASYNC_BUFFERED_INPUT_STREAM_TASK_NAME ("Async Flusher")
 #define OZERO_IO_ASYNC_BUFFERED_INPUT_STREAM_TASK_STACK_SIZE (1024)
 #define OZERO_IO_ASYNC_BUFFERED_INPUT_STREAM_TASK_PRIORITY (1)
@@ -12,7 +14,9 @@
 
 #include <BufferedOutputStream/BufferedOutputStream.h>
 #include <InputStream/InputStream.h>
+#include <freertos/FreeRTOS.h>
 #include <freertos/queue.h>
+#include <freertos/task.h>
 
 class AsyncBufferedOutputStream : public BufferedOutputStream {
 
@@ -34,7 +38,7 @@ public:
 	void write(unsigned char *b, int off, int len) override;
 
 protected:
-	TaskHandle_t flushTaskHandle;
+	TaskHandle_t task;
 	QueueHandle_t queue;
 
 	/**
@@ -50,4 +54,5 @@ protected:
 	static void flusherTask(const void *parameters);
 };
 
+#endif// OZERO_IO_ASYNC_STREAM_ENABLED
 #endif// OZERO_IO_ASYNC_BUFFERED_INPUT_STREAM_H

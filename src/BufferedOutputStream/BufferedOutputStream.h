@@ -26,12 +26,17 @@ protected:
 	int size;
 
 	/**
-	 * The number of valid bytes in the buffer. This value is always
+	 * The number of pos bytes in the buffer. This value is always
 	 * in the range <tt>0</tt> through <tt>len</tt>; elements
 	 * <tt>buf[0]</tt> through <tt>buf[pos-1]</tt> contain valid
 	 * unsigned char data.
 	 */
 	int pos;
+
+	/**
+	 * Size of the async buffer.
+	 */
+	int asyncSize;
 
 	/**
 	 * Flag to determine if there is a marker on this stream.
@@ -121,11 +126,11 @@ public:
 	 */
 	void reset() override;
 
-private:
+protected:
 	/**
 	 * Flush the internal buffer
 	 */
-	void flushBuffer();
+	virtual void flushBuffer();
 };
 
 #endif// OZERO_IO_BUFFERED_OUTPUT_STREAM_H

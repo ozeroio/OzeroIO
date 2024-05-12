@@ -26,7 +26,6 @@ protected:
 	 */
 	OutputStream *outputStream;
 
-public:
 	/**
 	 * Creates an output stream filter built on top of the specified
 	 * underlying output stream.
@@ -35,6 +34,8 @@ public:
 	 *                		   the field <tt>this->out</tt> for later use.
 	 */
 	explicit FilterOutputStream(OutputStream *outputStream);
+
+public:
 
 	/**
 	 * Writes the specified <code>unsigned char</code> to this output stream.

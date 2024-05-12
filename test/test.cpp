@@ -134,6 +134,9 @@ void testWhenSendingParts(OutputStream *os, uint8_t *streamBuffer, uint8_t *sour
 	initializeBuffer(streamBuffer, size, false);
 	initializeBuffer(sourceBuffer, size, true);
 	writeParts(os, sourceBuffer, size);
+
+	// Async flush wait.
+	delay(100);
 	measureTimeBegin();
 	assertTrueThat("Buffers match", compareBuffers(sourceBuffer, streamBuffer, size));
 	measureTimeEnd();
@@ -150,7 +153,7 @@ void testEepromWhenSendingParts(OutputStream *os, ExternalEeprom *eeprom, uint8_
 }
 
 void testWhenSendingOneByOne(OutputStream *os, uint8_t *streamBuffer, uint8_t *sourceBuffer, int32_t size) {
-	log("testWhenSendingOneByOne");
+	logPair("testWhenSendingOneByOne, size: ", size);
 	initializeBuffer(streamBuffer, size, false);
 	initializeBuffer(sourceBuffer, size, true);
 	measureTimeBegin();
@@ -158,6 +161,9 @@ void testWhenSendingOneByOne(OutputStream *os, uint8_t *streamBuffer, uint8_t *s
 		os->write(sourceBuffer[i]);
 	}
 	os->flush();
+
+	// Allows async to flush.
+	delay(100);
 	measureTimeEnd();
 	assertTrue(compareBuffers(sourceBuffer, streamBuffer, size));
 }
@@ -202,6 +208,7 @@ void testWriteBeyondLimit(OutputStream *os, uint8_t *streamBuffer, uint8_t *sour
 	os->write(sourceBuffer, (int) size - 10);
 	os->write(sourceBuffer, 20);
 	os->flush();
+	delay(100);
 	assertTrue(compareBuffers(sourceBuffer, &streamBuffer[size - 10], 10));
 }
 
@@ -212,6 +219,7 @@ void testEepromWriteBeyondLimit(OutputStream *os, ExternalEeprom *eeprom, uint8_
 	os->write(sourceBuffer, (int) size - 10);
 	os->write(sourceBuffer, 20);
 	os->flush();
+	delay(100);
 	measureTimeBegin();
 	uint8_t b[10] = {0};
 	eeprom->readBytes(size - 10, b, 10);
@@ -232,6 +240,7 @@ void testMark(OutputStream *os, uint8_t *streamBuffer, uint8_t *sourceBuffer, in
 	uint8_t b[4] = {0xab, 0xba, 0xcd, 0xdc};
 	os->write(b, 4);
 	os->flush();
+	delay(100);
 	assertTrue(compareBuffers(&streamBuffer[len], b, 4));
 }
 
@@ -263,6 +272,7 @@ void testEepromMark(OutputStream *os, ExternalEeprom *eeprom, uint8_t *sourceBuf
 	uint8_t b[4] = {0xab, 0xba, 0xcd, 0xdc};
 	os->write(b, 4);
 	os->flush();
+	delay(100);
 
 	// Read it again now, after resetting.
 	eeprom->readBytes(len, r, 4);

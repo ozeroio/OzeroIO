@@ -15,8 +15,6 @@
 #include <BufferedOutputStream/BufferedOutputStream.h>
 #include <InputStream/InputStream.h>
 #include <freertos/FreeRTOS.h>
-#include <freertos/queue.h>
-#include <freertos/task.h>
 
 class AsyncBufferedOutputStream : public BufferedOutputStream {
 

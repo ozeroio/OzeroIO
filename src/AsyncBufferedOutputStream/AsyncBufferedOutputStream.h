@@ -7,14 +7,19 @@
 
 #if OZERO_IO_ASYNC_STREAM_ENABLED == 1
 
-#define OZERO_IO_ASYNC_BUFFERED_INPUT_STREAM_TASK_NAME ("Async Flusher")
-#define OZERO_IO_ASYNC_BUFFERED_INPUT_STREAM_TASK_STACK_SIZE (1024)
-#define OZERO_IO_ASYNC_BUFFERED_INPUT_STREAM_TASK_PRIORITY (1)
-#define OZERO_IO_ASYNC_BUFFERED_INPUT_STREAM_QUEUE_SIZE (1)
+#define OZERO_IO_ASYNC_BUFFERED_OUTPUT_STREAM_TASK_NAME ("Async Flusher")
+#define OZERO_IO_ASYNC_BUFFERED_OUTPUT_STREAM_TASK_PRIORITY (1)
+#define OZERO_IO_ASYNC_BUFFERED_OUTPUT_STREAM_QUEUE_SIZE (1)
+
+#ifndef OZERO_IO_ASYNC_BUFFERED_OUTPUT_STREAM_TASK_STACK_SIZE
+#define OZERO_IO_ASYNC_BUFFERED_OUTPUT_STREAM_TASK_STACK_SIZE (1024)
+#endif
 
 #include <BufferedOutputStream/BufferedOutputStream.h>
 #include <InputStream/InputStream.h>
 #include <freertos/FreeRTOS.h>
+#include <freertos/queue.h>
+#include <freertos/task.h>
 
 class AsyncBufferedOutputStream : public BufferedOutputStream {
 

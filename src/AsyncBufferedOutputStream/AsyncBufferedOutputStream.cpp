@@ -7,12 +7,12 @@ AsyncBufferedOutputStream::AsyncBufferedOutputStream(OutputStream *outputStream,
 	: BufferedOutputStream(outputStream, buf, size), task(nullptr) {
 	xTaskCreate(
 			reinterpret_cast<TaskFunction_t>(AsyncBufferedOutputStream::flusherTask),
-			OZERO_IO_ASYNC_BUFFERED_INPUT_STREAM_TASK_NAME,
-			OZERO_IO_ASYNC_BUFFERED_INPUT_STREAM_TASK_STACK_SIZE,
+			OZERO_IO_ASYNC_BUFFERED_OUTPUT_STREAM_TASK_NAME,
+			OZERO_IO_ASYNC_BUFFERED_OUTPUT_STREAM_TASK_STACK_SIZE,
 			this,
-			OZERO_IO_ASYNC_BUFFERED_INPUT_STREAM_TASK_PRIORITY,
+			OZERO_IO_ASYNC_BUFFERED_OUTPUT_STREAM_TASK_PRIORITY,
 			&task);
-	queue = xQueueCreate(OZERO_IO_ASYNC_BUFFERED_INPUT_STREAM_QUEUE_SIZE, sizeof(unsigned char) * size);
+	queue = xQueueCreate(OZERO_IO_ASYNC_BUFFERED_OUTPUT_STREAM_QUEUE_SIZE, sizeof(unsigned char) * size);
 }
 
 AsyncBufferedOutputStream::~AsyncBufferedOutputStream() {

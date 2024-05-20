@@ -10,6 +10,8 @@
 
 class DataOutput {
 public:
+	virtual ~DataOutput() = default;
+
 	/**
 	 * Writes len bytes from the specified unsigned char array starting at offset off.
 	 *

@@ -9,6 +9,7 @@
 
 class Seekable {
 public:
+	virtual ~Seekable() = default;
 	virtual void seek(int pos) = 0;
 };
 

@@ -41,8 +41,21 @@ public:
 	void write(unsigned char *b, int off, int len) override;
 
 protected:
+
+	/**
+	 * Task to asynchronously flush the buffer.
+	 */
 	TaskHandle_t task;
+
+	/**
+	 * Queue handle to send flushable buffers to the flusher task.
+	 */
 	QueueHandle_t queue;
+
+	/**
+	 * Size of the async buffer.
+	 */
+	int asyncPos;
 
 	/**
 	 * Flush the internal buffer

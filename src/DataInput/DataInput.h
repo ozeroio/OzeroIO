@@ -11,6 +11,8 @@
 
 class DataInput {
 public:
+	virtual ~DataInput() = default;
+
 	/**
 	 * Reads the next unsigned char.
 	 */
@@ -118,14 +120,6 @@ public:
 	 * @return double
 	 */
 	virtual double readDouble();
-
-	//	/**
-	//	 * Skips n bytes of the stream.
-	//	 *
-	//	 * @param n
-	//	 * @return unsigned int The number of skipped bytes.
-	//	 */
-	//	virtual int skip(int n) = 0;
 };
 
 #endif// OZERO_IO_DATA_INPUT_H

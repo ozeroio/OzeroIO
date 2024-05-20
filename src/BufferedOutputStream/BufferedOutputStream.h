@@ -34,11 +34,6 @@ protected:
 	int pos;
 
 	/**
-	 * Size of the async buffer.
-	 */
-	int asyncSize;
-
-	/**
 	 * Flag to determine if there is a marker on this stream.
 	 */
 	bool marked;
@@ -59,11 +54,6 @@ public:
 	 * @param   size   the buffer size.
 	 */
 	BufferedOutputStream(OutputStream *outputStream, unsigned char *buf, int size);
-
-	/**
-	 * Virtual destructor.
-	 */
-	virtual ~BufferedOutputStream() = default;
 
 	/**
 	 * Writes the specified unsigned char to this buffered output stream.

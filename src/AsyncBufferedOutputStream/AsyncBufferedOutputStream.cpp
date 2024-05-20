@@ -4,7 +4,7 @@
 #include <cstring>
 
 AsyncBufferedOutputStream::AsyncBufferedOutputStream(OutputStream *outputStream, unsigned char *buf, const int size)
-	: BufferedOutputStream(outputStream, buf, size), task(nullptr) {
+	: BufferedOutputStream(outputStream, buf, size), task(nullptr), queue(nullptr) {
 	xTaskCreate(
 			reinterpret_cast<TaskFunction_t>(AsyncBufferedOutputStream::flusherTask),
 			OZERO_IO_ASYNC_BUFFERED_OUTPUT_STREAM_TASK_NAME,
@@ -16,8 +16,12 @@ AsyncBufferedOutputStream::AsyncBufferedOutputStream(OutputStream *outputStream,
 }
 
 AsyncBufferedOutputStream::~AsyncBufferedOutputStream() {
-	vTaskDelete(task);
-	vQueueDelete(queue);
+	if (task != nullptr) {
+		vTaskDelete(task);
+	}
+	if (queue != nullptr) {
+		vQueueDelete(queue);
+	}
 }
 
 void AsyncBufferedOutputStream::write(unsigned char *b, const int off, const int len) {
@@ -64,8 +68,8 @@ void AsyncBufferedOutputStream::write(unsigned char *b, const int off, const int
 }
 
 void AsyncBufferedOutputStream::flushBuffer() {
-	asyncSize = pos;
-	if (asyncSize > 0) {
+	asyncPos = pos;
+	if (asyncPos > 0) {
 		xQueueSend(queue, buf, portMAX_DELAY);
 		portYIELD();
 	}
@@ -78,7 +82,7 @@ void AsyncBufferedOutputStream::flusherTask(const void *parameters) {
 	unsigned char buffer[instance->size];
 	for (;;) {
 		if (xQueueReceive(instance->queue, &buffer, portMAX_DELAY) == pdTRUE) {
-			instance->outputStream->write(buffer, 0, instance->asyncSize);
+			instance->outputStream->write(buffer, 0, instance->asyncPos);
 		}
 	}
 }

@@ -16,6 +16,10 @@ bool InputStream::markSupported() {
 	return false;
 }
 
+bool InputStream::isMarked() {
+	return false;
+}
+
 int InputStream::read(unsigned char *b, const int len) {
 	return read(b, 0, len);
 }

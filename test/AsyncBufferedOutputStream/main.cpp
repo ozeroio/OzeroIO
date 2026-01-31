@@ -21,7 +21,6 @@ void setup() {
 	log("Initializing...");
 	auto *streamBuffer = new uint8_t[LEN];
 	auto *buffer = new uint8_t[BUFFER_SIZE];
-
 	auto *sourceBuffer = new uint8_t[LEN];
 
 	ByteArrayOutputStream os(streamBuffer, LEN);

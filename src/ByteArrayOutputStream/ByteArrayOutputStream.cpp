@@ -1,6 +1,6 @@
 #include "ByteArrayOutputStream.h"
-#include <io.h>
 #include <cstring>
+#include <io.h>
 
 ByteArrayOutputStream::ByteArrayOutputStream(unsigned char *buf, const int size)
 	: buf(buf), size(size), pos(0), markPos(0) {

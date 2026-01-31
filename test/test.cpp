@@ -18,6 +18,14 @@ void initializeEeprom(ExternalEeprom *eeprom, const int32_t len, const bool rand
 	eeprom->setBytes(0, (rand ? random() : 0) & 0xff, len);
 }
 
+void logBuffer(unsigned char *buffer, const int32_t start, const int32_t len) {
+	for (int i = 0; i < len; i++) {
+		Serial.print(buffer[i], HEX);
+		Serial.print(" ");
+	}
+	Serial.println();
+}
+
 bool compareBufferToEeprom(uint8_t *a, ExternalEeprom *eeprom, const int32_t len) {
 	bool match = true;
 	for (int i = 0; i < len; i++) {

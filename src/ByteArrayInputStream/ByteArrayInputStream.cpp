@@ -1,6 +1,6 @@
 #include "ByteArrayInputStream.h"
-#include <io.h>
 #include <cstring>
+#include <io.h>
 
 ByteArrayInputStream::ByteArrayInputStream(unsigned char *buf, const int size) : buf(buf),
 																				 size(size) {
@@ -28,7 +28,7 @@ int ByteArrayInputStream::read() {
 }
 
 int ByteArrayInputStream::read(unsigned char *b, const int off, const int len) {
-	if (b == nullptr || len == 0) {
+	if (b == nullptr || len <= 0) {
 		return 0;
 	}
 	if (pos >= size) {

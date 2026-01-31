@@ -2,8 +2,8 @@
 
 #include "InternalEepromOutputStream.h"
 #include <EEPROM.h>
-#include <io.h>
 #include <climits>
+#include <io.h>
 
 InternalEepromOutputStream::InternalEepromOutputStream() : pos(0),
 														   markPos(0) {

@@ -26,30 +26,24 @@ void BufferedOutputStream::write(unsigned char *b, const int off, const int len)
 		return;
 	}
 
-	/*
-	 * If the request length exceeds the size of the output buffer,
-	 * flush the output buffer and then write the data directly.
-	 * In this way buffered streams will cascade harmlessly.
-	 */
+	// If the request length exceeds the size of the output buffer,
+	// flush the output buffer and then write the data directly.
+	// In this way buffered streams will cascade harmlessly.
 	if (len >= size) {
 		flushBuffer();
 		outputStream->write(b, off, len);
 		return;
 	}
 
-	/*
-	 * If the request length exceeds the size of the available space,
-	 * flush the output buffer.
-	 */
+	// If the request length exceeds the size of the available space,
+	// flush the output buffer.
 	const auto available = size - pos;
 	if (len > available) {
 		flushBuffer();
 	}
 
-	/*
-	 * The request length is smaller or equals than the remaining
-	 * available space inside the buffer.
-	 */
+	// The request length is smaller or equals than the remaining
+	// available space inside the buffer.
 	memcpy(&buf[pos], &b[off], len);
 
 	pos += len;

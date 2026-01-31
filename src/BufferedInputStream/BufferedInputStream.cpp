@@ -17,7 +17,7 @@ int BufferedInputStream::available() {
 	const int underliningAvailable = inputStream->available();
 	const int available = head - pos;
 
-	// Both available might overflow the singed int.
+	// Both available might overflow the signed int.
 	return available > (INT_MAX - underliningAvailable) ? INT_MAX : underliningAvailable + available;
 }
 
@@ -36,17 +36,17 @@ int BufferedInputStream::read(unsigned char *b, const int len) {
 }
 
 int BufferedInputStream::read(unsigned char *b, const int off, const int len) {
-	if (b == nullptr || len == 0) {
+	if (b == nullptr || off < 0 || len <= 0) {
 		return 0;
 	}
 	int n = 0;
 	for (;;) {
-		const int p = readPortion(b, off + n, len - n);
+		const int p = readWithBuffer(b, off + n, len - n);
 
 		// In case we couldn't read anything.
 		if (p <= 0) {
 
-			// If nothing was read so far, return the result from readPortion (potentially -1)
+			// If nothing was read so far, return the result from readWithBuffer (potentially -1)
 			// Otherwise, return n.
 			return (n == 0) ? p : n;
 		}
@@ -84,10 +84,14 @@ int BufferedInputStream::read() {
 void BufferedInputStream::shiftBuffer() {
 	if (pos > 0) {
 		marked = false;
+
+		// Head is the last valid position < size.
 		const int available = head - pos;
 		for (int i = 0; i < available; i++) {
 			buf[i] = buf[pos + i];
 		}
+
+		// More head `pos` x to the beginning of the buffer.
 		head -= pos;
 		pos = 0;
 	}
@@ -95,19 +99,32 @@ void BufferedInputStream::shiftBuffer() {
 
 void BufferedInputStream::fillBuffer() {
 	shiftBuffer();
+
+	// Right after shifting, head is the position to write new data.
+	// Space is the remaining space in the buffer.
 	const int space = size - head;
-	const int n = inputStream->read(buf, pos, space);
-	head = n;
+
+	// Read into the buffer at position head up to space bytes.
+	const int n = inputStream->read(buf, head, space);
+	if (n > 0) {
+		head += n;
+	}
 }
 
 void BufferedInputStream::mark() {
 	fillBuffer();
+
+	// After shift, the pos is always 0.
 	markPos = 0;
 	marked = true;
 }
 
 bool BufferedInputStream::markSupported() {
 	return true;
+}
+
+bool BufferedInputStream::isMarked() {
+	return marked;
 }
 
 int BufferedInputStream::skip(const int n) {
@@ -125,7 +142,13 @@ int BufferedInputStream::skip(const int n) {
 	return skipped;
 }
 
-int BufferedInputStream::readPortion(unsigned char *b, const int off, const int len) {
+int BufferedInputStream::readWithBuffer(unsigned char *b, const int off, const int len) {
+
+	// Validate parameters
+	if (b == nullptr || off < 0 || len < 0) {
+		return -1;
+	}
+
 	int available = head - pos;
 	if (available <= 0) {
 

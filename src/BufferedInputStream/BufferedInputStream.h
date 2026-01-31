@@ -52,12 +52,12 @@ protected:
 	 * <p>
 	 * This value is always in the range <code>0</code>
 	 * through <code>head</code>. If it is less
-	 * than <code>head</code>, then  <code>buf[pos]</code>
+	 * than <code>head</code>, then <code>buf[pos]</code>
 	 * is the next unsigned char to be supplied as input;
 	 * if it is equal to <code>head</code>, then
 	 * the  next <code>read</code> or <code>skip</code>
 	 * operation will require more bytes to be
-	 * read from the contained  input stream.
+	 * read from the contained input stream.
 	 */
 	int pos;
 

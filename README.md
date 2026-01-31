@@ -30,7 +30,7 @@ OzeroIO is a port-agnostic, modular I/O library that brings Java-like stream abs
 ### ⚡ Performance Features
 - **BufferedInputStream**: Efficient buffered reading with mark/reset support
 - **BufferedOutputStream**: Efficient buffered writing with async flushing option
-- **AsyncBufferedOutputStream**: Non-blocking asynchronous buffer flushing (FreeRTOS)
+- **AsyncBufferedOutputStream**: Non-blocking asynchronous buffer flushing with ring buffer pooling (FreeRTOS)
 
 ### 🔄 Flexible Composition
 - **FilterInputStream/FilterOutputStream**: Chainable stream decorators
@@ -178,7 +178,7 @@ RandomAccess (interface - combines all above)
 | **OutputStream** | Abstract base for all output | flush(), mark(), reset() |
 | **FilterOutputStream** | Decorator for output streams | Chains to other streams |
 | **BufferedOutputStream** | Buffered writing | Reduces I/O operations |
-| **AsyncBufferedOutputStream** | Async buffered writing | FreeRTOS task-based flushing |
+| **AsyncBufferedOutputStream** | Async buffered writing with ring buffer pooling | FreeRTOS task-based flushing, metadata-only queuing, minimal memory overhead |
 | **DataOutputStream** | Typed data writing | Writes primitives: int, float, double, etc. |
 | **ByteArrayOutputStream** | In-memory writing | Seeks within byte array |
 | **HardwareSerialOutputStream** | Serial port writing | Hardware UART interface |
@@ -270,12 +270,24 @@ float myFloat = data.readFloat();
 
 unsigned char buffer[1024];
 HardwareSerialOutputStream serial(&Serial);
+
+// Creates ring buffer pool with 2 buffers for async flushing
 AsyncBufferedOutputStream async(&serial, buffer, 1024);
 
-// Writes are buffered and flushed asynchronously
+// Writes are buffered and flushed asynchronously in a FreeRTOS task
 async.write((unsigned char*)"Hello", 5);
 // Returns immediately without blocking
+
+// Flush and wait for all pending operations to complete
+async.flush();  // Blocks until all queued writes finish
 ```
+
+**Key Features:**
+- **Ring Buffer Pooling**: Uses N buffers (default 2) to enable concurrent async operations
+- **Metadata-Only Queuing**: Only 8-byte metadata items queued, not full buffers (87% memory reduction)
+- **Counting Semaphore**: Allows up to N concurrent pending flushes
+- **Proper Synchronization**: Semaphore given back before writing to allow pending writes during slow stream operations
+- **Explicit Flush Control**: `flush()` method waits for all pending async operations to complete
 
 ### Random Access with Seeking
 

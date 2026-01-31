@@ -68,8 +68,8 @@ public:
 	 * The general contract for write(b, len) is that it should have exactly
 	 * the same effect as the call write(b, 0, len).
 	 *
-	 * @param b
-	 * @param len
+	 * @param b The array of bytes to write
+	 * @param len The number of bytes to write
 	 */
 	void write(unsigned char *b, int len) override;
 
@@ -108,6 +108,8 @@ public:
 
 	/**
 	 * Tests if this output stream supports the mark and reset methods.
+	 *
+	 * @return true if mark/reset is supported, false otherwise
 	 */
 	bool markSupported() override;
 

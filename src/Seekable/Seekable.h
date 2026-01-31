@@ -10,6 +10,12 @@
 class Seekable {
 public:
 	virtual ~Seekable() = default;
+
+	/**
+	 * Seeks to the desired position in the stream.
+	 *
+	 * @param pos The position to seek to
+	 */
 	virtual void seek(int pos) = 0;
 };
 

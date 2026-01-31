@@ -1,5 +1,9 @@
 /**
  * Ozero IO
+ *
+ * An asynchronous buffered output stream that buffers output and flushes it asynchronously
+ * in a separate FreeRTOS task. This allows non-blocking writes to be buffered and flushed
+ * without blocking the caller.
  */
 
 #ifndef OZERO_IO_ASYNC_BUFFERED_INPUT_STREAM_H
@@ -27,9 +31,9 @@ public:
 	/**
 	 * Public constructor.
 	 *
-	 * @param in
-	 * @param buf
-	 * @param size
+	 * @param inputStream The underlying output stream
+	 * @param buf The buffer to use for buffering
+	 * @param size The size of the buffer
 	 */
 	AsyncBufferedOutputStream(OutputStream *inputStream, unsigned char *buf, int size);
 
@@ -38,10 +42,17 @@ public:
 	 */
 	~AsyncBufferedOutputStream() override;
 
+	/**
+	 * Asynchronously writes len bytes from the specified unsigned char array
+	 * starting at offset off to this buffered output stream.
+	 *
+	 * @param b The array of bytes to write
+	 * @param off The start offset in the array
+	 * @param len The number of bytes to write
+	 */
 	void write(unsigned char *b, int off, int len) override;
 
 protected:
-
 	/**
 	 * Task to asynchronously flush the buffer.
 	 */
@@ -63,9 +74,9 @@ protected:
 	void flushBuffer() override;
 
 	/**
-	 * Flush task handler.
+	 * Flush task handler for asynchronously flushing the buffer.
 	 *
-	 * @param parameters
+	 * @param parameters Pointer to the AsyncBufferedOutputStream instance
 	 */
 	static void flusherTask(const void *parameters);
 };

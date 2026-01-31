@@ -21,12 +21,14 @@ public:
 	/**
 	 * Public constructor.
 	 *
-	 * @param hardwareSerial
+	 * @param hardwareSerial The hardware serial port to write to
 	 */
 	explicit HardwareSerialOutputStream(HardwareSerial *hardwareSerial);
 
 	/**
 	 * Writes the specified unsigned char to this output stream.
+	 *
+	 * @param b The unsigned char to be written
 	 */
 	void write(unsigned char b) override;
 
@@ -34,8 +36,8 @@ public:
 	 * Writes len bytes from the specified unsigned char array to
 	 * this output stream.
 	 *
-	 * @param b
-	 * @param len
+	 * @param b The array of bytes to write
+	 * @param len The number of bytes to write
 	 */
 	void write(unsigned char *b, int len) override;
 

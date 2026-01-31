@@ -39,7 +39,7 @@ public:
 	/**
 	 * Returns the number of bytes that can be read (or skipped over) from this input stream.
 	 *
-	 * @return
+	 * @return int The number of bytes that can be read without blocking
 	 */
 	int available() override;
 
@@ -51,7 +51,7 @@ public:
 	/**
 	 * Tests if this input stream supports the mark and reset methods.
 	 *
-	 * @return
+	 * @return true if mark/reset is supported, false otherwise
 	 */
 	bool markSupported() override;
 
@@ -63,7 +63,7 @@ public:
 	/**
 	 * Reads the next unsigned char of data from the input stream.
 	 *
-	 * @return
+	 * @return int The next unsigned char of data, or -1 if end of stream is reached
 	 */
 	int read() override;
 
@@ -71,12 +71,11 @@ public:
 	 * Reads up to <code>len</code> bytes of data from this buffer.
 	 * <p>
 	 *
-	 * @param      b     the buffer into which the data is read.
-	 * @param      off   the start offset in the destination array <code>b</code>
-	 * @param      len   the maximum number of bytes read.
-	 * @return     the total number of bytes read into the buffer, or
-	 *             <code>-1</code> if there is no more data because the end of
-	 *             the stream has been reached.
+	 * @param b the buffer into which the data is read.
+	 * @param off the start offset in the destination array <code>b</code>
+	 * @param len the maximum number of bytes read.
+	 * @return the total number of bytes read into the buffer, or <code>-1</code>
+	 * if there is no more data because the end of the stream has been reached.
 	 */
 	int read(unsigned char *b, int off, int len) override;
 

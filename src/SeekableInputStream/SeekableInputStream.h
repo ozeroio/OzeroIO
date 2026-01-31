@@ -1,5 +1,8 @@
 /**
  * Ozero IO
+ *
+ * A SeekableInputStream is an input stream that also supports seeking to a specific position
+ * in the stream. This interface combines the functionality of InputStream and Seekable.
  */
 
 #ifndef OZERO_IO_SEEKABLE_INPUT_STREAM_H

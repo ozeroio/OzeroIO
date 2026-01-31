@@ -24,9 +24,9 @@ public:
 	/**
 	 * Writes len bytes from the specified unsigned char array starting at offset off.
 	 *
-	 * @param b
-	 * @param off
-	 * @param len
+	 * @param b The array of bytes to write
+	 * @param off The start offset in the array
+	 * @param len The number of bytes to write
 	 */
 	void write(unsigned char *b, int off, int len) override;
 

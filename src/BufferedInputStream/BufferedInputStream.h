@@ -41,9 +41,8 @@ protected:
 	/**
 	 * The index one greater than the index of the last valid unsigned char in the buffer.
 	 * This value is always in the range <code>0</code> through <code>size</code>;
-	 * elements <code>buf[0]</code>  through <code>buf[head-1]
-	 * </code>contain buffered input data obtained
-	 * from the underlying input stream.
+	 * elements <code>buf[0]</code> through <code>buf[head-1]</code>
+	 * contain buffered input data obtained from the underlying input stream.
 	 */
 	int head;
 
@@ -97,9 +96,9 @@ public:
 	/**
 	 * Public constructor.
 	 *
-	 * @param in
-	 * @param buf
-	 * @param size
+	 * @param inputStream The underlying input stream
+	 * @param buf The buffer to use
+	 * @param size The size of the buffer
 	 */
 	BufferedInputStream(InputStream *inputStream, unsigned char *buf, int size);
 
@@ -112,6 +111,7 @@ public:
 	 * Returns the number of bytes that can be read(or skipped over) from this
 	 * input stream without blocking by the next caller of a method for this input stream.
 	 *
+	 * @return int The number of bytes that can be read without blocking
 	 */
 	int available() override;
 
@@ -124,19 +124,30 @@ public:
 	/**
 	 * Marks the current position in this input stream.
 	 *
-	 * NOTE: Mark position is only supported when within the current buffet.
+	 * NOTE: Mark position is only supported when within the current buffer.
 	 */
 	void mark() override;
 
 	/**
 	 * Tests if this input stream supports the mark and reset methods.
 	 *
-	 * NOTE: Mark position is only supported when within the current buffet.
+	 * NOTE: Mark position is only supported when within the current buffer.
+	 *
+	 * @return true if mark/reset is supported, false otherwise
 	 */
 	bool markSupported() override;
 
 	/**
+	 * Indicates whether the stream is currently marked.
+	 *
+	 * @return true if the stream is marked, false otherwise
+	 */
+	bool isMarked();
+
+	/**
 	 * Reads the next unsigned char of data from the input stream.
+	 *
+	 * @return The next unsigned char of data, or -1 if end of stream is reached
 	 */
 	int read() override;
 
@@ -144,15 +155,20 @@ public:
 	 * Reads some number of bytes from the input stream and stores them into
 	 * the buffer array b.
 	 *
-	 * @param b
-	 * @param len
-	 * @return
+	 * @param b The buffer to read into
+	 * @param len The maximum number of bytes to read
+	 * @return The number of bytes read, or -1 if end of stream is reached
 	 */
 	int read(unsigned char *b, int len) override;
 
 	/**
 	 * Reads some number of bytes from the input stream and stores them into
 	 * the buffer array b.
+	 *
+	 * @param b The buffer to read into
+	 * @param off The offset to start writing into the buffer
+	 * @param len The maximum number of bytes to read
+	 * @return The number of bytes read, or -1 if end of stream is reached
 	 */
 	int read(unsigned char *b, int off, int len) override;
 
@@ -160,25 +176,29 @@ public:
 	 * Repositions this stream to the position at the time the mark method was
 	 * last called on this input stream.
 	 *
-	 * NOTE: Mark position is only supported when within the current buffet.
+	 * NOTE: Mark position is only supported when within the current buffer.
 	 */
 	void reset() override;
 
 	/**
 	 * Skips over and discards n bytes of data from this input stream.
+	 *
+	 * @param n The number of bytes to skip
+	 * @return The number of bytes actually skipped
 	 */
 	int skip(int n) override;
 
 private:
 	/**
 	 * Reads a chunk to the a portion of an array, reading from the underlying
-	 * stream at most once if necessary.
+	 * stream at most once (if necessary).
 	 *
-	 * @param b
-	 * @param off
-	 * @param len
+	 * @param b The buffer to read into
+	 * @param off The offset to start writing into the buffer
+	 * @param len The maximum number of bytes to read
+	 * @return The number of bytes read, or -1 if end of stream is reached
 	 */
-	int readPortion(unsigned char *b, int off, int len);
+	int readWithBuffer(unsigned char *b, int off, int len);
 
 	/**
 	 * Moves the valid bytes on the buffer to the left side of the buffer.

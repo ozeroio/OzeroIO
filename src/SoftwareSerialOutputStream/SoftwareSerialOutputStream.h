@@ -21,10 +21,17 @@ protected:
 	SoftwareSerial *softwareSerial;
 
 public:
+	/**
+	 * Public constructor.
+	 *
+	 * @param softwareSerial The software serial instance to write to
+	 */
 	explicit SoftwareSerialOutputStream(SoftwareSerial *softwareSerial);
 
 	/**
 	 * Writes the specified unsigned char to this output stream.
+	 *
+	 * @param b The unsigned char to be written
 	 */
 	void write(unsigned char b) override;
 
@@ -32,9 +39,9 @@ public:
 	 * Writes len bytes from the specified unsigned char array starting at offset off to
 	 * this output stream.
 	 *
-	 * @param b
-	 * @param off
-	 * @param len
+	 * @param b The array of bytes to write
+	 * @param off The start offset in the array
+	 * @param len The number of bytes to write
 	 */
 	void write(unsigned char *b, int off, int len) override;
 };

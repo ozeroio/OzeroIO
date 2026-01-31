@@ -14,26 +14,28 @@ public:
 	virtual ~DataInput() = default;
 
 	/**
-	 * Reads the next unsigned char.
+	 * Reads the next unsigned char of data from the input stream.
+	 *
+	 * @return The next unsigned char of data, or -1 if end of stream is reached
 	 */
 	virtual int read() = 0;
 
 	/**
 	 * Reads len of bytes and stores them into the buffer array b.
 	 *
-	 * @param b
-	 * @param len
-	 * @return
+	 * @param b The buffer to read into
+	 * @param len The maximum number of bytes to read
+	 * @return The number of bytes read, or -1 if end of stream is reached
 	 */
 	virtual int read(unsigned char *b, int len);
 
 	/**
 	 * Reads len of bytes and stores them into the buffer array b with offset.
 	 *
-	 * @param b
-	 * @param off
-	 * @param len
-	 * @return
+	 * @param b The buffer to read into
+	 * @param off The offset to start writing into the buffer
+	 * @param len The maximum number of bytes to read
+	 * @return The number of bytes read, or -1 if end of stream is reached
 	 */
 	virtual int read(unsigned char *b, int off, int len) = 0;
 

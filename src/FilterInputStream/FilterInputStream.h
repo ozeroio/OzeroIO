@@ -92,7 +92,8 @@ public:
 	/**
 	 * This method simply performs <code>inputStream->skip(n)</code>.
 	 *
-	 * @param
+	 * @param n The number of bytes to skip
+	 * @return The actual number of bytes skipped
 	 */
 	int skip(int n) override;
 

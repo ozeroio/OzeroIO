@@ -19,6 +19,7 @@ public:
 	 * Returns the number of bytes that can be read(or skipped over) from this
 	 * input stream without blocking by the next caller of a method for this input stream.
 	 *
+	 * @return int The number of bytes that can be read without blocking
 	 */
 	virtual int available();
 
@@ -35,27 +36,42 @@ public:
 
 	/**
 	 * Tests if this input stream supports the mark and reset methods.
+	 *
+	 * @return true if mark/reset is supported, false otherwise
 	 */
 	virtual bool markSupported();
 
 	/**
+	 * Tests if this input stream is currently marked.
+	 *
+	 * @return true if the stream is marked, false otherwise
+	 */
+	virtual bool isMarked();
+
+	/**
 	 * Reads the next unsigned char of data from the input stream.
+	 *
+	 * @return The next unsigned char of data, or -1 if end of stream is reached
 	 */
 	virtual int read() = 0;
 
 	/**
 	 * Reads some number of bytes from the input stream and stores them into
 	 * the buffer array b.
+	 *
+	 * @param b The buffer to read into
+	 * @param len The maximum number of bytes to read
+	 * @return The number of bytes read, or -1 if end of stream is reached
 	 */
 	virtual int read(unsigned char *b, int len);
 
 	/**
 	 * Reads len of bytes from the stream.
 	 *
-	 * @param b
-	 * @param off
-	 * @param len
-	 * @return
+	 * @param b The buffer to read into
+	 * @param off The start offset in the destination array b
+	 * @param len The maximum number of bytes read
+	 * @return The number of bytes read, or -1 if end of stream is reached
 	 */
 	virtual int read(unsigned char *b, int off, int len);
 
@@ -67,6 +83,9 @@ public:
 
 	/**
 	 * Skips over and discards n bytes of data from this input stream.
+	 *
+	 * @param n The number of bytes to skip
+	 * @return The actual number of bytes skipped
 	 */
 	virtual int skip(int n);
 };

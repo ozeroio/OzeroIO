@@ -83,18 +83,18 @@ public:
 	/**
 	 * Reads len of bytes and stores them into the buffer array b with offset.
 	 *
-	 * @param b
-	 * @param off
-	 * @param len
-	 * @return
+	 * @param b The buffer to read into
+	 * @param off The offset to start writing into the buffer
+	 * @param len The maximum number of bytes to read
+	 * @return The number of bytes read, or -1 if end of stream is reached
 	 */
 	int read(unsigned char *b, int off, int len) override;
 
 	/**
 	 * Skips n bytes of the stream.
 	 *
-	 * @param n
-	 * @return int The number of skipped bytes.
+	 * @param n The number of bytes to skip
+	 * @return The number of bytes actually skipped
 	 */
 	int skip(int n) override;
 };

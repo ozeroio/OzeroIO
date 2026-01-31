@@ -43,7 +43,7 @@ public:
 	/**
 	 * Writes the specified unsigned char to this output stream.
 	 *
-	 * @param b
+	 * @param b The unsigned char to be written
 	 */
 	void write(unsigned char b) override;
 
@@ -51,9 +51,9 @@ public:
 	 * Writes len bytes from the specified unsigned char array starting at offset off to
 	 * this output stream.
 	 *
-	 * @param b
-	 * @param off
-	 * @param len
+	 * @param b The array of bytes to write
+	 * @param off The start offset in the array
+	 * @param len The number of bytes to write
 	 */
 	void write(unsigned char *b, int off, int len) override;
 
@@ -71,6 +71,8 @@ public:
 
 	/**
 	 * Tests if this output stream supports the mark and reset methods.
+	 *
+	 * @return true if mark/reset is supported, false otherwise
 	 */
 	bool markSupported() override;
 

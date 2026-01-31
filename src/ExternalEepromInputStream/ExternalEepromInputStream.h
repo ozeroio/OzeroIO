@@ -67,10 +67,10 @@ public:
 	/**
 	 * Reads len of bytes from the input stream.
 	 *
-	 * @param b
-	 * @param off
-	 * @param len
-	 * @return
+	 * @param b The buffer to read into
+	 * @param off The offset to start writing into the buffer
+	 * @param len The maximum number of bytes to read
+	 * @return The number of bytes read, or -1 if end of stream is reached
 	 */
 	int read(unsigned char *b, int off, int len) override;
 

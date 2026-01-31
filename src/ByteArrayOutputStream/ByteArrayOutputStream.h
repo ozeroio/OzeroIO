@@ -37,8 +37,8 @@ public:
 	/**
 	 * Public constructor.
 	 *
-	 * @param buf
-	 * @param size
+	 * @param buf The unsigned char array to write to
+	 * @param size The size of the array
 	 */
 	ByteArrayOutputStream(unsigned char *buf, int size);
 
@@ -72,9 +72,9 @@ public:
 	 * Writes len bytes from the specified unsigned char array starting at offset off to
 	 * this output stream.
 	 *
-	 * @param b
-	 * @param off
-	 * @param len
+	 * @param b The array of bytes to write
+	 * @param off The start offset in the array
+	 * @param len The number of bytes to write
 	 */
 	void write(unsigned char *b, int off, int len) override;
 
@@ -89,9 +89,9 @@ public:
 	void mark() override;
 
 	/**
-	 * Tests if this input stream supports the mark and reset methods.
+	 * Tests if this output stream supports the mark and reset methods.
 	 *
-	 * @return bool
+	 * @return true if mark/reset is supported, false otherwise
 	 */
 	bool markSupported() override;
 

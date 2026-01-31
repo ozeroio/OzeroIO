@@ -36,7 +36,6 @@ protected:
 	explicit FilterOutputStream(OutputStream *outputStream);
 
 public:
-
 	/**
 	 * Writes the specified <code>unsigned char</code> to this output stream.
 	 * <p>
@@ -100,6 +99,8 @@ public:
 
 	/**
 	 * Tests if this output stream supports the mark and reset methods.
+	 *
+	 * @return true if mark/reset is supported, false otherwise
 	 */
 	bool markSupported() override;
 

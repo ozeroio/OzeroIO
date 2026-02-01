@@ -365,6 +365,31 @@ Contributions are welcome! Please ensure:
 ### Earlier Versions
 See git history for complete changelog.
 
+## Release Notes
+
+### v3.4.0 - January 31, 2026
+
+#### New Features
+- **CyclicRedundancyChecksum**:
+  - Added a new class for CRC16 checksum calculation.
+  - Provides methods to update, reset, and retrieve the checksum value.
+
+#### Enhancements
+- **RandomAccessExternalEeprom**:
+  - Improved handling of offsets for read and write operations.
+  - Enhanced code comments for clarity.
+- **BufferedInputStream**:
+  - Added validation for negative skip values.
+  - Improved code comments for better readability.
+- **ByteArrayInputStream**:
+  - Ensured position validation within the valid range.
+  - Enhanced code comments for clarity.
+- **RandomAccessByteArray**:
+  - Added support for seeking within the valid range, including EOF.
+  - Improved code comments for better readability.
+
+---
+
 ## Support & Feedback
 
 For issues, feature requests, or questions:

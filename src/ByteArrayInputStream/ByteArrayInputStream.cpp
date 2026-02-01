@@ -46,7 +46,8 @@ void ByteArrayInputStream::reset() {
 }
 
 void ByteArrayInputStream::seek(const int pos) {
-	if (pos < size) {
+	// Ensure position is within valid range [0, size).
+	if (pos >= 0 && pos < size) {
 		this->pos = pos;
 	}
 }

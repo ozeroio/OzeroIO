@@ -34,7 +34,9 @@ void RandomAccessExternalEeprom::write(unsigned char *b, const int off, const in
 		return;
 	}
 	const int n = ozero_min(len, size - pos);
-	const int writtenBytes = (int) externalEeprom->writeBytes(pos, b, n);
+
+	// Use offset for writing bytes to external EEPROM.
+	const int writtenBytes = (int) externalEeprom->writeBytes(pos, &b[off], n);
 	pos += writtenBytes;
 }
 
@@ -53,7 +55,8 @@ int RandomAccessExternalEeprom::read(unsigned char *b, const int off, const int 
 		return -1;
 	}
 	const int n = ozero_min(len, size - pos);
-	const int readBytes = (int) externalEeprom->readBytes(pos, b, n);
+	// Use offset for reading bytes from external EEPROM.
+	const int readBytes = (int) externalEeprom->readBytes(pos, &b[off], n);
 	pos += readBytes;
 	return readBytes;
 }

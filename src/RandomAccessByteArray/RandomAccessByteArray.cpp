@@ -1,6 +1,6 @@
 #include "RandomAccessByteArray.h"
-#include <io.h>
 #include <cstring>
+#include <io.h>
 
 RandomAccessByteArray::RandomAccessByteArray(unsigned char *buf,
 											 const int size) : buf(buf),
@@ -13,7 +13,9 @@ unsigned int RandomAccessByteArray::length() const {
 }
 
 void RandomAccessByteArray::seek(const int pos) {
-	if (pos < size) {
+
+	// Allow seeking to [0, size] inclusive (size = EOF).
+	if (pos >= 0 && pos <= size) {
 		this->pos = pos;
 	}
 }
@@ -57,6 +59,12 @@ int RandomAccessByteArray::read(unsigned char *b, const int off, const int len) 
 }
 
 int RandomAccessByteArray::skip(const int n) {
+
+	// Negative skip is not supported. Return 0.
+	if (n <= 0) {
+		return 0;
+	}
+
 	int newPos = pos + n;
 	if (newPos > size) {
 		newPos = size;

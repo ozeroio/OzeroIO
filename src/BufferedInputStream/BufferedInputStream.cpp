@@ -128,6 +128,12 @@ bool BufferedInputStream::isMarked() {
 }
 
 int BufferedInputStream::skip(const int n) {
+
+	// Negative skip is not supported. Return 0.
+	if (n <= 0) {
+		return 0;
+	}
+
 	const int available = head - pos;
 
 	// In case we can skip within the buffer.

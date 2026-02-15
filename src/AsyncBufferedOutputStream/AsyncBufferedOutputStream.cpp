@@ -76,8 +76,6 @@ AsyncBufferedOutputStream::~AsyncBufferedOutputStream() {
 unsigned char *AsyncBufferedOutputStream::getNextFlushBuffer() {
 	unsigned char *buffer = flushBuffers[availableFlushIndex];
 	availableFlushIndex = (availableFlushIndex + 1) % numFlushBuffers;
-	Serial.print("Allocated flush buffer index: ");
-	Serial.println(availableFlushIndex);
 	return buffer;
 }
 

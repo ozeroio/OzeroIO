@@ -8,10 +8,10 @@
 
 #include "Checksum.h"
 
-void Checksum::update(uint8_t *b, int32_t len) {
+void Checksum::update(unsigned char *b, int len) {
 	update(b, 0, len);
 }
 
-void Checksum::update(uint8_t b) {
-	update((uint8_t *) &b, 0, 1);
+void Checksum::update(unsigned char b) {
+	update((unsigned char *) &b, 0, 1);
 }

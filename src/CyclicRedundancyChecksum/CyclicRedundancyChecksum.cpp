@@ -15,7 +15,7 @@ void CyclicRedundancyChecksum::update(unsigned char *b, int off, int len) {
 	int end = off + len;
 	for (int i = off; i < end; i++) {
 		crc ^= b[i];
-		for (uint8_t k = 0; k < 8; k++) {
+		for (unsigned char k = 0; k < 8; k++) {
 			if (crc & 1) {
 				crc = (crc >> 1) ^ 0xA001;
 			} else {

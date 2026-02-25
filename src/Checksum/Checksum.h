@@ -16,7 +16,7 @@ public:
 	 *
 	 * @param b the byte to update the checksum with
 	 */
-	void update(uint8_t b);
+	void update(unsigned char b);
 
 	/**
 	 * Updates the current checksum with the specified array of bytes.
@@ -24,7 +24,7 @@ public:
 	 * @param b the array of bytes to update the checksum with
 	 * @param len the number of bytes to use for the update
 	 */
-	void update(uint8_t *b, int32_t len);
+	void update(unsigned char *b, int len);
 
 	/**
 	 * Updates the current checksum with the specified array of bytes.
@@ -33,7 +33,7 @@ public:
 	 * @param off the start offset of the data
 	 * @param len the number of bytes to use for the update
 	 */
-	virtual void update(uint8_t *b, int32_t off, int32_t len) = 0;
+	virtual void update(unsigned char *b, int off, int len) = 0;
 
 	/**
 	 * Resets the checksum to its initial value.
